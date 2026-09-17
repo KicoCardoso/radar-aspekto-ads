@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Painel de desempenho das campanhas da Aspekto (BH e SP).">
+<title>Radar Aspekto Ads</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A1%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f4f6fb;
+    --surface: #ffffff;
+    --surface-2: #f5f7fc;
+    --ink: #1c2333;
+    --ink-2: #5b6478;
+    --muted: #8b93a7;
+    --hairline: #edf0f6;
+    --hairline-2: #dfe4ee;
+    --primary: #2b5cff;
+    --primary-ink: #ffffff;
+    --primary-soft: #e6ecff;
+    --accent: #2b5cff;
+    --accent-ink: #ffffff;
+    --grid: #e6eaf2;
+    --axis: #d5dbe7;
+    --wash: rgba(28, 35, 51, 0.04);
+    --s-bh: #2b5cff;
+    --s-sp: #ff5a36;
+    --s-form: #8b3dff;
+    --s-wa: #00c389;
+    --s-other: #a3adc2;
+    --st1: #22d3ee;
+    --st2: #2563eb;
+    --st3: #172554;
+    --t-frio: #1e90ff;
+    --t-morno: #ffb300;
+    --t-quente: #ff3b3b;
+    --good: #00c853;
+    --good-ink: #0a8f3c;
+    --warning: #ffb300;
+    --serious: #ff7a00;
+    --critical: #ff2d55;
+    --critical-ink: #d81b3f;
+    --shadow: 0 1px 2px rgba(20, 30, 60, 0.04), 0 10px 30px -14px rgba(20, 30, 60, 0.14);
+    --shadow-lg: 0 2px 4px rgba(20, 30, 60, 0.04), 0 18px 40px -18px rgba(20, 30, 60, 0.22);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0f1320;
+      --surface: #171c2c;
+      --surface-2: #1d2335;
+      --ink: #eef1f8;
+      --ink-2: #b3bacc;
+      --muted: #7f889f;
+      --hairline: #242b3e;
+      --hairline-2: #333c52;
+      --primary: #4d7cff;
+      --primary-ink: #ffffff;
+      --primary-soft: #223066;
+      --accent: #4d7cff;
+      --accent-ink: #ffffff;
+      --grid: #232a3d;
+      --axis: #3a4359;
+      --wash: rgba(255, 255, 255, 0.05);
+      --s-bh: #4d7cff;
+      --s-sp: #ff6a3d;
+      --s-form: #a06bff;
+      --s-wa: #19e3a1;
+      --s-other: #6f7890;
+      --st1: #1e3a6b;
+      --st2: #3b82f6;
+      --st3: #67e8f9;
+      --t-frio: #42a5f5;
+      --t-morno: #ffc233;
+      --t-quente: #ff5252;
+      --good: #22e07a;
+      --good-ink: #33e07a;
+      --warning: #ffc233;
+      --serious: #ff8a3d;
+      --critical: #ff4d6d;
+      --critical-ink: #ff6b8a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.4), 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0f1320;
+    --surface: #171c2c;
+    --surface-2: #1d2335;
+    --ink: #eef1f8;
+    --ink-2: #b3bacc;
+    --muted: #7f889f;
+    --hairline: #242b3e;
+    --hairline-2: #333c52;
+    --primary: #4d7cff;
+    --primary-ink: #ffffff;
+    --primary-soft: #223066;
+    --accent: #4d7cff;
+    --accent-ink: #ffffff;
+    --grid: #232a3d;
+    --axis: #3a4359;
+    --wash: rgba(255, 255, 255, 0.05);
+    --s-bh: #4d7cff;
+    --s-sp: #ff6a3d;
+    --s-form: #a06bff;
+    --s-wa: #19e3a1;
+    --s-other: #6f7890;
+    --st1: #1e3a6b;
+    --st2: #3b82f6;
+    --st3: #67e8f9;
+    --t-frio: #42a5f5;
+    --t-morno: #ffc233;
+    --t-quente: #ff5252;
+    --good: #22e07a;
+      --good-ink: #33e07a;
+      --warning: #ffc233;
+      --serious: #ff8a3d;
+      --critical: #ff4d6d;
+    --critical-ink: #ff6b8a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.4), 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    padding-block: 0;
+    padding-inline: 0;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1, "cv11" 1;
+  }
+  a { color: inherit; text-decoration: none; }
+  button, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+  /* ---------- app shell: sidebar + main ---------- */
+  .app { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+  .side {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--surface); border-right: 1px solid var(--hairline);
+    padding: 22px 16px; display: flex; flex-direction: column; gap: 18px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; padding: 2px 8px 6px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .logo .mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--primary), var(--s-form)); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 14px; box-shadow: 0 6px 14px -6px var(--primary); }
+  .logo small { display: block; font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
+  .side nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav-lab { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 14px 10px 6px; }
+  .side nav a {
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink-2);
+    transition: background 0.15s, color 0.15s;
+  }
+  .side nav a svg { width: 17px; height: 17px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: 0.9; }
+  .side nav a:hover { background: var(--surface-2); color: var(--ink); }
+  .side nav a.active { background: var(--primary-soft); color: var(--primary); }
+  .side-foot { margin-top: auto; padding: 12px 10px 0; border-top: 1px solid var(--hairline); display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); }
+  .main { min-width: 0; padding: 26px clamp(16px, 3vw, 36px) 56px; }
+  .wrap { max-width: 1320px; margin: 0 auto; }
+
+  /* ---------- header ---------- */
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-bottom: 8px; }
+  .brand .hello { margin: 0; font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); }
+  .brand .hello b { font-weight: 700; }
+  .brand .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+  .live { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--ink-2); }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; box-shadow: 0 0 0 3px color-mix(in srgb, var(--muted) 18%, transparent); }
+  .live.on i { background: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
+  .live.err i { background: var(--critical); box-shadow: 0 0 0 3px color-mix(in srgb, var(--critical) 20%, transparent); }
+  .live.wait i { background: var(--warning); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning) 25%, transparent); }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .seg { display: inline-flex; background: var(--surface); border-radius: 999px; padding: 3px; box-shadow: var(--shadow); }
+  .seg button { background: transparent; border: 0; padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--ink-2); border-radius: 999px; transition: background 0.15s, color 0.15s; }
+  .seg button:hover { color: var(--ink); }
+  .seg button[aria-pressed="true"] { background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--s-form))); color: #fff; }
+  .seg.small { box-shadow: none; background: var(--surface-2); }
+  .seg.small button { padding: 5px 11px; font-size: 12px; }
+  .seg.small button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+  .seg button .swatch { margin-right: 7px; vertical-align: 1px; border-radius: 50%; }
+  .seg button[aria-pressed="true"] .swatch { outline: 2px solid rgba(255, 255, 255, 0.7); }
+  .btn { background: var(--surface); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; box-shadow: var(--shadow); color: var(--ink-2); }
+  .btn:hover { color: var(--ink); background: var(--surface-2); }
+  .btn[disabled] { opacity: 0.6; cursor: default; }
+  .fresh { font-size: 12px; color: var(--muted); }
+  .ctl { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); }
+
+  /* ---------- banners ---------- */
+  .banner { margin-top: 18px; border-radius: var(--radius); padding: 16px 18px; background: var(--surface); box-shadow: var(--shadow); display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+  .banner[hidden] { display: none; }
+  .banner .ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+  .banner.critical .ic { background: color-mix(in srgb, var(--critical) 14%, transparent); color: var(--critical-ink); }
+  .banner.warning .ic { background: color-mix(in srgb, var(--warning) 22%, transparent); color: var(--ink); }
+  .banner.info .ic { background: var(--primary-soft); color: var(--primary); }
+  .banner h3 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+  .banner p { margin: 0; color: var(--ink-2); max-width: 70ch; }
+  .banner ol { margin: 8px 0 0; padding-left: 18px; color: var(--ink-2); }
+  .banner li { margin: 3px 0; }
+  .banner code { font-family: var(--mono); font-size: 12px; background: var(--wash); padding: 1px 5px; border-radius: 4px; }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 30px; scroll-margin-top: 16px; }
+  .sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 12px; }
+  .sec-head h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .sec-head .note { color: var(--muted); font-size: 12px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- KPI head (one card, dividers) ---------- */
+  .kpis { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 6px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 0; }
+  .kpi { padding: 2px 18px; min-width: 0; border-left: 1px solid var(--hairline); }
+  .kpi:nth-child(4n+1) { border-left: 0; }
+  .kpi:nth-child(n+5) { padding-top: 14px; border-top: 1px solid var(--hairline); }
+  .kpi.hl { background: linear-gradient(135deg, var(--primary) 0%, var(--s-form) 100%); color: #fff; border-radius: 12px; margin: -8px 8px -8px 2px; padding: 12px 18px; box-shadow: 0 14px 28px -14px var(--primary); border-left: 0; }
+  .kpi.hl .lab, .kpi.hl .aux { color: rgba(255, 255, 255, 0.85); }
+  .kpi.hl .val { font-size: 30px; color: #fff; }
+  .kpi.hl .delta { color: #fff; background: rgba(255, 255, 255, 0.18); padding: 1px 7px; border-radius: 999px; }
+  .kpi.hl + .kpi { border-left: 0; }
+  .kpi .lab { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .kpi .val { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin-top: 4px; white-space: nowrap; }
+  .kpi .aux { font-size: 12px; color: var(--muted); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+  @media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi:nth-child(4n+1) { border-left: 1px solid var(--hairline); } .kpi:nth-child(2n+1) { border-left: 0; } .kpi:nth-child(n+3) { padding-top: 14px; border-top: 1px solid var(--hairline); } }
+
+  /* ---------- tiles (Hoje) ---------- */
+  .tiles { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .tile { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px 15px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .tile .lab { font-size: 12.5px; color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .tile .val { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
+  .tile .aux { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+  .tile.hero { grid-column: span 2; }
+  .tile.hero .val { font-size: 40px; }
+  .tile.accent { background: linear-gradient(135deg, var(--primary) 0%, var(--s-form) 100%); color: #fff; box-shadow: 0 14px 30px -14px var(--primary); }
+  .tile.accent .lab, .tile.accent .aux, .tile.accent .delta { color: var(--primary-ink); opacity: 0.92; }
+  .tile.accent .meter { background: rgba(255, 255, 255, 0.28); }
+  .tile.accent .meter > i { background: #fff; }
+  .delta { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 12px; }
+  .delta.up { color: var(--good-ink); }
+  .delta.down { color: var(--critical-ink); }
+  .delta.flat { color: var(--muted); }
+  .swatch { width: 9px; height: 9px; border-radius: 3px; display: inline-block; flex: none; }
+  .meter { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--primary) 16%, transparent); overflow: hidden; margin-top: 6px; }
+  .meter > i { display: block; height: 100%; background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 70%, white), var(--primary)); border-radius: 3px; }
+  .meter.warn > i { background: var(--warning); }
+  .meter.bad > i { background: var(--critical); }
+  .meter.warn { background: color-mix(in srgb, var(--warning) 22%, transparent); }
+  .meter.bad { background: color-mix(in srgb, var(--critical) 16%, transparent); }
+
+  /* ---------- cards & charts ---------- */
+  .charts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .charts.evo { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
+  .charts.evo > .card:last-child { grid-column: 1 / -1; }
+  .charts.temp, .charts.funnel { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
+  @media (max-width: 900px) { .charts.temp, .charts.funnel { grid-template-columns: 1fr; } }
+  .grid2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; min-width: 0; }
+  .card h3 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .card .hint { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px 12px; flex-wrap: wrap; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); margin-top: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .line { width: 14px; height: 2.5px; border-radius: 2px; display: inline-block; }
+  .chart { position: relative; margin-top: 10px; }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .tick { font-size: 11px; fill: var(--muted); font-family: var(--sans); font-variant-numeric: tabular-nums; }
+  .chart .gl { stroke: var(--grid); stroke-width: 1; stroke-dasharray: 3 4; }
+  .chart .ax { stroke: var(--axis); stroke-width: 1; }
+  .chart .hit { fill: transparent; cursor: crosshair; }
+  .chart .cross { stroke: var(--axis); stroke-width: 1; pointer-events: none; }
+  .chart .vlab { font-size: 10.5px; fill: var(--ink-2); font-family: var(--sans); font-variant-numeric: tabular-nums; }
+  .tip { position: absolute; z-index: 5; pointer-events: none; background: var(--ink); color: var(--page); border-radius: 10px; padding: 9px 12px; font-size: 12px; line-height: 1.4; box-shadow: var(--shadow-lg); max-width: 260px; white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); }
+  .tip b { font-weight: 600; }
+  .tip .row { display: flex; justify-content: space-between; gap: 14px; }
+  .tip .row span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+  .tip[hidden] { display: none; }
+  .empty { color: var(--muted); font-size: 13px; padding: 28px 0; text-align: center; }
+
+  /* ---------- thermometer ---------- */
+  .gauge { margin-top: 12px; }
+  .gauge .score { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .gauge .score .big { font-size: 38px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+  .gauge .score .lab { font-size: 13px; color: var(--ink-2); }
+  .gauge svg { width: 100%; height: auto; display: block; margin-top: 8px; overflow: visible; }
+  .gauge .tick { font-size: 11px; fill: var(--muted); font-family: var(--sans); }
+  .tbar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; margin-top: 14px; background: var(--surface-2); gap: 2px; }
+  .tbar > i { display: block; height: 100%; min-width: 0; border-radius: 2px; }
+  .tbar-lab { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--ink-2); margin-top: 8px; flex-wrap: wrap; }
+  .tbar-lab span { display: inline-flex; align-items: center; gap: 6px; }
+  .tbar-lab b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tstats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .tstats > div { flex: 1 1 150px; min-width: 0; background: var(--surface-2); border-radius: 12px; padding: 10px 12px; }
+  .tstats .l { display: block; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .tstats b { display: block; font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .tstats .s { display: block; font-size: 11.5px; color: var(--ink-2); margin-top: 2px; }
+  .bsplit { margin-top: 16px; }
+  .bsplit .lab { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; display: flex; justify-content: space-between; gap: 8px; }
+  .bsplit .lab span:last-child { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--ink-2); }
+  .bsplit .bar { display: flex; height: 18px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--surface-2); }
+  .bsplit .bar > i { display: block; height: 100%; border-radius: 2px; min-width: 0; }
+  .bsplit .legs { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 7px; font-size: 12px; color: var(--ink-2); }
+  .bsplit .legs span { display: inline-flex; align-items: center; gap: 6px; }
+  .bsplit .legs b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .btotal { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  #budgetTbl { margin-top: 10px; }
+  #budgetTbl th, #budgetTbl td { padding: 7px 5px; }
+  #budgetTbl .share { min-width: 64px; grid-template-columns: 1fr 32px; }
+  .btotal .big { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+  .btotal .lab { font-size: 13px; color: var(--ink-2); }
+  .temptbl { margin-top: 14px; font-size: 12px; }
+  .temptbl th, .temptbl td { padding: 7px 6px; }
+  .temptbl td.k { text-align: left; font-weight: 500; white-space: normal; min-width: 150px; line-height: 1.3; }
+  .temptbl td.k small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+  .stagevol { margin-top: 12px; }
+  .stagevol th, .stagevol td { padding: 7px 8px; }
+  .stagevol td.k { text-align: left; font-weight: 500; white-space: nowrap; }
+
+  /* ---------- tables ---------- */
+  .tabs { display: inline-flex; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; box-shadow: var(--shadow); margin-bottom: 12px; }
+  .tabs button { background: none; border: 0; padding: 7px 14px; cursor: pointer; color: var(--ink-2); font-size: 13px; font-weight: 500; border-radius: 999px; }
+  .tabs button[aria-selected="true"] { color: var(--primary); background: var(--primary-soft); font-weight: 600; }
+  .tabs button .n { color: var(--muted); font-weight: 500; margin-left: 5px; font-variant-numeric: tabular-nums; }
+  .tscroll { overflow-x: auto; border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+  .card .tscroll { box-shadow: none; border-radius: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--hairline); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface); position: sticky; top: 0; z-index: 1; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { color: var(--ink); }
+  th.sorted { color: var(--primary); }
+  th.sorted::after { content: " ▾"; font-size: 10px; }
+  th.sorted.asc::after { content: " ▴"; }
+  th:first-child, td:first-child { text-align: left; }
+  td.name { max-width: 380px; white-space: normal; min-width: 220px; }
+  td.name .nm { font-weight: 500; }
+  td.name .ctx { color: var(--muted); font-size: 12px; margin-top: 1px; }
+  tbody tr:hover { background: var(--wash); }
+  tbody tr:last-child td { border-bottom: 0; }
+  tr.total td { font-weight: 600; background: var(--surface-2); }
+  .chips { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .chip { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .chip i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .st { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .st i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: var(--muted); }
+  .st.active i { background: var(--good); }
+  .st.learning i { background: var(--warning); }
+  .st.issue i { background: var(--critical); }
+  .st.off i { background: var(--muted); }
+  .bar-cell { display: inline-grid; grid-template-columns: 52px 1fr; align-items: center; gap: 8px; min-width: 150px; }
+  .bar-cell .b { height: 6px; border-radius: 3px; background: var(--wash); overflow: hidden; }
+  .bar-cell .b > i { display: block; height: 100%; border-radius: 3px; background: var(--primary); }
+  .dim { color: var(--muted); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- structure ---------- */
+  .matrix { font-size: 12.5px; }
+  .matrix th, .matrix td { padding: 7px 6px; }
+  .matrix th { letter-spacing: 0.04em; }
+  .matrix th.grp { text-align: center; border-bottom: 0; padding-bottom: 2px; }
+  .matrix td.k { text-align: left; font-weight: 500; }
+  .matrix td.k .sw { margin-right: 8px; }
+  .share { display: inline-grid; grid-template-columns: 1fr 40px; align-items: center; gap: 6px; min-width: 96px; }
+  .share .b { height: 8px; border-radius: 4px; background: var(--wash); overflow: hidden; }
+  .share .b > i { display: block; height: 100%; border-radius: 4px; }
+
+  /* ---------- alerts ---------- */
+  .alerts { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .alert { background: var(--surface); border-radius: var(--radius-sm); box-shadow: var(--shadow); padding: 12px 14px 12px 12px; display: grid; grid-template-columns: 4px 1fr; gap: 12px; }
+  .alert .stripe { border-radius: 2px; background: var(--muted); }
+  .alert.critical .stripe { background: var(--critical); }
+  .alert.serious .stripe { background: var(--serious); }
+  .alert.warning .stripe { background: var(--warning); }
+  .alert.good .stripe { background: var(--good); }
+  .alert .t { font-weight: 600; font-size: 13px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .alert .t .lvl { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .alert .d { color: var(--ink-2); font-size: 12px; margin-top: 2px; }
+  .alerts .ok { color: var(--ink-2); font-size: 13px; padding: 12px 2px; display: flex; gap: 8px; align-items: center; }
+
+  /* ---------- footer ---------- */
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--hairline); color: var(--muted); font-size: 12px; display: grid; gap: 6px; max-width: 90ch; }
+  footer b { color: var(--ink-2); font-weight: 500; }
+
+  .stale { opacity: 0.55; transition: opacity 0.2s; }
+  .sr { position: absolute; left: -9999px; }
+
+  /* ---------- responsive shell ---------- */
+  @media (max-width: 1024px) {
+    .app { grid-template-columns: 1fr; }
+    .side { position: static; height: auto; flex-direction: row; align-items: center; gap: 6px; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--hairline); overflow-x: auto; }
+    .side nav { flex-direction: row; gap: 2px; }
+    .nav-lab { display: none; }
+    .side nav a { padding: 7px 10px; white-space: nowrap; font-size: 12.5px; }
+    .side nav a svg { display: none; }
+    .side-foot { display: none; }
+    .logo { padding: 0 6px 0 0; }
+    .logo span:not(.mark) { display: none; }
+  }
+  @media (max-width: 640px) {
+    .tile.hero { grid-column: span 2; }
+    .tile.hero .val { font-size: 30px; }
+    .brand .hello { font-size: 20px; }
+    .main { padding-top: 18px; }
+  }
+  /* --- ajuste de largura fora do visualizador de artifacts --- */
+  html, body { max-width: 100%; overflow-x: hidden; }
+  .app, .app > *, .main, .wrap, section, .card, .charts, .charts > *, .kpis, .tiles, .tscroll { min-width: 0; }
+  .side { max-width: 100%; }
+  @media (max-width: 1024px) {
+    .side { -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    .side nav { flex: 1 1 auto; min-width: 0; }
+  }
+  /* números grandes cabem na coluna estreita do celular em vez de serem cortados */
+  @media (max-width: 760px) {
+    .kpi .val { font-size: 21px; }
+    .kpi.hl .val { font-size: 25px; }
+    .kpi.hl { margin: -8px 2px; padding: 12px 14px; }
+    .tile .val { font-size: 22px; }
+  }
+  @media (max-width: 420px) {
+    .kpi .val, .kpi.hl .val, .tile .val { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side">
+    <div class="logo"><span class="mark">A</span><span>Radar Aspekto<small>Meta Ads · Henrique</small></span></div>
+    <nav id="sideNav" aria-label="Seções">
+      <div class="nav-lab">Painel</div>
+      <a href="#secKpi" class="active"><svg viewBox="0 0 24 24"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM4 20h6v-4H4zM14 7h6V4h-6z"/></svg>Visão do mês</a>
+      <a href="#secToday"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoje</a>
+      <a href="#secTemp"><svg viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v6"/></svg>Termômetro</a>
+      <a href="#secBudget"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>Orçamento</a>
+      <a href="#secCharts"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-8"/><path d="M4 21h16"/></svg>Evolução</a>
+      <div class="nav-lab">Estrutura</div>
+      <a href="#secStruct"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Região × funil</a>
+      <a href="#secFunnel"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>Impressões e alcance</a>
+      <div class="nav-lab">Operação</div>
+      <a href="#secAlerts"><svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4z"/><path d="M10 21h4"/></svg>Atenção</a>
+      <a href="#secTables"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg>Detalhe</a>
+    </nav>
+    <div class="side-foot">
+      <span class="live wait" id="liveChip"><i></i><span id="liveTxt">conectando</span></span>
+      <span class="fresh" id="fresh"></span>
+    </div>
+  </aside>
+  <main class="main">
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <p class="hello" id="hello">Olá, <b>Kico</b></p>
+      <p class="sub"><span id="acctLabel">Conta Henrique · BH e SP</span><span id="subLine">resumo de desempenho do mês</span></p>
+    </div>
+    <div class="controls">
+      <div class="seg" id="regionSeg" role="group" aria-label="Região">
+        <button type="button" data-r="ALL" aria-pressed="true">Geral</button>
+        <button type="button" data-r="BH" aria-pressed="false"><i class="swatch" style="background:var(--s-bh)"></i>BH</button>
+        <button type="button" data-r="SP" aria-pressed="false"><i class="swatch" style="background:var(--s-sp)"></i>SP</button>
+      </div>
+      <button class="btn" type="button" id="refreshBtn" title="Buscar dados agora">↻ Atualizar</button>
+    </div>
+  </header>
+
+  <div class="banner info" id="banner" hidden>
+    <div class="ic">i</div>
+    <div>
+      <h3 id="bannerTitle"></h3>
+      <p id="bannerText"></p>
+      <ol id="bannerSteps" hidden></ol>
+    </div>
+  </div>
+
+  <section id="secKpi">
+    <div class="sec-head"><h2 id="kpiTitle">Mês atual</h2><span class="note" id="kpiNote"></span></div>
+    <div class="kpis" id="kpiRow"></div>
+  </section>
+
+  <section id="secToday">
+    <div class="sec-head"><h2>Hoje</h2><span class="note" id="todayNote">atualiza de hora em hora</span></div>
+    <div class="tiles" id="todayRow"></div>
+  </section>
+
+  <section id="secTemp">
+    <div class="sec-head"><h2>Termômetro do lead</h2><span class="note">frio = converteu no topo (etapa 1) · morno = já passou pelo topo e converteu no meio (etapa 2) · quente = chegou ao fundo (etapa 3)</span></div>
+    <div class="charts temp">
+      <div class="card">
+        <h3>Temperatura dos contatos no mês</h3>
+        <div class="hint">quanto conteúdo o contato já tinha consumido quando chegou · média de 1 (tudo frio) a 3 (tudo quente)</div>
+        <div id="tempGauge"></div>
+        <div class="tscroll" style="border:0"><table class="matrix temptbl" id="tempTbl"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div><h3>Temperatura por dia</h3><div class="hint">como a mistura frio · morno · quente muda ao longo do mês</div></div>
+          <div class="seg small" id="tempModeSeg" role="group" aria-label="Modo"><button type="button" data-m="share" aria-pressed="true">Participação</button><button type="button" data-m="count" aria-pressed="false">Quantidade</button></div>
+        </div>
+        <div class="legend"><span><i class="swatch" style="background:var(--t-frio)"></i>Frio</span><span><i class="swatch" style="background:var(--t-morno)"></i>Morno</span><span><i class="swatch" style="background:var(--t-quente)"></i>Quente</span><span><i class="line" style="background:var(--ink)"></i>Temperatura média do dia</span></div>
+        <div class="chart" id="chTemp"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secBudget">
+    <div class="sec-head"><h2>Divisão do orçamento diário</h2><span class="note">orçamento ativo agora (campanhas e conjuntos ligados) · por unidade, objetivo e etapa do funil</span></div>
+    <div class="charts temp">
+      <div class="card">
+        <div class="card-head">
+          <div><h3>Como o orçamento está dividido</h3><div class="hint" id="budgetHint">R$/dia</div></div>
+          <div class="seg small" id="budgetUnitSeg" role="group" aria-label="Unidade"><button type="button" data-u="ALL" aria-pressed="true">BH + SP</button><button type="button" data-u="BH" aria-pressed="false">BH</button><button type="button" data-u="SP" aria-pressed="false">SP</button></div>
+        </div>
+        <div id="budgetBars"></div>
+      </div>
+      <div class="card">
+        <h3>Unidade × etapa × objetivo</h3>
+        <div class="hint">R$/dia de cada combinação e a fatia do total · L = formulário · E = WhatsApp</div>
+        <div class="tscroll" style="border:0"><table class="matrix" id="budgetTbl"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secCharts">
+    <div class="sec-head"><h2>Evolução diária</h2><span class="note">passe o mouse sobre os dias</span></div>
+    <div class="charts evo">
+      <div class="card">
+        <h3>Investimento por dia</h3>
+        <div class="hint" id="spendHint">por região</div>
+        <div class="legend" id="spendLegend"><span><i class="swatch" style="background:var(--s-bh)"></i>BH</span><span><i class="swatch" style="background:var(--s-sp)"></i>SP</span><span><i class="swatch" style="background:var(--s-other)"></i>Outros</span></div>
+        <div class="chart" id="chSpend"></div>
+      </div>
+      <div class="card">
+        <h3>Contatos por dia</h3>
+        <div class="hint">contatos únicos por origem · a linha tracejada é quem preencheu o formulário e não mandou mensagem</div>
+        <div class="legend"><span><i class="line" style="background:var(--s-form)"></i>Leads · formulário</span><span><i class="line" style="background:repeating-linear-gradient(90deg,var(--s-form) 0 4px,transparent 4px 7px)"></i>dos quais sem mensagem</span><span><i class="line" style="background:var(--s-wa)"></i>WhatsApp direto</span></div>
+        <div class="chart" id="chContacts"></div>
+      </div>
+      <div class="card">
+        <h3>Custo por contato por dia</h3>
+        <div class="hint">investimento ÷ contatos únicos (formulário + WhatsApp direto)</div>
+        <div class="legend"><span><i class="line" style="background:var(--s-bh)"></i>Custo médio do dia</span><span><i class="line" style="background:var(--axis)"></i>Média do período</span></div>
+        <div class="chart" id="chCost"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secStruct">
+    <div class="sec-head"><h2>Distribuição por estrutura</h2><span class="note">região × destino e etapas do funil (L = formulário, E = WhatsApp)</span></div>
+    <div class="grid2">
+      <div class="card"><h3>Região × destino</h3><div class="hint">orçamento diário ativo, gasto e custo por contato no período</div><div class="tscroll" style="margin-top:8px;border:0"><table class="matrix" id="matrix"></table></div></div>
+      <div class="card"><h3>Etapas do funil</h3><div class="hint">1 = topo · 2 = meio (remarketing) · 3 = fundo (urgência)</div><div class="tscroll" style="margin-top:8px;border:0"><table class="matrix" id="stages"></table></div></div>
+    </div>
+  </section>
+
+  <section id="secFunnel">
+    <div class="sec-head"><h2>Funil · impressões e alcance</h2><span class="note">1 = topo · 2 = meio · 3 = fundo · impressões = vezes que os anúncios foram exibidos · alcance = pessoas únicas</span></div>
+    <div class="charts funnel">
+      <div class="card">
+        <h3>Volume por etapa, no mês</h3>
+        <div class="hint" id="stageHint">barra cheia = impressões · barra suave = alcance · BH e SP lado a lado</div>
+        <div class="legend" id="stageLegend"></div>
+        <div class="chart" id="chStageBars"></div>
+        <div class="tscroll" style="border:0"><table class="matrix stagevol" id="stageVol"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div><h3>Volume por dia, por etapa</h3><div class="hint">empilhado por etapa do funil · campanhas sem etapa no nome ficam de fora</div></div>
+          <div class="seg small" id="stageMetricSeg" role="group" aria-label="Métrica"><button type="button" data-m="impressions" aria-pressed="true">Impressões</button><button type="button" data-m="reach" aria-pressed="false">Alcance</button></div>
+        </div>
+        <div class="legend"><span><i class="swatch" style="background:var(--st1)"></i>1 · Topo</span><span><i class="swatch" style="background:var(--st2)"></i>2 · Meio</span><span><i class="swatch" style="background:var(--st3)"></i>3 · Fundo</span></div>
+        <div class="chart" id="chStageDaily"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secAlerts">
+    <div class="sec-head"><h2>Atenção agora</h2><span class="note" id="alertNote"></span></div>
+    <div class="alerts" id="alerts"></div>
+  </section>
+
+  <section id="secTables">
+    <div class="sec-head"><h2>Detalhe</h2><span class="note">clique no cabeçalho para ordenar</span></div>
+    <div class="tabs" role="tablist" id="tblTabs">
+      <button type="button" role="tab" data-t="campaigns" aria-selected="true">Campanhas<span class="n" id="nCamp"></span></button>
+      <button type="button" role="tab" data-t="adsets" aria-selected="false">Conjuntos<span class="n" id="nAdset"></span></button>
+      <button type="button" role="tab" data-t="ads" aria-selected="false">Anúncios<span class="n" id="nAd"></span></button>
+      <button type="button" role="tab" data-t="pacing" aria-selected="false">Ritmo de hoje<span class="n" id="nPace"></span></button>
+    </div>
+    <div class="tscroll"><table id="tbl"></table></div>
+  </section>
+
+  <footer>
+    <div><b>Como é contado.</b> Leads · formulário = leads de formulário atribuídos pela Meta (campanhas L). Nas campanhas de formulário, as conversas de WhatsApp vêm de quem acabou de preencher o formulário (a página de obrigado leva ao WhatsApp), então não são somadas de novo: viram "seguiram para o WhatsApp" e a diferença é "formulário sem mensagem". Leads · WhatsApp direto = conversas iniciadas em 7 dias nas campanhas E, calculadas a partir do custo por conversa informado pela Meta. Contatos = leads de formulário + WhatsApp direto (cada pessoa conta uma vez). Custo por contato = investimento ÷ contatos.</div>
+    <div><b>Estrutura.</b> A região vem das tags [BH]/[SP] no nome; o destino de [Formulario]/[Whatsapp]; a etapa de [L1–L3]/[E1–E3]. Campanhas sem essas tags entram em "Outros".</div>
+    <div><b>Termômetro do lead.</b> A temperatura é inferida pela etapa da campanha que gerou o contato: as campanhas de meio (L2/E2) e fundo (L3/E3) só alcançam quem já foi impactado pelas etapas anteriores (públicos de remarketing), então um contato vindo do meio já consumiu o topo (morno) e um vindo do fundo percorreu topo e meio (quente). Contato de campanha de topo = frio. Temperatura média = média ponderada (frio 1 · morno 2 · quente 3). A Meta atribui o contato à campanha do último clique/visualização, por isso é uma aproximação.</div>
+    <div><b>Impressões e alcance.</b> Impressões = vezes que os anúncios foram exibidos; alcance = pessoas únicas por campanha, somado entre as campanhas da mesma etapa (quem viu duas campanhas conta duas vezes). Frequência = impressões ÷ alcance. Os níveis 1/2/3 juntam L e E (formulário e WhatsApp) da mesma etapa.</div>
+    <div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente de hora em hora e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>
+  </footer>
+</div>
+  </main>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- configuration ---------------- */
+  const SERVER = 'Facebook Ads';
+  const DEFAULT_ACCOUNT = '1545616483609687';
+  const DEFAULT_ACCOUNT_NAME = 'Henrique';
+  const REFRESH_MS = 5 * 60 * 1000;
+  const REQUEST_TEXT = 'dashboard em tempo real com graficos e tabelas da minha estrutura de marketing';
+  const CONV_ID = (function () { const a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; let s = ''; for (let i = 0; i < 20; i++) s += a[Math.floor(Math.random() * a.length)]; return s; })();
+
+  const F_CAMPAIGN = ['id', 'name', 'objective', 'effective_status', 'delivery', 'daily_budget', 'amount_spent', 'impressions', 'reach', 'frequency', 'cpm', 'ctr', 'link_click', 'results', 'cost_per_result', 'lead', 'cost_per_action_type'];
+  const F_ADSET = ['id', 'name', 'campaign_id', 'campaign_name', 'effective_status', 'delivery', 'delivery_sub_status', 'daily_budget', 'optimization_goal', 'destination_type', 'learning_stage_info', 'amount_spent', 'impressions', 'reach', 'frequency', 'cpm', 'ctr', 'link_click', 'results', 'cost_per_result', 'lead', 'cost_per_action_type'];
+  const F_AD = ['id', 'name', 'adset_id', 'adset_name', 'campaign_id', 'campaign_name', 'effective_status', 'delivery', 'amount_spent', 'impressions', 'reach', 'frequency', 'cpm', 'ctr', 'link_click', 'results', 'cost_per_result', 'lead', 'cost_per_action_type', 'video_thruplay_watched_actions'];
+  const F_DAILY = ['id', 'name', 'amount_spent', 'impressions', 'reach', 'link_click', 'lead', 'results', 'cost_per_action_type'];
+  const F_PREV = ['id', 'name', 'amount_spent', 'impressions', 'reach', 'link_click', 'lead', 'results', 'cost_per_action_type'];
+
+  /* ---------------- formatting & parsing ---------------- */
+  const fmtBRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 2 });
+  const fmtBRL0 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  const fmtInt = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
+  const fmt1 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const fmt2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money = (v, dec) => (v == null || !isFinite(v)) ? '—' : (dec === 0 ? fmtBRL0 : fmtBRL).format(v);
+  const compactBRL = (v) => v >= 1000 ? 'R$ ' + fmt1.format(v / 1000).replace(',0', '') + ' mil' : money(v, 0);
+  const int = (v) => (v == null || !isFinite(v)) ? '—' : fmtInt.format(Math.round(v));
+  const compactInt = (v) => v >= 1e6 ? fmt1.format(v / 1e6) + ' mi' : v >= 1000 ? fmt1.format(v / 1000).replace(',0', '') + ' mil' : int(v);
+  const pct = (v) => (v == null || !isFinite(v)) ? '—' : fmt2.format(v) + '%';
+  const dec1 = (v) => (v == null || !isFinite(v)) ? '—' : fmt1.format(v);
+
+  function parseMoney(s) {
+    if (s == null) return 0;
+    if (typeof s === 'number') return s;
+    let t = String(s).replace(/[^\d.,-]/g, '');
+    if (!t) return 0;
+    const lc = t.lastIndexOf(','), ld = t.lastIndexOf('.');
+    if (lc > ld) t = t.replace(/\./g, '').replace(',', '.');
+    else t = t.replace(/,/g, '');
+    const n = parseFloat(t);
+    return isFinite(n) ? n : 0;
+  }
+  function parseNum(s) {
+    if (s == null || s === '') return 0;
+    if (typeof s === 'number') return s;
+    const n = parseFloat(String(s).replace(/[^\d.-]/g, ''));
+    return isFinite(n) ? n : 0;
+  }
+  function parsePct(s) { return parseMoney(s); }
+  function resultsCount(r) {
+    if (!r || typeof r !== 'object') return null;
+    if (Array.isArray(r.values) && r.values.length) { const v = parseNum(r.values[0].value); return isFinite(v) ? v : null; }
+    return null;
+  }
+  function resultsLabel(r) {
+    if (!r || typeof r !== 'object') return '';
+    const ind = r.indicator || '';
+    if (/messaging_conversation_started/.test(ind)) return 'conversas';
+    if (/lead/.test(ind)) return 'leads';
+    if (/link_click/.test(ind)) return 'cliques';
+    if (/landing_page/.test(ind)) return 'visitas';
+    if (/thruplay|video/.test(ind)) return 'reproduções';
+    if (ind === 'mixed') return 'misto';
+    return ind.replace('actions:', '');
+  }
+  function derived(spend, cost) {
+    if (!cost || cost <= 0 || !spend) return 0;
+    return Math.round(spend / cost);
+  }
+
+  /* ---------------- dates ---------------- */
+  const pad = (n) => String(n).padStart(2, '0');
+  const iso = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  const fmtDay = (isoStr) => { const [y, m, d] = isoStr.split('-').map(Number); return d + ' ' + MONTHS[m - 1]; };
+  const fmtRange = (a, b) => a === b ? fmtDay(a) : (a.slice(0, 7) === b.slice(0, 7) ? a.slice(8) + '–' + fmtDay(b) : fmtDay(a) + ' – ' + fmtDay(b));
+  const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 864e5) + 1;
+
+  function periodRange(key) {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const t = iso(today);
+    let since, until, cSince, cUntil, cLabel;
+    if (key === 'this_month') {
+      since = iso(new Date(today.getFullYear(), today.getMonth(), 1)); until = t;
+      const pm = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      const pmDays = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      cSince = iso(pm); cUntil = iso(new Date(pm.getFullYear(), pm.getMonth(), Math.min(today.getDate(), pmDays)));
+      cLabel = 'mesmos dias do mês anterior';
+    } else if (key === 'last_month') {
+      const pm = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      since = iso(pm); until = iso(new Date(today.getFullYear(), today.getMonth(), 0));
+      const ppm = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+      cSince = iso(ppm); cUntil = iso(new Date(today.getFullYear(), today.getMonth() - 1, 0));
+      cLabel = 'mês anterior a esse';
+    } else if (key === 'last_7d' || key === 'last_30d') {
+      const n = key === 'last_7d' ? 7 : 30;
+      since = iso(addDays(today, -(n - 1))); until = t;
+      cSince = iso(addDays(today, -(2 * n - 1))); cUntil = iso(addDays(today, -n));
+      cLabel = n + ' dias anteriores';
+    } else if (key === 'today') {
+      since = until = t; cSince = cUntil = iso(addDays(today, -1)); cLabel = 'ontem';
+    } else {
+      since = until = iso(addDays(today, -1)); cSince = cUntil = iso(addDays(today, -2)); cLabel = 'anteontem';
+    }
+    return { key, since, until, cSince, cUntil, cLabel, today: t };
+  }
+  const PERIOD_LABEL = { this_month: 'Mês atual', last_month: 'Mês anterior', last_7d: 'Últimos 7 dias', last_30d: 'Últimos 30 dias', today: 'Hoje', yesterday: 'Ontem' };
+
+  /* ---------------- structure classification ---------------- */
+  function classify(name, extra) {
+    const n = name || ''; extra = extra || {};
+    const region = /\[\s*BH\s*\]/i.test(n) ? 'BH' : /\[\s*SP\s*\]/i.test(n) ? 'SP' : 'Outros';
+    let dest = null;
+    if (/formul[aá]rio|\[\s*leads?\s*\]|lead ?gen/i.test(n)) dest = 'Formulário';
+    else if (/whats/i.test(n)) dest = 'WhatsApp';
+    else if (/perfil|tr[aá]fego|reconhecimento|\[site\]|curtidas|seguidores/i.test(n)) dest = 'Outros';
+    if (!dest) {
+      const og = extra.optimization_goal || '', dt = extra.destination_type || '', ob = extra.objective || '';
+      if (og === 'CONVERSATIONS' || /WHATSAPP|MESSENGER|INSTAGRAM_DIRECT/.test(dt)) dest = 'WhatsApp';
+      else if (/LEAD/.test(og) || ob === 'OUTCOME_LEADS') dest = 'Formulário';
+      else if (/OUTCOME_ENGAGEMENT/.test(ob)) dest = 'WhatsApp';
+      else dest = 'Outros';
+    }
+    let stageNum = 0, stageKey = '';
+    const m = n.match(/\[\s*([LE])\s*([123])\s*\]/i);
+    if (m) { stageNum = +m[2]; stageKey = m[1].toUpperCase() + m[2]; }
+    else if (/\[\s*topo/i.test(n)) stageNum = 1; else if (/\[\s*meio/i.test(n)) stageNum = 2; else if (/\[\s*fundo/i.test(n)) stageNum = 3;
+    if (!stageKey && stageNum) stageKey = (dest === 'Formulário' ? 'L' : dest === 'WhatsApp' ? 'E' : 'X') + stageNum;
+    const stageLabel = { 1: 'Topo', 2: 'Meio', 3: 'Fundo' }[stageNum] || '';
+    return { region, dest, stageNum, stageKey, stageLabel };
+  }
+  const REGION_COLOR = { BH: 'var(--s-bh)', SP: 'var(--s-sp)', Outros: 'var(--s-other)' };
+  const DEST_COLOR = { 'Formulário': 'var(--s-form)', WhatsApp: 'var(--s-wa)', Outros: 'var(--s-other)' };
+
+  /* ---------------- metrics ---------------- */
+  function metricsOf(e) {
+    const spend = parseMoney(e.amount_spent);
+    const impressions = parseNum(e.impressions), reach = parseNum(e.reach), clicks = parseNum(e.link_click);
+    const cpl = parseNum(e['cost_per_lead'] || e['cost_per_action_type:onsite_conversion.lead_grouped'] || e['cost_per_action_type:onsite_conversion.lead']);
+    let leads = e.lead != null && e.lead !== '' ? parseNum(e.lead) : 0;
+    if (!leads && cpl) leads = derived(spend, cpl);
+    const cpc = parseNum(e['cost_per_action_type:onsite_conversion.messaging_conversation_started_7d']);
+    let conv = e.conversations != null && e.conversations !== '' ? parseNum(e.conversations) : derived(spend, cpc);
+    const rc = resultsCount(e.results), rl = resultsLabel(e.results);
+    if (!conv && rl === 'conversas' && rc) conv = rc;
+    if (!leads && rl === 'leads' && rc) leads = rc;
+    const contacts = leads + conv;
+    const freq = parseNum(e.frequency);
+    const ctr = e.ctr != null ? parsePct(e.ctr) : (impressions ? clicks / impressions * 100 : 0);
+    const cpm = e.cpm != null ? parseMoney(e.cpm) : (impressions ? spend / impressions * 1000 : 0);
+    return { spend, impressions, reach, clicks, leads, conv, contacts, freq, ctr, cpm,
+      formToWa: 0, formNoMsg: 0, waDirect: conv,
+      cpContact: contacts ? spend / contacts : null, cpLead: leads ? spend / leads : null, cpConv: conv ? spend / conv : null,
+      results: rc, resultsLabel: rl, cprText: e.cost_per_result && e.cost_per_result.value ? String(e.cost_per_result.value) : '' };
+  }
+  // De-duplication: in form campaigns (L) the WhatsApp conversations come from people who had just filled the form
+  // (the thank-you page sends them to WhatsApp), so they are the same contacts. A contact is counted once:
+  //   form campaigns  → contacts = form leads (conversations = the share of those leads that went on to WhatsApp)
+  //   WhatsApp campaigns → contacts = conversations (direct)
+  function dedup(met, cls) {
+    if (cls && cls.dest === 'Formulário') {
+      met.formToWa = Math.min(met.leads, met.conv);
+      met.formNoMsg = Math.max(0, met.leads - met.conv);
+      met.waDirect = Math.max(0, met.conv - met.leads); // conversations beyond the form leads (rare) count as direct
+      met.contacts = met.leads + met.waDirect;
+    } else {
+      met.formToWa = 0; met.formNoMsg = met.leads; met.waDirect = met.conv;
+      met.contacts = met.leads + met.conv;
+    }
+    met.cpContact = met.contacts ? met.spend / met.contacts : null;
+    return met;
+  }
+  function deliveryState(e) {
+    const d = e.delivery && typeof e.delivery === 'object' ? e.delivery : {};
+    const st = String(d.status || '').toLowerCase();
+    const subs = Array.isArray(d.substatuses) ? d.substatuses.map(String) : [];
+    const es = String(e.effective_status || '');
+    const dss = String(e.delivery_sub_status || '');
+    let cls = 'off', label = 'Desligado';
+    if (st === 'active') { cls = 'active'; label = 'Ativo'; }
+    else if (st === 'error' || es === 'WITH_ISSUES') { cls = 'issue'; label = 'Com problema'; }
+    else if (st === 'pending' || es === 'IN_PROCESS' || es === 'PENDING_REVIEW') { cls = 'learning'; label = 'Em análise'; }
+    else if (st === 'draft') { cls = 'off'; label = 'Rascunho'; }
+    else if (st === 'inactive' || es === 'PAUSED' || /PAUSED/.test(es)) { cls = 'off'; label = es === 'PAUSED' ? 'Pausado' : 'Desligado'; }
+    else if (st === 'completed') { cls = 'off'; label = 'Concluído'; }
+    if (cls === 'active' && /LEARNING_LIMITED|LIMITED/.test(dss)) { cls = 'learning'; label = 'Aprendizado limitado'; }
+    else if (cls === 'active' && /LEARNING/.test(dss)) { cls = 'learning'; label = 'Em aprendizado'; }
+    else if (cls === 'active' && subs.some(s => /learning_limited/i.test(s))) { cls = 'learning'; label = 'Aprendizado limitado'; }
+    else if (cls === 'active' && subs.some(s => /learning/i.test(s))) { cls = 'learning'; label = 'Em aprendizado'; }
+    return { cls, label, active: st === 'active', issue: cls === 'issue', subs };
+  }
+
+  /* ---------------- state ---------------- */
+  const S = {
+    mcp: null, period: 'this_month', account: DEFAULT_ACCOUNT, range: null,
+    raw: { campaigns: null, adsets: null, ads: null, daily: null, prev: null, today: null },
+    stamp: {}, err: {}, unsub: [], tab: 'campaigns', sort: { campaigns: ['spend', 'desc'], adsets: ['spend', 'desc'], ads: ['spend', 'desc'], pacing: ['budget', 'desc'] },
+    model: null, accessDenied: false, offline: false, at: null,
+    specs: null, retries: {}, gen: 0, stageMetric: 'impressions', region: 'ALL', tempMode: 'share', budgetUnit: 'ALL',
+  };
+  try {
+    localStorage.removeItem('radar.account'); localStorage.removeItem('radar.period');
+    const sm = localStorage.getItem('radar.stageMetric'); if (sm === 'reach' || sm === 'impressions') S.stageMetric = sm;
+    const rg = localStorage.getItem('radar.region'); if (rg === 'BH' || rg === 'SP' || rg === 'ALL') S.region = rg;
+    const tm = localStorage.getItem('radar.tempMode'); if (tm === 'share' || tm === 'count') S.tempMode = tm;
+    const bu = localStorage.getItem('radar.budgetUnit'); if (bu === 'BH' || bu === 'SP' || bu === 'ALL') S.budgetUnit = bu;
+  } catch (e) {}
+  const REGIONS = () => S.region === 'ALL' ? ['BH', 'SP'] : [S.region];
+  const inRegion = (cls) => S.region === 'ALL' || cls.region === S.region;
+
+  /* ---------------- DOM helpers ---------------- */
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  function deltaHtml(cur, prev, opts) {
+    opts = opts || {};
+    if (prev == null || !isFinite(prev) || prev === 0 || cur == null || !isFinite(cur)) return '<span class="delta flat">—</span>';
+    const d = (cur - prev) / Math.abs(prev) * 100;
+    const good = opts.lowerIsBetter ? d < 0 : d > 0;
+    const cls = Math.abs(d) < 0.5 ? 'flat' : (good ? 'up' : 'down');
+    const arrow = d > 0.5 ? '▲' : d < -0.5 ? '▼' : '•';
+    // above +500% a percentage stops being readable (a base that was almost zero): show the multiple instead
+    const txt = d >= 500 ? fmt1.format(cur / prev) + '×' : fmt1.format(Math.abs(d)) + '%';
+    return '<span class="delta ' + cls + '" title="vs ' + esc(opts.vs || 'período anterior') + '">' + arrow + ' ' + txt + '</span>';
+  }
+  function chip(text, color) { return '<span class="chip">' + (color ? '<i style="background:' + color + '"></i>' : '') + esc(text) + '</span>'; }
+  function stHtml(ds) { return '<span class="st ' + ds.cls + '"><i></i>' + esc(ds.label) + '</span>'; }
+
+  /* ---------------- model ---------------- */
+  function entities(key) {
+    const p = S.raw[key];
+    if (!p) return null;
+    let ents = p.ad_entities != null ? p.ad_entities : p.ad_drafts;
+    if (typeof ents === 'string') { try { ents = JSON.parse(ents); } catch (e) { ents = []; } }
+    return Array.isArray(ents) ? ents : [];
+  }
+  function recompute() {
+    const camps = entities('campaigns'), adsets = entities('adsets'), ads = entities('ads'), daily = entities('daily'), prev = entities('prev');
+    const R = S.range;
+    const m = { camps: [], adsets: [], ads: [], byId: {}, days: [], prevTotals: null, totals: null, today: null };
+
+    const adsetByCamp = {};
+    if (adsets) for (const a of adsets) {
+      const ds = deliveryState(a);
+      const cls = classify(a.name, a);
+      const row = { e: a, id: String(a.id), name: a.name, campaign_id: String(a.campaign_id || ''), campaign_name: a.campaign_name || '', ds, cls, met: metricsOf(a),
+        budget: parseMoney(a.daily_budget), goal: a.optimization_goal || '', destType: a.destination_type || '' };
+      m.adsets.push(row);
+      (adsetByCamp[row.campaign_id] = adsetByCamp[row.campaign_id] || []).push(row);
+    }
+    if (camps) for (const c of camps) {
+      const ds = deliveryState(c);
+      const sets = adsetByCamp[String(c.id)] || [];
+      const cls = classify(c.name, { objective: c.objective, optimization_goal: sets[0] && sets[0].goal, destination_type: sets[0] && sets[0].destType });
+      const cbo = parseMoney(c.daily_budget);
+      const activeSets = sets.filter(s => s.ds.active);
+      const budget = cbo > 0 ? (ds.active ? cbo : 0) : activeSets.reduce((t, s) => t + s.budget, 0);
+      const row = { e: c, id: String(c.id), name: c.name, ds, cls, met: dedup(metricsOf(c), cls), budget, cbo: cbo > 0, sets, objective: c.objective || '' };
+      if (!inRegion(cls)) continue; // region filter (Geral / BH / SP)
+      m.camps.push(row); m.byId[row.id] = row;
+    }
+    m.adsets = m.adsets.filter(a => m.byId[a.campaign_id] || (!camps && inRegion(a.cls)));
+    for (const a of m.adsets) { const c = m.byId[a.campaign_id]; if (c) a.cls = Object.assign({}, c.cls, a.cls.stageKey ? { stageNum: a.cls.stageNum, stageKey: a.cls.stageKey, stageLabel: a.cls.stageLabel } : {}); a.camp = c; dedup(a.met, a.cls); }
+    if (ads) for (const a of ads) {
+      const c = m.byId[String(a.campaign_id || '')];
+      const cls = c ? c.cls : classify(a.campaign_name || a.name, a);
+      if (!c && (camps || !inRegion(cls))) continue;
+      m.ads.push({ e: a, id: String(a.id), name: a.name, adset_name: a.adset_name || '', campaign_name: a.campaign_name || '', ds: deliveryState(a), cls, met: dedup(metricsOf(a), cls), thruplays: parseNum(a.video_thruplay_watched_actions) });
+    }
+
+    // daily series
+    const mkStage = () => ({ 1: { impressions: 0, reach: 0, contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0 }, 2: { impressions: 0, reach: 0, contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0 }, 3: { impressions: 0, reach: 0, contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0 } });
+    const mkDay = (d) => ({ date: d, spend: 0, impressions: 0, reach: 0, clicks: 0, leads: 0, conv: 0, contacts: 0, formToWa: 0, formNoMsg: 0, waDirect: 0, byRegion: { BH: 0, SP: 0, Outros: 0 }, byDest: { 'Formulário': 0, WhatsApp: 0, Outros: 0 }, byStage: mkStage(), camps: {} });
+    const addRow = (day, r) => {
+      const met = metricsOf(r); const c = m.byId[String(r.id)]; const cls = c ? c.cls : classify(r.name, r);
+      if (!c && (camps || !inRegion(cls))) return;
+      dedup(met, cls);
+      day.spend += met.spend; day.impressions += met.impressions; day.reach += met.reach; day.clicks += met.clicks;
+      day.leads += met.leads; day.conv += met.conv; day.contacts += met.contacts; day.formToWa += met.formToWa; day.formNoMsg += met.formNoMsg; day.waDirect += met.waDirect;
+      day.byRegion[cls.region] = (day.byRegion[cls.region] || 0) + met.spend;
+      day.byDest[cls.dest] = (day.byDest[cls.dest] || 0) + met.spend;
+      const bs = day.byStage[cls.stageNum];
+      if (bs) { bs.impressions += met.impressions; bs.reach += met.reach; bs.contacts += met.contacts; bs.leads += met.leads; bs.conv += met.conv; bs.waDirect += met.waDirect; bs.formNoMsg += met.formNoMsg; bs.spend += met.spend; }
+      day.camps[String(r.id)] = met;
+    };
+    if (daily) {
+      const byDay = {};
+      const start = new Date(R.since + 'T12:00:00'), n = daysBetween(R.since, R.until);
+      for (let i = 0; i < n; i++) { const d = iso(addDays(start, i)); byDay[d] = mkDay(d); }
+      for (const r of daily) { const day = byDay[r.date_start]; if (day) addRow(day, r); }
+      m.days = Object.values(byDay);
+      m.today = byDay[R.today] || null;
+    }
+    // "Hoje" when today is outside the selected period: its own one-day series
+    const todayRows = entities('today');
+    if (!m.today && todayRows) { const day = mkDay(R.today); for (const r of todayRows) addRow(day, r); m.today = day; }
+
+    // totals for the period (from campaign level) — contacts de-duplicated per campaign
+    const sumTotals = (rows, getMet, getCls) => {
+      const t = { spend: 0, impressions: 0, reach: 0, clicks: 0, leads: 0, conv: 0, contacts: 0, formToWa: 0, formNoMsg: 0, waDirect: 0, spendForm: 0, spendWa: 0, budget: 0, byKey: {}, byStage: { 1: { contacts: 0, spend: 0 }, 2: { contacts: 0, spend: 0 }, 3: { contacts: 0, spend: 0 } } };
+      for (const r of rows) {
+        const met = getMet(r), cls = getCls(r); if (!met) continue;
+        t.spend += met.spend; t.impressions += met.impressions; t.reach += met.reach; t.clicks += met.clicks;
+        t.leads += met.leads; t.conv += met.conv; t.contacts += met.contacts; t.formToWa += met.formToWa; t.formNoMsg += met.formNoMsg; t.waDirect += met.waDirect;
+        if (cls.dest === 'Formulário') t.spendForm += met.spend; else if (cls.dest === 'WhatsApp') t.spendWa += met.spend;
+        t.budget += r.budget || 0;
+        const k = cls.region + '|' + cls.dest; const b = t.byKey[k] = t.byKey[k] || { spend: 0, contacts: 0 }; b.spend += met.spend; b.contacts += met.contacts;
+        if (t.byStage[cls.stageNum]) { t.byStage[cls.stageNum].contacts += met.contacts; t.byStage[cls.stageNum].spend += met.spend; }
+      }
+      t.cpContact = t.contacts ? t.spend / t.contacts : null;
+      t.cpLead = t.leads ? (t.spendForm || t.spend) / t.leads : null;          // cost per form lead, on the form campaigns' spend
+      t.cpConv = t.waDirect ? (t.spendWa || t.spend) / t.waDirect : null;      // cost per direct WhatsApp lead, on the WhatsApp campaigns' spend
+      t.formNoMsgShare = t.leads ? t.formNoMsg / t.leads : null; t.formToWaShare = t.leads ? t.formToWa / t.leads : null;
+      t.ctr = t.impressions ? t.clicks / t.impressions * 100 : null; t.cpm = t.impressions ? t.spend / t.impressions * 1000 : null; t.freq = t.reach ? t.impressions / t.reach : null;
+      t.temp = tempOf(t.byStage);
+      return t;
+    };
+    if (camps) m.totals = sumTotals(m.camps, (c) => c.met, (c) => c.cls);
+    if (prev) {
+      const rows = [];
+      for (const r of prev) { const c = m.byId[String(r.id)]; const cls = c ? c.cls : classify(r.name, r); if (!inRegion(cls)) continue; rows.push({ met: dedup(metricsOf(r), cls), cls }); }
+      m.prevTotals = sumTotals(rows, (r) => r.met, (r) => r.cls);
+    }
+    // lead temperature (current period): contacts by the stage of the campaign that generated them
+    if (camps) {
+      const bs = { 1: { contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0, n: 0 }, 2: { contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0, n: 0 }, 3: { contacts: 0, leads: 0, conv: 0, waDirect: 0, formNoMsg: 0, spend: 0, n: 0 } };
+      let noStage = 0;
+      for (const c of m.camps) { const b = bs[c.cls.stageNum]; if (!b) { noStage += c.met.contacts; continue; } b.contacts += c.met.contacts; b.leads += c.met.leads; b.conv += c.met.conv; b.waDirect += c.met.waDirect; b.formNoMsg += c.met.formNoMsg; b.spend += c.met.spend; b.n++; }
+      m.temp = Object.assign({ byStage: bs, noStage }, tempOf(bs));
+    }
+    S.model = m;
+  }
+  // temperature score: 1 = only cold (stage 1) contacts … 3 = only hot (stage 3) contacts
+  function tempOf(bs) {
+    const total = bs[1].contacts + bs[2].contacts + bs[3].contacts;
+    const score = total ? (bs[1].contacts + 2 * bs[2].contacts + 3 * bs[3].contacts) / total : null;
+    return { total, score, share: { 1: total ? bs[1].contacts / total : 0, 2: total ? bs[2].contacts / total : 0, 3: total ? bs[3].contacts / total : 0 } };
+  }
+
+  const dataNow = () => S.at ? new Date(S.at) : new Date();
+
+  /* ---------------- rendering: today ---------------- */
+  function renderToday() {
+    const m = S.model, el = $('todayRow');
+    const now = dataNow(); const hourFrac = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);
+    if (!m || !m.today || !m.totals) { el.innerHTML = tileEmpty(4); return; }
+    const t = m.today;
+    const budget = m.totals.budget;
+    const expected = budget * hourFrac;
+    const pace = budget > 0 ? t.spend / expected : null;
+    const paceCls = pace == null ? '' : pace < 0.6 ? 'bad' : pace < 0.85 || pace > 1.25 ? 'warn' : '';
+    const contacts = t.contacts;
+    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza de hora em hora';
+    el.innerHTML = [
+      tile('Investimento hoje', money(t.spend), '<span>orçamento diário ativo ' + money(budget, 0) + '</span>' + (pace != null ? '<span class="delta">' + (paceCls === 'bad' ? '▼' : paceCls === 'warn' ? '•' : '▲') + ' ritmo ' + Math.round(pace * 100) + '%</span>' : ''), '<div class="meter" title="gasto vs. esperado até agora"><i style="width:' + Math.min(100, Math.round((budget ? t.spend / budget : 0) * 100)) + '%"></i></div>', 'accent'),
+      tile('Leads · formulário hoje', int(t.leads), '<span><i class="swatch" style="background:var(--s-form)"></i>' + (t.leads ? int(t.formNoMsg) + ' sem mensagem · ' + int(t.formToWa) + ' → WhatsApp' : 'sem leads ainda') + '</span>'),
+      tile('Leads · WhatsApp direto hoje', int(t.waDirect), '<span><i class="swatch" style="background:var(--s-wa)"></i>' + (t.waDirect ? money(t.spend * (1 - (leadShareSpend(t) || 0)) / t.waDirect) + ' por conversa' : 'sem conversas ainda') + '</span>'),
+      tile('Custo por contato hoje', contacts ? money(t.spend / contacts) : '—', '<span>' + int(contacts) + ' contatos únicos · ' + compactInt(t.impressions) + ' impressões</span>'),
+    ].join('');
+  }
+  function leadShareSpend(day) { const f = day.byDest['Formulário'] || 0, w = day.byDest['WhatsApp'] || 0; return (f + w) ? f / (f + w) : null; }
+  function tile(label, value, aux, extra, cls) { return '<div class="tile ' + (cls || '') + '"><div class="lab">' + label + '</div><div class="val">' + value + '</div>' + (aux ? '<div class="aux">' + aux + '</div>' : '') + (extra || '') + '</div>'; }
+  function tileEmpty(n) { let s = ''; for (let i = 0; i < n; i++) s += '<div class="tile"><div class="lab">&nbsp;</div><div class="val dim">—</div><div class="aux">aguardando dados</div></div>'; return s; }
+
+  /* ---------------- rendering: KPIs ---------------- */
+  function renderKpis() {
+    const m = S.model, el = $('kpiRow'), R = S.range;
+    const rg = S.region === 'ALL' ? 'BH + SP' : S.region;
+    $('kpiTitle').textContent = monthName(R.since) + ' · ' + fmtRange(R.since, R.until) + ' · ' + rg;
+    $('kpiNote').textContent = 'mês fechado até hoje · comparado com ' + R.cLabel + ' (' + fmtRange(R.cSince, R.cUntil) + ')';
+    if (!m || !m.totals) { el.innerHTML = kpiEmpty(8); return; }
+    const t = m.totals, p = m.prevTotals || {};
+    const vs = R.cLabel;
+    const pctOf = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+    el.innerHTML = [
+      kpi('Investimento', money(t.spend, 0), deltaHtml(t.spend, p.spend, { vs }) + (p.spend ? '<span>antes ' + money(p.spend, 0) + '</span>' : '<span>mês até hoje</span>'), 'hl'),
+      kpi('Custo por contato', money(t.cpContact), deltaHtml(t.cpContact, p.cpContact, { vs, lowerIsBetter: true }) + (p.cpContact ? '<span>antes ' + money(p.cpContact) + '</span>' : '<span>investimento ÷ contatos únicos</span>')),
+      kpi('Contatos gerados', int(t.contacts), deltaHtml(t.contacts, p.contacts, { vs }) + '<span>' + int(t.leads) + ' formulário + ' + int(t.waDirect) + ' WhatsApp direto · sem duplicar</span>'),
+      kpi('Leads · formulário', int(t.leads), deltaHtml(t.leads, p.leads, { vs }) + '<span>' + (t.cpLead ? money(t.cpLead) + ' por lead · ' : '') + int(t.formToWa) + ' (' + pctOf(t.formToWa, t.leads) + ') seguiram para o WhatsApp</span>'),
+      kpi('Formulário sem mensagem', int(t.formNoMsg), ppDelta(t.formNoMsgShare, p.formNoMsgShare, { vs, lowerIsBetter: true }) + '<span>' + pctOf(t.formNoMsg, t.leads) + ' dos leads de formulário não mandaram mensagem</span>'),
+      kpi('Leads · WhatsApp direto', int(t.waDirect), deltaHtml(t.waDirect, p.waDirect, { vs }) + '<span>' + (t.cpConv ? money(t.cpConv) + ' por conversa · ' : '') + 'campanhas de WhatsApp</span>'),
+      kpi('Impressões', compactInt(t.impressions), deltaHtml(t.impressions, p.impressions, { vs }) + '<span>alcance ' + compactInt(t.reach) + ' · freq. ' + dec1(t.freq) + '</span>'),
+      kpi('CTR', pct(t.ctr), deltaHtml(t.ctr, p.ctr, { vs }) + '<span>cliques no link · CPM ' + money(t.cpm) + '</span>'),
+    ].join('');
+  }
+  // delta of a share, in percentage points
+  function ppDelta(cur, prev, opts) {
+    opts = opts || {};
+    if (cur == null || prev == null || !isFinite(cur) || !isFinite(prev)) return '<span class="delta flat">—</span>';
+    const d = (cur - prev) * 100; const good = opts.lowerIsBetter ? d < 0 : d > 0;
+    const cls = Math.abs(d) < 0.5 ? 'flat' : (good ? 'up' : 'down'); const arrow = d > 0.5 ? '▲' : d < -0.5 ? '▼' : '•';
+    return '<span class="delta ' + cls + '" title="participação vs ' + esc(opts.vs || 'período anterior') + '">' + arrow + ' ' + fmt1.format(Math.abs(d)) + ' p.p.</span>';
+  }
+  function kpi(label, value, aux, cls) { return '<div class="kpi' + (cls ? ' ' + cls : '') + '"><div class="lab">' + label + '</div><div class="val">' + value + '</div>' + (aux ? '<div class="aux">' + aux + '</div>' : '') + '</div>'; }
+  function kpiEmpty(n) { let s = ''; for (let i = 0; i < n; i++) s += '<div class="kpi"><div class="lab">&nbsp;</div><div class="val dim">—</div><div class="aux">aguardando dados</div></div>'; return s; }
+  function greet() {
+    const h = new Date().getHours(); const g = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+    $('hello').innerHTML = g + ', <b>Kico</b>';
+    $('subLine').textContent = 'resumo de ' + monthName(S.range.since).toLowerCase() + ' · atualiza de hora em hora';
+  }
+  function monthName(isoDate) { const d = new Date(isoDate + 'T12:00:00'); const s = d.toLocaleDateString('pt-BR', { month: 'long' }); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* ---------------- charts (SVG) ---------------- */
+  const CH = { w: 640, h: 230, l: 44, r: 12, t: 14, b: 26 };
+  // charts are drawn 1 unit = 1 px of the container, so text and marks keep their size at any card width
+  function fitChart(el) { const w = el ? el.clientWidth : 0; CH.w = w > 240 ? Math.round(w) : 640; }
+  function niceMax(v) { if (!v || v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const f = v / p; const n = f <= 1 ? 1 : f <= 1.5 ? 1.5 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 3 ? 3 : f <= 4 ? 4 : f <= 5 ? 5 : f <= 6 ? 6 : f <= 8 ? 8 : 10; return n * p; }
+  function yTicks(max) { const step = max / 4; const out = []; for (let i = 0; i <= 4; i++) out.push(step * i); return out; }
+  function frame(max, fmt) {
+    const iw = CH.w - CH.l - CH.r, ih = CH.h - CH.t - CH.b;
+    const y = (v) => CH.t + ih - (max ? v / max * ih : 0);
+    let g = '';
+    for (const tv of yTicks(max)) { const yy = y(tv); g += '<line class="gl" x1="' + CH.l + '" x2="' + (CH.w - CH.r) + '" y1="' + yy.toFixed(1) + '" y2="' + yy.toFixed(1) + '"></line><text class="tick" x="' + (CH.l - 6) + '" y="' + (yy + 4).toFixed(1) + '" text-anchor="end">' + esc(fmt(tv)) + '</text>'; }
+    g += '<line class="ax" x1="' + CH.l + '" x2="' + (CH.w - CH.r) + '" y1="' + (CH.t + ih) + '" y2="' + (CH.t + ih) + '"></line>';
+    return { iw, ih, y, grid: g };
+  }
+  function xLabels(days) {
+    const n = days.length; if (!n) return '';
+    const iw = CH.w - CH.l - CH.r; const step = n <= 8 ? 1 : n <= 16 ? 2 : n <= 31 ? 5 : 7;
+    const idx = [];
+    for (let i = 0; i < n; i += step) idx.push(i);
+    // o ultimo dia e o mais importante do eixo (o periodo vai ate hoje): ele sempre recebe rotulo,
+    // e quem sai e a marca anterior, se estiver perto demais para caber
+    if (idx[idx.length - 1] !== n - 1) {
+      if (n - 1 - idx[idx.length - 1] < Math.max(2, step - 1)) idx.pop();
+      idx.push(n - 1);
+    }
+    let s = '';
+    for (const i of idx) {
+      const x = CH.l + (i + 0.5) / n * iw;
+      s += '<text class="tick" x="' + x.toFixed(1) + '" y="' + (CH.h - 8) + '" text-anchor="middle">' + esc(n === 1 ? fmtDay(days[i].date) : days[i].date.slice(8).replace(/^0/, '')) + '</text>';
+    }
+    return s;
+  }
+  function hitLayer(days, id) {
+    const n = days.length, iw = CH.w - CH.l - CH.r, bw = iw / n;
+    let s = '';
+    for (let i = 0; i < n; i++) s += '<rect class="hit" data-i="' + i + '" data-ch="' + id + '" x="' + (CH.l + i * bw).toFixed(1) + '" y="' + CH.t + '" width="' + bw.toFixed(2) + '" height="' + (CH.h - CH.t - CH.b) + '"></rect>';
+    return s;
+  }
+  function spendStack() {
+    return S.region === 'ALL'
+      ? { field: 'byRegion', keys: ['BH', 'SP', 'Outros'], color: REGION_COLOR, hint: 'por região' }
+      : { field: 'byDest', keys: ['Formulário', 'WhatsApp', 'Outros'], color: DEST_COLOR, hint: 'por destino · ' + S.region };
+  }
+  function renderCharts() {
+    const m = S.model;
+    const days = m && m.days && m.days.length ? m.days : null;
+    if (!days) { for (const id of ['chSpend', 'chContacts', 'chCost']) $(id).innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return; }
+    const n = days.length;
+    // 1. stacked spend — by region in "Geral", by destination when one region is selected
+    const st = spendStack();
+    $('spendHint').textContent = st.hint;
+    $('spendLegend').innerHTML = st.keys.map(k => '<span><i class="swatch" style="background:' + st.color[k] + '"></i>' + esc(k) + '</span>').join('');
+    if (!days.some(d => d.spend > 0)) $('chSpend').innerHTML = '<div class="empty">Sem investimento no período.</div>';
+    else {
+      fitChart($('chSpend'));
+      const max = niceMax(Math.max(...days.map(d => d.spend)) * 1.05);
+      const f = frame(max, (v) => v >= 1000 ? (v / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + 'k' : v.toFixed(0));
+      const bw = f.iw / n, barW = Math.min(24, bw * 0.62);
+      let bars = '';
+      for (let i = 0; i < n; i++) {
+        const d = days[i]; const x = CH.l + i * bw + (bw - barW) / 2; let base = CH.t + f.ih;
+        const src = d[st.field];
+        for (const key of st.keys) {
+          const v = src[key] || 0; if (v <= 0) continue;
+          const h = v / max * f.ih; const top = base - h;
+          const isTop = st.keys.slice(st.keys.indexOf(key) + 1).every(k => !(src[k] > 0));
+          const rad = isTop ? 4 : 0;
+          bars += '<path fill="' + gradFill(st.color[key]) + '" d="' + roundTop(x, top, barW, Math.max(0, h - (isTop ? 0 : 2)), rad) + '"></path>';
+          base = top;
+        }
+      }
+      $('chSpend').innerHTML = svgWrap(barDefs() + f.grid + bars + xLabels(days) + hitLayer(days, 'spend'), 'Investimento por dia');
+    }
+    // 2. contacts lines
+    if (!days.some(d => d.leads > 0 || d.waDirect > 0)) $('chContacts').innerHTML = '<div class="empty">Ainda não há contatos no período.</div>';
+    else {
+      fitChart($('chContacts'));
+      const max = niceMax(Math.max(1, ...days.map(d => Math.max(d.leads, d.waDirect))) * 1.1);
+      const f = frame(max, (v) => int(v));
+      const bw = f.iw / n; const xs = (i) => CH.l + (i + 0.5) * bw;
+      const path = (key) => days.map((d, i) => (i ? 'L' : 'M') + xs(i).toFixed(1) + ' ' + f.y(d[key]).toFixed(1)).join(' ');
+      let g = gradDefs([['gLeads', 'var(--s-form)'], ['gConv', 'var(--s-wa)']]);
+      const last = days[n - 1];
+      const collide = Math.abs(f.y(last.leads) - f.y(last.waDirect)) < 13;
+      const baseY = (CH.t + f.ih).toFixed(1);
+      // dashed: form leads that did not go on to WhatsApp
+      g += '<path d="' + path('formNoMsg') + '" fill="none" stroke="var(--s-form)" stroke-width="1.6" stroke-dasharray="4 4" stroke-linejoin="round" stroke-linecap="round" opacity="0.8"></path>';
+      for (const [key, color, gid] of [['leads', 'var(--s-form)', 'gLeads'], ['waDirect', 'var(--s-wa)', 'gConv']]) {
+        if (n > 1) g += '<path d="' + path(key) + ' L' + xs(n - 1).toFixed(1) + ' ' + baseY + ' L' + xs(0).toFixed(1) + ' ' + baseY + ' Z" fill="url(#' + gid + ')" stroke="none"></path>';
+        g += '<path d="' + path(key) + '" fill="none" stroke="' + color + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"></path>';
+        if (n <= 31) for (let i = 0; i < n - 1; i++) g += '<circle cx="' + xs(i).toFixed(1) + '" cy="' + f.y(days[i][key]).toFixed(1) + '" r="2.6" fill="' + color + '" stroke="var(--surface)" stroke-width="1.5"></circle>';
+        g += '<circle cx="' + xs(n - 1).toFixed(1) + '" cy="' + f.y(last[key]).toFixed(1) + '" r="4.5" fill="' + color + '" stroke="var(--surface)" stroke-width="2"></circle>';
+        if (n > 1 && !collide) { const lx = xs(n - 1) + 8; if (lx < CH.w - 4) g += '<text class="tick" x="' + lx.toFixed(1) + '" y="' + (f.y(last[key]) + 4).toFixed(1) + '" style="fill:var(--ink-2);font-weight:600">' + int(last[key]) + '</text>'; }
+      }
+      $('chContacts').innerHTML = svgWrap(f.grid + g + xLabels(days) + hitLayer(days, 'contacts'), 'Contatos por dia');
+    }
+    // 3. cost per contact line + period average
+    {
+      fitChart($('chCost'));
+      const vals = days.map(d => d.contacts ? d.spend / d.contacts : null);
+      const have = vals.filter(v => v != null);
+      const avg = m.totals && m.totals.cpContact;
+      const max = niceMax(Math.max(1, ...have, avg || 0) * 1.15);
+      const f = frame(max, (v) => 'R$' + v.toFixed(0));
+      const bw = f.iw / n; const xs = (i) => CH.l + (i + 0.5) * bw;
+      let g = '';
+      if (avg) {
+        const firstV = have[0]; const labelAbove = firstV == null || firstV >= avg; // put the label on the side of the line away from the first point
+        g += '<line x1="' + CH.l + '" x2="' + (CH.w - CH.r) + '" y1="' + f.y(avg).toFixed(1) + '" y2="' + f.y(avg).toFixed(1) + '" stroke="var(--axis)" stroke-width="1.5"></line>' +
+          '<text class="tick" x="' + (CH.l + 6) + '" y="' + (f.y(avg) + (labelAbove ? 13 : -5)).toFixed(1) + '" style="fill:var(--ink-2)">média ' + esc(money(avg)) + '</text>';
+      }
+      let d = '', pen = false, area = '';
+      const baseY = (CH.t + f.ih).toFixed(1);
+      vals.forEach((v, i) => {
+        if (v == null) { if (pen) area += 'L' + xs(i - 1).toFixed(1) + ' ' + baseY + ' Z '; pen = false; return; }
+        const pt = xs(i).toFixed(1) + ' ' + f.y(v).toFixed(1);
+        d += (pen ? 'L' : 'M') + pt + ' ';
+        area += (pen ? 'L' : 'M' + xs(i).toFixed(1) + ' ' + baseY + ' L') + pt + ' ';
+        pen = true;
+      });
+      if (pen) area += 'L' + xs(n - 1).toFixed(1) + ' ' + baseY + ' Z';
+      g = gradDefs([['gCost', 'var(--s-bh)']]) + '<path d="' + area + '" fill="url(#gCost)" stroke="none"></path>' + g;
+      g += '<path d="' + d + '" fill="none" stroke="var(--s-bh)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"></path>';
+      vals.forEach((v, i) => { if (v == null) return; const lone = (i === 0 || vals[i - 1] == null) && (i === n - 1 || vals[i + 1] == null); g += '<circle cx="' + xs(i).toFixed(1) + '" cy="' + f.y(v).toFixed(1) + '" r="' + (lone || i === n - 1 ? 4.5 : 2.6) + '" fill="var(--s-bh)" stroke="var(--surface)" stroke-width="' + (lone || i === n - 1 ? 2 : 1.5) + '"></circle>'; });
+      $('chCost').innerHTML = have.length ? svgWrap(f.grid + g + xLabels(days) + hitLayer(days, 'cost'), 'Custo por contato por dia') : '<div class="empty">Ainda não há contatos no período.</div>';
+    }
+  }
+  // vertical gradient for bars: lighter tint at the top, full color at the bottom. Works for any color token.
+  const GRAD_TOKENS = ['s-bh', 's-sp', 's-other', 's-form', 's-wa', 'st1', 'st2', 'st3', 't-frio', 't-morno', 't-quente'];
+  function barDefs() { return '<defs>' + GRAD_TOKENS.map(t => '<linearGradient id="g-' + t + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="color-mix(in srgb, var(--' + t + ') 58%, white)"/><stop offset="1" stop-color="var(--' + t + ')"/></linearGradient>').join('') + '</defs>'; }
+  function gradFill(color) { const m = /var\(--([a-z0-9-]+)\)/.exec(color || ''); return m && GRAD_TOKENS.includes(m[1]) ? 'url(#g-' + m[1] + ')' : color; }
+  // CSS version for the horizontal bars
+  function cssGrad(color) { return 'linear-gradient(180deg, color-mix(in srgb, ' + color + ' 62%, white), ' + color + ')'; }
+  // soft gradient fill under a line (top: 22% of the line color → transparent at the axis)
+  function gradDefs(list) { return '<defs>' + list.map(([id, color]) => '<linearGradient id="' + id + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + color + '" stop-opacity="0.3"/><stop offset="1" stop-color="' + color + '" stop-opacity="0.02"/></linearGradient>').join('') + '</defs>'; }
+  /* ---------------- rendering: daily budget split ---------------- */
+  function renderBudget() {
+    const m = S.model, barsEl = $('budgetBars'), tblEl = $('budgetTbl');
+    if (!m || !m.camps.length) { barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = ''; $('budgetHint').textContent = 'R$/dia'; return; }
+    const act = m.camps.filter(c => c.budget > 0);
+    const total = act.reduce((t, c) => t + c.budget, 0);
+    // unit shown in this card: the card's own toggle when the page is on "Geral", else the page filter
+    const seg = $('budgetUnitSeg'); seg.hidden = S.region !== 'ALL';
+    const unit = S.region === 'ALL' ? S.budgetUnit : S.region;
+    const actU = unit === 'ALL' ? act : act.filter(c => c.cls.region === unit);
+    const totalU = actU.reduce((t, c) => t + c.budget, 0);
+    $('budgetHint').textContent = actU.length + ' campanha' + (actU.length === 1 ? '' : 's') + ' com orçamento ativo · ' + (unit === 'ALL' ? 'BH + SP' : unit);
+    if (!total) { barsEl.innerHTML = '<div class="empty">Nenhuma campanha com orçamento ativo agora.</div>'; tblEl.innerHTML = ''; return; }
+    const sum = (rows, fn) => rows.reduce((acc, c) => { const k = fn(c); acc[k] = (acc[k] || 0) + c.budget; return acc; }, {});
+    const byRegion = sum(act, c => c.cls.region), byDest = sum(actU, c => c.cls.dest), byStage = sum(actU, c => c.cls.stageNum ? String(c.cls.stageNum) : '0');
+    const split = (title, data, base, keys, color, label) => {
+      const ks = keys.filter(k => data[k] > 0); if (!ks.length || !base) return '';
+      return '<div class="bsplit"><div class="lab"><span>' + title + '</span><span>' + ks.map(k => label(k) + ' ' + Math.round(data[k] / base * 100) + '%').join(' · ') + '</span></div>' +
+        '<div class="bar">' + ks.map(k => '<i style="width:' + (data[k] / base * 100).toFixed(1) + '%;background:' + cssGrad(color(k)) + '" title="' + esc(label(k)) + ' ' + esc(money(data[k], 0)) + '/dia"></i>').join('') + '</div>' +
+        '<div class="legs">' + ks.map(k => '<span><i class="swatch" style="background:' + color(k) + '"></i>' + esc(label(k)) + ' <b>' + money(data[k], 0) + '</b> · ' + Math.round(data[k] / base * 100) + '%</span>').join('') + '</div></div>';
+    };
+    const STG = { '1': '1 · Topo', '2': '2 · Meio', '3': '3 · Fundo', '0': 'Sem etapa' };
+    // month forecast for the unit: spend already booked (until yesterday) + active daily budget × days left (today included);
+    // a second estimate uses the real average daily spend instead of the budget, since Meta rarely spends the full budget
+    const R = S.range; const now = new Date(); const dnum = now.getDate(); const dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const spentOf = (d) => unit === 'ALL' ? d.spend : (d.byRegion[unit] || 0);
+    const days = m.days || []; const spentU = days.reduce((t, d) => t + spentOf(d), 0);
+    const todayU = m.today ? spentOf(m.today) : 0; const booked = spentU - todayU;
+    const pastDays = Math.max(0, dnum - 1), left = dim - dnum + 1;
+    const avg = pastDays > 0 ? booked / pastDays : null;
+    const fBudget = booked + totalU * left, fPace = avg != null ? booked + avg * left : null;
+    const paceShare = avg != null && totalU ? avg / totalU : null;
+    const forecast = '<div class="tstats">' +
+      '<div><span class="l">Gasto até hoje</span><b>' + money(spentU, 0) + '</b><span class="s">' + fmtRange(R.since, R.until) + (avg != null ? ' · média ' + money(avg, 0) + '/dia' : '') + '</span></div>' +
+      '<div><span class="l">Previsão do mês · pelo orçamento</span><b>' + money(fBudget, 0) + '</b><span class="s">+ ' + money(totalU, 0) + '/dia × ' + left + ' dia' + (left === 1 ? '' : 's') + ' restante' + (left === 1 ? '' : 's') + '</span></div>' +
+      '<div><span class="l">Previsão do mês · pelo ritmo real</span><b>' + (fPace != null ? money(fPace, 0) : '—') + '</b><span class="s">' + (paceShare != null ? 'gasto real = ' + Math.round(paceShare * 100) + '% do orçamento diário' : 'sem dias fechados ainda') + '</span></div></div>' +
+      '<div class="meter" title="gasto até hoje vs. previsão pelo orçamento" style="margin-top:10px"><i style="width:' + (fBudget ? Math.min(100, Math.round(spentU / fBudget * 100)) : 0) + '%"></i></div>' +
+      '<div class="legs" style="margin-top:6px;font-size:12px;color:var(--muted)">' + (fBudget ? Math.round(spentU / fBudget * 100) + '% da previsão já gasto · dia ' + dnum + ' de ' + dim : '') + '</div>';
+    barsEl.innerHTML = '<div class="btotal"><span class="big">' + money(totalU, 0) + '</span><span class="lab">por dia' + (unit === 'ALL' ? '' : ' em ' + unit) + ' · ' + money(totalU * dim, 0) + ' no mês cheio (' + dim + ' dias)</span></div>' + forecast +
+      (unit === 'ALL' ? split('Por unidade', byRegion, total, ['BH', 'SP', 'Outros'], (k) => REGION_COLOR[k], (k) => k) : '') +
+      split('Por objetivo' + (unit === 'ALL' ? '' : ' · ' + unit), byDest, totalU, ['Formulário', 'WhatsApp', 'Outros'], (k) => DEST_COLOR[k], (k) => k) +
+      split('Por etapa do funil' + (unit === 'ALL' ? '' : ' · ' + unit), byStage, totalU, ['1', '2', '3', '0'], (k) => k === '0' ? 'var(--s-other)' : 'var(--st' + k + ')', (k) => STG[k]);
+    // table: stage key × region
+    const regs = REGIONS();
+    const cell = {}; const rowTot = {}; const colTot = {};
+    for (const c of act) {
+      const key = c.cls.stageKey && c.cls.stageKey[0] !== 'X' ? c.cls.stageKey : 'Outros';
+      const rg = regs.includes(c.cls.region) ? c.cls.region : null; if (!rg) { cell['Outros|x'] = (cell['Outros|x'] || 0) + c.budget; rowTot['Outros'] = (rowTot['Outros'] || 0) + c.budget; continue; }
+      cell[key + '|' + rg] = (cell[key + '|' + rg] || 0) + c.budget; rowTot[key] = (rowTot[key] || 0) + c.budget; colTot[rg] = (colTot[rg] || 0) + c.budget;
+      cell[key + '|' + rg + '|n'] = (cell[key + '|' + rg + '|n'] || 0) + 1;
+    }
+    const order = ['L1', 'L2', 'L3', 'E1', 'E2', 'E3', 'Outros'];
+    const regCell = (v) => v ? '<td>' + money(v, 0) + ' <span class="dim">' + Math.round(v / total * 100) + '%</span></td>' : '<td class="dim">—</td>';
+    let h = '<thead><tr><th>Etapa · objetivo</th>' + regs.map(rg => '<th><i class="swatch" style="background:' + REGION_COLOR[rg] + ';vertical-align:middle"></i> ' + rg + '</th>').join('') + '<th>Total · share</th></tr></thead><tbody>';
+    for (const k of order) {
+      if (!rowTot[k]) continue;
+      const lab = k === 'Outros' ? '<i class="swatch sw" style="background:var(--s-other)"></i>Outros <span class="dim">sem etapa/objetivo</span>' : '<i class="swatch sw" style="background:' + DEST_COLOR[k[0] === 'L' ? 'Formulário' : 'WhatsApp'] + '"></i>' + k + ' <span class="dim">' + (k[0] === 'L' ? 'Formulário' : 'WhatsApp') + ' · ' + ({ 1: 'topo', 2: 'meio', 3: 'fundo' })[k[1]] + '</span>';
+      h += '<tr><td class="k">' + lab + '</td>' + regs.map(rg => regCell(cell[k + '|' + rg] || 0)).join('') + '<td><b>' + money(rowTot[k], 0) + '</b> <span class="dim">' + Math.round(rowTot[k] / total * 100) + '%</span></td></tr>';
+    }
+    h += '<tr class="total"><td class="k">Total</td>' + regs.map(rg => '<td>' + money(colTot[rg] || 0, 0) + (colTot[rg] ? ' <span class="dim">' + Math.round(colTot[rg] / total * 100) + '%</span>' : '') + '</td>').join('') + '<td>' + money(total, 0) + ' <span class="dim">100%</span></td></tr></tbody>';
+    tblEl.innerHTML = h;
+  }
+
+  /* ---------------- rendering: lead temperature ---------------- */
+  const TEMP = {
+    1: { label: 'Frio', sub: 'veio do topo (etapa 1)', color: 'var(--t-frio)' },
+    2: { label: 'Morno', sub: 'topo → meio (etapa 2)', color: 'var(--t-morno)' },
+    3: { label: 'Quente', sub: 'topo → meio → fundo (etapa 3)', color: 'var(--t-quente)' },
+  };
+  function tempWord(score) { return score == null ? '—' : score < 1.35 ? 'frio' : score < 1.75 ? 'morno para frio' : score < 2.25 ? 'morno' : score < 2.65 ? 'morno para quente' : 'quente'; }
+  function renderTemp() {
+    const m = S.model, gEl = $('tempGauge'), tEl = $('tempTbl'), cEl = $('chTemp');
+    if (!m || !m.temp) {
+      gEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tEl.innerHTML = '';
+      cEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return;
+    }
+    const T = m.temp, P = m.prevTotals && m.prevTotals.temp;
+    if (!T.total) { gEl.innerHTML = '<div class="empty">Ainda não há contatos em campanhas com etapa ([L1]–[L3] / [E1]–[E3]) neste mês.</div>'; tEl.innerHTML = ''; }
+    else {
+      // gauge 1 → 3
+      const gw = 640, gl = 16, gr = 16, gy = 22, trackW = gw - gl - gr;
+      const px = (v) => gl + (v - 1) / 2 * trackW;
+      let g = '<svg viewBox="0 0 ' + gw + ' 58" role="img" aria-label="Temperatura média dos contatos">' +
+        '<defs><linearGradient id="tgrad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="var(--t-frio)"/><stop offset="0.5" stop-color="var(--t-morno)"/><stop offset="1" stop-color="var(--t-quente)"/></linearGradient></defs>' +
+        '<rect x="' + gl + '" y="' + (gy - 5) + '" width="' + trackW + '" height="10" rx="5" fill="url(#tgrad)" opacity="0.9"></rect>';
+      for (const [v, lab] of [[1, '1 · frio'], [2, '2 · morno'], [3, '3 · quente']]) g += '<line x1="' + px(v) + '" x2="' + px(v) + '" y1="' + (gy + 8) + '" y2="' + (gy + 13) + '" stroke="var(--axis)"></line><text class="tick" x="' + px(v) + '" y="' + (gy + 26) + '" text-anchor="' + (v === 1 ? 'start' : v === 3 ? 'end' : 'middle') + '">' + lab + '</text>';
+      if (P && P.score) g += '<circle cx="' + px(P.score).toFixed(1) + '" cy="' + gy + '" r="6" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"><title>mês anterior: ' + fmt2.format(P.score) + '</title></circle>';
+      g += '<circle cx="' + px(T.score).toFixed(1) + '" cy="' + gy + '" r="9" fill="var(--ink)" stroke="var(--surface)" stroke-width="3"></circle>';
+      g += '<text class="tick" x="' + px(T.score).toFixed(1) + '" y="' + (gy - 12) + '" text-anchor="middle" style="fill:var(--ink);font-weight:600">' + fmt2.format(T.score) + '</text></svg>';
+      const dScore = P && P.score ? T.score - P.score : null;
+      const trend = dScore == null ? '' : Math.abs(dScore) < 0.03 ? '<span class="delta flat">• igual ao mês anterior (' + fmt2.format(P.score) + ')</span>' : dScore > 0 ? '<span class="delta up">▲ mais quente que o mês anterior (' + fmt2.format(P.score) + ')</span>' : '<span class="delta down">▼ mais frio que o mês anterior (' + fmt2.format(P.score) + ')</span>';
+      const bar = [1, 2, 3].map(s => '<i style="width:' + (T.share[s] * 100).toFixed(1) + '%;background:' + cssGrad(TEMP[s].color) + '" title="' + TEMP[s].label + ' ' + Math.round(T.share[s] * 100) + '%"></i>').join('');
+      const labs = [1, 2, 3].map(s => '<span><i class="swatch" style="background:' + TEMP[s].color + '"></i>' + TEMP[s].label + ' <b>' + Math.round(T.share[s] * 100) + '%</b> · ' + int(T.byStage[s].contacts) + '</span>').join('');
+      // shorter windows, from the daily series: last 7 days and today
+      const dl = m.days || [];
+      const scoreOf = (list) => { let a = 0, b = 0; for (const d of list) { if (!d.byStage) continue; const t = d.byStage[1].contacts + d.byStage[2].contacts + d.byStage[3].contacts; a += d.byStage[1].contacts + 2 * d.byStage[2].contacts + 3 * d.byStage[3].contacts; b += t; } return { score: b ? a / b : null, n: b }; };
+      const w7 = scoreOf(dl.slice(-7)), w1 = scoreOf(dl.slice(-1));
+      const cmp = (a, b, what) => a == null || b == null ? '' : a - b > 0.03 ? '<span class="delta up">▲ mais quente que ' + what + '</span>' : b - a > 0.03 ? '<span class="delta down">▼ mais frio que ' + what + '</span>' : '<span class="delta flat">• igual a ' + what + '</span>';
+      const stat = (l, w, sub) => '<div><span class="l">' + l + '</span><b>' + (w.score == null ? '—' : fmt2.format(w.score)) + '</b><span class="s">' + (w.n ? int(w.n) + ' contatos' + (sub ? ' · ' + sub : '') : 'sem contatos ainda') + '</span></div>';
+      const stats = '<div class="tstats">' + stat('Mês · ' + fmtRange(S.range.since, S.range.until), { score: T.score, n: T.total }, 'lead ' + tempWord(T.score)) +
+        stat('Últimos 7 dias', w7, cmp(w7.score, T.score, 'o mês')) + stat('Hoje (parcial)', w1, cmp(w1.score, w7.score, 'os 7 dias')) + '</div>';
+      gEl.innerHTML = '<div class="gauge"><div class="score"><span class="big">' + fmt2.format(T.score) + '</span><span class="lab">temperatura média do mês · lead <b>' + tempWord(T.score) + '</b></span>' + trend + '</div>' + g + '</div>' +
+        '<div class="tbar">' + bar + '</div><div class="tbar-lab">' + labs + '</div>' + stats;
+      // table
+      let h = '<thead><tr><th style="text-align:left">Temperatura</th><th>Contatos</th><th>Share</th><th title="participação vs. mesmos dias do mês anterior, em pontos percentuais">vs. ant.</th><th title="investimento ÷ contatos, nas campanhas dessa etapa">Custo</th></tr></thead><tbody>';
+      for (const s of [1, 2, 3]) {
+        const b = T.byStage[s]; const ps = P ? P.share[s] : null; const pp = ps == null ? null : (T.share[s] - ps) * 100;
+        h += '<tr><td class="k"><i class="swatch sw" style="background:' + TEMP[s].color + '"></i>' + TEMP[s].label + ' <span class="dim">' + TEMP[s].sub + '</span><small>' + int(b.leads) + ' formulário · ' + int(b.waDirect) + ' WhatsApp direto</small></td><td>' + int(b.contacts) + '</td><td>' + Math.round(T.share[s] * 100) + '%</td>' +
+          '<td>' + (pp == null || !P.total ? '<span class="dim">—</span>' : '<span class="delta ' + (Math.abs(pp) < 0.5 ? 'flat' : (pp > 0) === (s !== 1) ? 'up' : 'down') + '">' + (pp > 0 ? '+' : '') + fmt1.format(pp) + ' p.p.</span>') + '</td>' +
+          '<td>' + money(b.contacts ? b.spend / b.contacts : null) + '</td></tr>';
+      }
+      const all = { contacts: T.total, leads: T.byStage[1].leads + T.byStage[2].leads + T.byStage[3].leads, conv: T.byStage[1].waDirect + T.byStage[2].waDirect + T.byStage[3].waDirect, spend: T.byStage[1].spend + T.byStage[2].spend + T.byStage[3].spend };
+      h += '<tr class="total"><td class="k">Total com etapa<small>' + int(all.leads) + ' formulário · ' + int(all.conv) + ' WhatsApp direto' + (T.noStage ? ' · + ' + int(T.noStage) + ' de campanhas sem etapa' : '') + '</small></td><td>' + int(all.contacts) + '</td><td>100%</td><td></td><td>' + money(all.contacts ? all.spend / all.contacts : null) + '</td></tr></tbody>';
+      tEl.innerHTML = h;
+    }
+    // daily chart: share (100% stacked) or count, plus the day's average temperature line
+    const days = m.days && m.days.length ? m.days : null;
+    if (!days) { cEl.innerHTML = '<div class="empty">Aguardando a série diária…</div>'; return; }
+    const tot = (d) => d.byStage ? d.byStage[1].contacts + d.byStage[2].contacts + d.byStage[3].contacts : 0;
+    if (!days.some(d => tot(d) > 0)) { cEl.innerHTML = '<div class="empty">Ainda não há contatos com etapa neste mês.</div>'; return; }
+    const share = S.tempMode === 'share';
+    const max = share ? 100 : niceMax(Math.max(...days.map(tot)) * 1.05);
+    fitChart(cEl);
+    const savedR = CH.r; CH.r = 62; // room for the temperature scale on the right (restored below)
+    const f = frame(max, (v) => share ? Math.round(v) + '%' : int(v));
+    const n = days.length, bw = f.iw / n, barW = Math.min(24, bw * 0.62);
+    let bars = '', line = '', pen = false;
+    for (let i = 0; i < n; i++) {
+      const d = days[i]; const t = tot(d); const x = CH.l + i * bw + (bw - barW) / 2; let base = CH.t + f.ih;
+      if (t > 0) {
+        for (const s of [1, 2, 3]) {
+          const raw = d.byStage[s].contacts; if (raw <= 0) continue;
+          const v = share ? raw / t * 100 : raw; const h = v / max * f.ih; const top = base - h;
+          const isTop = [1, 2, 3].slice(s).every(k => !(d.byStage[k].contacts > 0));
+          bars += '<path fill="' + gradFill(TEMP[s].color) + '" d="' + roundTop(x, top, barW, Math.max(0, h - (isTop ? 0 : 2)), isTop ? 4 : 0) + '"></path>';
+          base = top;
+        }
+        // average temperature of the day, mapped 1→bottom … 3→top of the plot
+        const sc = (d.byStage[1].contacts + 2 * d.byStage[2].contacts + 3 * d.byStage[3].contacts) / t;
+        const ly = CH.t + f.ih - (sc - 1) / 2 * f.ih;
+        line += (pen ? 'L' : 'M') + (x + barW / 2).toFixed(1) + ' ' + ly.toFixed(1) + ' '; pen = true;
+      } else pen = false;
+    }
+    const ax = CH.w - CH.r + 6;
+    const lineSvg = '<path d="' + line + '" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"></path>' +
+      [[3, 'quente'], [2, 'morno'], [1, 'frio']].map(([v, lab]) => { const y = CH.t + f.ih - (v - 1) / 2 * f.ih; return '<line x1="' + (CH.w - CH.r) + '" x2="' + (CH.w - CH.r + 3) + '" y1="' + y.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="var(--axis)"></line><text class="tick" x="' + ax + '" y="' + (y + 4).toFixed(1) + '">' + v + ' ' + lab + '</text>'; }).join('');
+    const svg = svgWrap(barDefs() + f.grid + bars + lineSvg + xLabels(days) + hitLayer(days, 'temp'), 'Temperatura dos contatos por dia');
+    CH.r = savedR;
+    cEl.innerHTML = svg;
+  }
+
+  /* ---------------- rendering: funnel volumes (impressions & reach by stage) ---------------- */
+  const STAGE_NAME = { 1: 'Topo', 2: 'Meio', 3: 'Fundo' };
+  function renderFunnel() {
+    const m = S.model; const barsEl = $('chStageBars'), tblEl = $('stageVol'), dailyEl = $('chStageDaily');
+    if (!m || !m.camps.length) {
+      barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = '';
+      dailyEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return;
+    }
+    // period volumes: region × stage
+    const mk = () => ({ 1: { impressions: 0, reach: 0, spend: 0, n: 0 }, 2: { impressions: 0, reach: 0, spend: 0, n: 0 }, 3: { impressions: 0, reach: 0, spend: 0, n: 0 } });
+    const agg = { BH: mk(), SP: mk() };
+    for (const c of m.camps) { const st = c.cls.stageNum, rg = agg[c.cls.region]; if (!st || !rg) continue; const a = rg[st]; a.impressions += c.met.impressions; a.reach += c.met.reach; a.spend += c.met.spend; a.n++; }
+    m.stageAgg = agg;
+    const regs = REGIONS();
+    $('stageHint').textContent = 'barra cheia = impressões · barra suave = alcance' + (regs.length > 1 ? ' · BH e SP lado a lado' : ' · ' + regs[0]);
+    $('stageLegend').innerHTML = regs.map(rg => '<span><i class="swatch" style="background:' + REGION_COLOR[rg] + '"></i>' + rg + '</span>').join('') + '<span>' + regs.map((rg, i) => '<i class="swatch" style="background:' + REGION_COLOR[rg] + ';opacity:.4' + (i ? ';margin-left:-3px' : '') + '"></i>').join('') + 'alcance</span>';
+    const any = regs.some(rg => [1, 2, 3].some(st => agg[rg][st].impressions > 0));
+    if (!any) { barsEl.innerHTML = '<div class="empty">Nenhuma campanha com etapa ([L1]–[L3] / [E1]–[E3]) teve impressões no período.</div>'; tblEl.innerHTML = ''; }
+    else {
+      fitChart(barsEl);
+      const maxV = Math.max(...regs.flatMap(rg => [1, 2, 3].map(st => agg[rg][st].impressions)));
+      const max = niceMax(maxV * 1.14);
+      const f = frame(max, (v) => compactInt(v));
+      const gw = f.iw / 3, bw = Math.min(regs.length > 1 ? 36 : 44, gw * (regs.length > 1 ? 0.17 : 0.3)), pairGap = 4, regionGap = 18;
+      const shortInt = (v) => v >= 1e6 ? fmt1.format(v / 1e6) + ' mi' : v >= 1e4 ? int(v / 1000) + ' mil' : v >= 1e3 ? fmt1.format(v / 1000) + ' mil' : int(v);
+      const setW = regs.length * (2 * bw + pairGap) + (regs.length - 1) * regionGap;
+      let g = '';
+      for (let s = 1; s <= 3; s++) {
+        let x = CH.l + (s - 1) * gw + (gw - setW) / 2;
+        for (const rg of regs) {
+          const a = agg[rg][s]; const col = REGION_COLOR[rg];
+          for (const [key, op] of [['impressions', 1], ['reach', 0.42]]) {
+            const v = a[key]; const h = v / max * f.ih; const top = CH.t + f.ih - h;
+            if (v > 0) g += '<path fill="' + gradFill(col) + '" fill-opacity="' + op + '" d="' + roundTop(x, top, bw, h, 3) + '"></path>' +
+              '<text class="vlab" x="' + (x + bw / 2).toFixed(1) + '" y="' + (top - 4).toFixed(1) + '" text-anchor="middle">' + esc(shortInt(v)) + '</text>';
+            x += bw + pairGap;
+          }
+          x += regionGap - pairGap;
+        }
+        const cx = CH.l + (s - 0.5) * gw;
+        g += '<text class="tick" x="' + cx.toFixed(1) + '" y="' + (CH.h - 8) + '" text-anchor="middle">' + s + ' · ' + STAGE_NAME[s] + '</text>' +
+          '<rect class="hit" data-i="' + s + '" data-ch="stage" x="' + (CH.l + (s - 1) * gw).toFixed(1) + '" y="' + CH.t + '" width="' + gw.toFixed(1) + '" height="' + (CH.h - CH.t - CH.b) + '"></rect>';
+      }
+      barsEl.innerHTML = svgWrap(barDefs() + f.grid + g, 'Impressões e alcance por etapa do funil, ' + regs.join(' e '));
+      let h = '<thead><tr><th></th>' + regs.map(rg => '<th class="grp" colspan="3"><i class="swatch" style="background:' + REGION_COLOR[rg] + ';vertical-align:middle"></i> ' + rg + '</th>').join('') + '</tr>' +
+        '<tr><th style="text-align:left">Etapa</th>' + regs.map(() => '<th>Impressões</th><th>Alcance</th><th title="impressões ÷ alcance">Freq.</th>').join('') + '</tr></thead><tbody>';
+      const tot = { BH: { impressions: 0, reach: 0 }, SP: { impressions: 0, reach: 0 } };
+      for (let s = 1; s <= 3; s++) {
+        h += '<tr><td class="k"><i class="swatch sw" style="background:var(--st' + s + ')"></i>' + s + ' · ' + STAGE_NAME[s] + '</td>';
+        for (const rg of regs) { const a = agg[rg][s]; tot[rg].impressions += a.impressions; tot[rg].reach += a.reach; h += '<td>' + int(a.impressions) + '</td><td>' + int(a.reach) + '</td><td>' + (a.reach ? dec1(a.impressions / a.reach) : '—') + '</td>'; }
+        h += '</tr>';
+      }
+      h += '<tr class="total"><td class="k">Total</td>';
+      for (const rg of regs) h += '<td>' + int(tot[rg].impressions) + '</td><td>' + int(tot[rg].reach) + '</td><td>' + (tot[rg].reach ? dec1(tot[rg].impressions / tot[rg].reach) : '—') + '</td>';
+      tblEl.innerHTML = h + '</tr></tbody>';
+    }
+    // daily stacked columns by stage
+    const days = m.days && m.days.length ? m.days : null;
+    if (!days) { dailyEl.innerHTML = '<div class="empty">Aguardando a série diária…</div>'; return; }
+    const metric = S.stageMetric;
+    const totOf = (d) => d.byStage ? [1, 2, 3].reduce((t, s) => t + d.byStage[s][metric], 0) : 0;
+    if (!days.some(d => totOf(d) > 0)) { dailyEl.innerHTML = '<div class="empty">Sem ' + (metric === 'reach' ? 'alcance' : 'impressões') + ' por etapa no período.</div>'; return; }
+    fitChart(dailyEl);
+    const max = niceMax(Math.max(...days.map(totOf)) * 1.05);
+    const f = frame(max, (v) => compactInt(v));
+    const n = days.length, bw = f.iw / n, barW = Math.min(24, bw * 0.62);
+    let bars = '';
+    for (let i = 0; i < n; i++) {
+      const d = days[i]; if (!d.byStage) continue; const x = CH.l + i * bw + (bw - barW) / 2; let base = CH.t + f.ih;
+      for (const s of [1, 2, 3]) {
+        const v = d.byStage[s][metric]; if (v <= 0) continue;
+        const h = v / max * f.ih; const top = base - h;
+        const isTop = [1, 2, 3].slice(s).every(k => !(d.byStage[k][metric] > 0));
+        bars += '<path fill="' + gradFill('var(--st' + s + ')') + '" d="' + roundTop(x, top, barW, Math.max(0, h - (isTop ? 0 : 2)), isTop ? 4 : 0) + '"></path>';
+        base = top;
+      }
+    }
+    dailyEl.innerHTML = svgWrap(barDefs() + f.grid + bars + xLabels(days) + hitLayer(days, 'stageDaily'), (metric === 'reach' ? 'Alcance' : 'Impressões') + ' por dia por etapa do funil');
+  }
+  function roundTop(x, y, w, h, r) {
+    if (h <= 0) return '';
+    r = Math.min(r, h / 2, w / 2);
+    return 'M' + x.toFixed(1) + ' ' + (y + h).toFixed(1) + ' V' + (y + r).toFixed(1) + ' Q' + x.toFixed(1) + ' ' + y.toFixed(1) + ' ' + (x + r).toFixed(1) + ' ' + y.toFixed(1) + ' H' + (x + w - r).toFixed(1) + ' Q' + (x + w).toFixed(1) + ' ' + y.toFixed(1) + ' ' + (x + w).toFixed(1) + ' ' + (y + r).toFixed(1) + ' V' + (y + h).toFixed(1) + ' Z';
+  }
+  function svgWrap(inner, label) { return '<svg viewBox="0 0 ' + CH.w + ' ' + CH.h + '" role="img" aria-label="' + esc(label) + '">' + inner + '</svg><div class="tip" hidden></div>'; }
+
+  // tooltips
+  document.addEventListener('mousemove', (ev) => {
+    const r = ev.target.closest && ev.target.closest('rect.hit');
+    const tipEls = document.querySelectorAll('.chart .tip');
+    if (!r) { tipEls.forEach(t => t.hidden = true); return; }
+    const i = +r.getAttribute('data-i'), ch = r.getAttribute('data-ch');
+    const chart = r.closest('.chart'); const tip = chart.querySelector('.tip');
+    const rect = chart.getBoundingClientRect();
+    let html = '';
+    if (ch === 'stage') {
+      const agg = S.model.stageAgg; if (!agg) return;
+      html = '<b>' + i + ' · ' + esc(STAGE_NAME[i]) + '</b>';
+      for (const rg of REGIONS()) { const a = agg[rg][i]; html += row(rg + ' impressões', int(a.impressions), REGION_COLOR[rg]) + row(rg + ' alcance', int(a.reach)) + row(rg + ' frequência', a.reach ? dec1(a.impressions / a.reach) : '—') + (a.impressions ? row(rg + ' CPM', money(a.spend / a.impressions * 1000)) : ''); }
+      tip.innerHTML = html; tip.hidden = false;
+      tip.style.left = Math.max(100, Math.min(rect.width - 100, (i - 0.5) * rect.width / 3)) + 'px';
+      tip.style.top = (ev.clientY - rect.top) + 'px';
+      return;
+    }
+    const d = S.model.days[i]; if (!d) return;
+    html = '<b>' + esc(fmtDay(d.date)) + '</b>';
+    if (ch === 'spend') { const st = spendStack(); for (const k of st.keys) if (d[st.field][k] > 0 || k !== 'Outros') html += row(k, money(d[st.field][k] || 0), st.color[k]); html += row('Total', money(d.spend)); }
+    else if (ch === 'temp') {
+      const bs = d.byStage || {}; const tot = [1, 2, 3].reduce((t, s) => t + (bs[s] ? bs[s].contacts : 0), 0);
+      for (const s of [3, 2, 1]) { const v = bs[s] ? bs[s].contacts : 0; html += row(TEMP[s].label, int(v) + (tot ? ' · ' + Math.round(v / tot * 100) + '%' : ''), TEMP[s].color); }
+      const sc = tot ? (bs[1].contacts + 2 * bs[2].contacts + 3 * bs[3].contacts) / tot : null;
+      html += row('Contatos com etapa', int(tot)) + row('Temperatura média', sc ? fmt2.format(sc) : '—');
+    }
+    else if (ch === 'contacts') html += row('Leads · formulário', int(d.leads), 'var(--s-form)') + row('  ↳ sem mensagem', int(d.formNoMsg)) + row('  ↳ seguiram p/ WhatsApp', int(d.formToWa)) + row('WhatsApp direto', int(d.waDirect), 'var(--s-wa)') + row('Contatos únicos', int(d.contacts)) + row('Investimento', money(d.spend));
+    else if (ch === 'stageDaily') { const k = S.stageMetric; const bs = d.byStage || {}; let t = 0; for (const s of [3, 2, 1]) { const v = bs[s] ? bs[s][k] : 0; t += v; html += row(s + ' · ' + STAGE_NAME[s], int(v), 'var(--st' + s + ')'); } html += row('Total (com etapa)', int(t)); }
+    else html += row('Custo por contato', d.contacts ? money(d.spend / d.contacts) : '—', 'var(--s-bh)') + row('Contatos únicos', int(d.contacts)) + row('Investimento', money(d.spend));
+    tip.innerHTML = html; tip.hidden = false;
+    const bw = (rect.width - CH.l - (ch === 'temp' ? 62 : CH.r)) / S.model.days.length;
+    tip.style.left = Math.max(80, Math.min(rect.width - 80, CH.l + (i + 0.5) * bw)) + 'px';
+    tip.style.top = (ev.clientY - rect.top) + 'px';
+    function row(k, v, c) { return '<div class="row"><span>' + (c ? '<i class="swatch" style="background:' + c + '"></i>' : '') + esc(k) + '</span><span>' + esc(v) + '</span></div>'; }
+  });
+
+  /* ---------------- rendering: structure ---------------- */
+  function renderStructure() {
+    const m = S.model; const R = S.range;
+    if (!m || !m.camps.length) { $('matrix').innerHTML = '<tbody><tr><td class="empty">Aguardando campanhas…</td></tr></tbody>'; $('stages').innerHTML = ''; return; }
+    const keys = REGIONS().flatMap(rg => [[rg, 'Formulário'], [rg, 'WhatsApp']]);
+    const agg = {}; let other = { spend: 0, contacts: 0, budget: 0, n: 0 };
+    for (const c of m.camps) {
+      const k = c.cls.region + '|' + c.cls.dest;
+      if (keys.some(kk => kk.join('|') === k)) { const a = agg[k] = agg[k] || { spend: 0, contacts: 0, leads: 0, conv: 0, budget: 0, n: 0 }; a.spend += c.met.spend; a.contacts += c.met.contacts; a.leads += c.met.leads; a.conv += c.met.conv; a.budget += c.budget; a.n++; }
+      else { other.spend += c.met.spend; other.contacts += c.met.contacts; other.budget += c.budget; other.n++; }
+    }
+    const total = m.totals.spend || 1; const totalBudget = m.totals.budget;
+    let h = '<thead><tr><th>Estrutura</th><th>Orç./dia</th><th>Gasto</th><th>Share</th><th>Contatos</th><th>Custo</th><th title="custo por contato vs. período de comparação">vs. ant.</th></tr></thead><tbody>';
+    for (const [rg, ds] of keys) {
+      const a = agg[rg + '|' + ds] || { spend: 0, contacts: 0, leads: 0, conv: 0, budget: 0, n: 0 };
+      const prev = m.prevTotals && m.prevTotals.byKey[rg + '|' + ds];
+      const cp = a.contacts ? a.spend / a.contacts : null, pcp = prev && prev.contacts ? prev.spend / prev.contacts : null;
+      h += '<tr><td class="k"><i class="swatch sw" style="background:' + REGION_COLOR[rg] + '"></i>' + rg + ' · ' + ds + ' <span class="dim">(' + a.n + ')</span></td>' +
+        '<td>' + money(a.budget, 0) + '</td><td>' + money(a.spend, 0) + '</td>' +
+        '<td><span class="share"><span class="b"><i style="width:' + Math.round(a.spend / total * 100) + '%;background:' + REGION_COLOR[rg] + '"></i></span><span>' + Math.round(a.spend / total * 100) + '%</span></span></td>' +
+        '<td>' + int(a.contacts) + '</td><td>' + money(cp) + '</td><td>' + (pcp ? deltaHtml(cp, pcp, { lowerIsBetter: true, vs: R.cLabel }) : '<span class="dim">—</span>') + '</td></tr>';
+    }
+    if (other.n) h += '<tr><td class="k"><i class="swatch sw" style="background:var(--s-other)"></i>Outros <span class="dim">(' + other.n + ')</span></td><td>' + money(other.budget, 0) + '</td><td>' + money(other.spend, 0) + '</td><td><span class="share"><span class="b"><i style="width:' + Math.round(other.spend / total * 100) + '%;background:var(--s-other)"></i></span><span>' + Math.round(other.spend / total * 100) + '%</span></span></td><td>' + int(other.contacts) + '</td><td>' + money(other.contacts ? other.spend / other.contacts : null) + '</td><td class="dim">—</td></tr>';
+    h += '<tr class="total"><td class="k">Total</td><td>' + money(totalBudget, 0) + '</td><td>' + money(m.totals.spend, 0) + '</td><td></td><td>' + int(m.totals.contacts) + '</td><td>' + money(m.totals.cpContact) + '</td><td>' + (m.prevTotals ? deltaHtml(m.totals.cpContact, m.prevTotals.cpContact, { lowerIsBetter: true, vs: R.cLabel }) : '') + '</td></tr></tbody>';
+    $('matrix').innerHTML = h;
+
+    // stages
+    const st = {};
+    for (const c of m.camps) { if (!c.cls.stageKey || c.cls.stageKey[0] === 'X') continue; const k = c.cls.stageKey; const a = st[k] = st[k] || { BH: z(), SP: z(), Outros: z() }; const b = a[c.cls.region] || a.Outros; b.spend += c.met.spend; b.contacts += c.met.contacts; b.budget += c.budget; b.n++; }
+    function z() { return { spend: 0, contacts: 0, budget: 0, n: 0 }; }
+    const order = ['L1', 'L2', 'L3', 'E1', 'E2', 'E3'];
+    const regs = REGIONS();
+    let s = '<thead><tr><th></th>' + regs.map(rg => '<th class="grp" colspan="3"><i class="swatch" style="background:' + REGION_COLOR[rg] + ';vertical-align:middle"></i> ' + rg + '</th>').join('') + '</tr>' +
+      '<tr><th>Etapa</th>' + regs.map(() => '<th>Gasto</th><th>Contatos</th><th>Custo</th>').join('') + '</tr></thead><tbody>';
+    let any = false;
+    for (const k of order) {
+      const a = st[k]; if (!a) continue; any = true;
+      const lab = (k[0] === 'L' ? 'Formulário ' : 'WhatsApp ') + k[1] + ' · ' + ({ 1: 'topo', 2: 'meio', 3: 'fundo' }[k[1]]);
+      s += '<tr><td class="k"><i class="swatch sw" style="background:' + DEST_COLOR[k[0] === 'L' ? 'Formulário' : 'WhatsApp'] + '"></i>' + esc(k) + ' <span class="dim">' + esc(lab) + '</span></td>' + regs.map(rg => cell(a[rg])).join('') + '</tr>';
+    }
+    function cell(b) { return '<td>' + (b.n ? money(b.spend, 0) : '<span class="dim">—</span>') + '</td><td>' + (b.n ? int(b.contacts) : '') + '</td><td>' + (b.n ? money(b.contacts ? b.spend / b.contacts : null) : '') + '</td>'; }
+    s += '</tbody>';
+    $('stages').innerHTML = any ? s : '<tbody><tr><td class="empty">Nenhuma campanha com tag de etapa ([L1]…[E3]) no período.</td></tr></tbody>';
+  }
+
+  /* ---------------- rendering: alerts ---------------- */
+  function renderAlerts() {
+    const m = S.model, el = $('alerts');
+    if (!m || !m.camps.length) { el.innerHTML = '<div class="ok">Aguardando dados…</div>'; $('alertNote').textContent = ''; return; }
+    const out = []; const now = new Date(); const hour = now.getHours() + now.getMinutes() / 60;
+    // issues
+    // only for campaigns that are actually running — a paused campaign's old errors are not urgent
+    const running = (campId) => { const c = m.byId[String(campId || '')]; return !c || c.ds.cls !== 'off'; };
+    for (const a of m.adsets) if (a.ds.issue && running(a.campaign_id)) out.push({ lvl: 'critical', t: 'Conjunto com problema de veiculação', d: a.name + ' · ' + (a.ds.subs.join(', ') || 'verifique no Gerenciador') });
+    for (const a of m.ads) if (a.ds.issue && running(a.e.campaign_id) && !m.adsets.some(s => s.id === String(a.e.adset_id) && (s.ds.issue || s.ds.cls === 'off'))) out.push({ lvl: 'critical', t: 'Anúncio com problema', d: a.name + ' · ' + a.adset_name });
+    for (const a of m.adsets) if (a.ds.cls === 'learning' && /limitado/i.test(a.ds.label)) out.push({ lvl: 'serious', t: 'Aprendizado limitado', d: a.name + ' · a Meta não está encontrando volume suficiente; considere ampliar público ou orçamento' });
+    // no spend today
+    if (m.today && hour >= 10) for (const c of m.camps) { if (!c.ds.active || !c.budget) continue; const d = m.today.camps[c.id]; if (!d || d.spend === 0) out.push({ lvl: 'warning', t: 'Sem gasto hoje', d: c.name + ' · ativa com ' + money(c.budget, 0) + '/dia e nenhum gasto até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) }); }
+    // pacing
+    if (m.today && m.totals.budget && hour >= 14) { const exp = m.totals.budget * hour / 24; const pace = m.today.spend / exp; if (pace < 0.6) out.push({ lvl: 'warning', t: 'Ritmo de gasto abaixo do esperado', d: 'Hoje ' + money(m.today.spend) + ' vs. ' + money(exp, 0) + ' esperados até agora (' + Math.round(pace * 100) + '%)' }); else if (pace > 1.3) out.push({ lvl: 'warning', t: 'Ritmo de gasto acima do esperado', d: 'Hoje ' + money(m.today.spend) + ' vs. ' + money(exp, 0) + ' esperados até agora (' + Math.round(pace * 100) + '%)' }); }
+    // frequency & cost outliers (active campaigns with spend)
+    const act = m.camps.filter(c => c.met.spend > 0 && c.ds.active);
+    for (const c of act) if (c.met.freq >= 3.5 && daysBetween(S.range.since, S.range.until) <= 31) out.push({ lvl: 'warning', t: 'Frequência alta', d: c.name + ' · ' + dec1(c.met.freq) + ' impressões por pessoa; criativos podem estar saturando' });
+    for (const dest of ['Formulário', 'WhatsApp']) {
+      const grp = act.filter(c => c.cls.dest === dest && c.met.cpContact); if (grp.length < 2) continue;
+      const med = median(grp.map(c => c.met.cpContact));
+      for (const c of grp) if (c.met.cpContact > med * 1.6 && c.met.spend > 200) out.push({ lvl: 'serious', t: 'Custo por contato acima da média', d: c.name + ' · ' + money(c.met.cpContact) + ' vs. mediana ' + money(med) + ' das campanhas de ' + dest.toLowerCase() });
+    }
+    for (const c of act) if (c.met.spend > 300 && c.met.contacts === 0 && c.cls.dest !== 'Outros') out.push({ lvl: 'serious', t: 'Gasto sem contatos', d: c.name + ' · ' + money(c.met.spend) + ' no período e nenhum lead/conversa' });
+    for (const a of m.ads.filter(x => x.ds.active && x.met.spend > 150)) if (a.met.ctr > 0 && a.met.ctr < 0.35 && a.met.freq > 2.5) out.push({ lvl: 'warning', t: 'Anúncio com sinal de fadiga', d: a.name + ' · CTR ' + pct(a.met.ctr) + ' e frequência ' + dec1(a.met.freq) });
+    const lvlOrder = { critical: 0, serious: 1, warning: 2, good: 3 };
+    out.sort((a, b) => lvlOrder[a.lvl] - lvlOrder[b.lvl]);
+    $('alertNote').textContent = out.length ? out.length + (out.length === 1 ? ' ponto' : ' pontos') + ' de atenção' : '';
+    el.innerHTML = out.length ? out.slice(0, 12).map(a => '<div class="alert ' + a.lvl + '"><div class="stripe"></div><div><div class="t"><span class="lvl">' + ({ critical: 'crítico', serious: 'sério', warning: 'atenção', good: 'ok' }[a.lvl]) + '</span>' + esc(a.t) + '</div><div class="d">' + esc(a.d) + '</div></div></div>').join('') : '<div class="ok"><span class="st active"><i></i></span>Nada fora do normal nas campanhas ativas.</div>';
+  }
+  function median(arr) { const a = arr.slice().sort((x, y) => x - y); const h = Math.floor(a.length / 2); return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2; }
+
+  /* ---------------- rendering: tables ---------------- */
+  const COLS = {
+    campaigns: [
+      ['name', 'Campanha', 'l'], ['status', 'Status', 'l'], ['budget', 'Orç./dia'], ['spend', 'Gasto'], ['contacts', 'Contatos'], ['cpContact', 'Custo/contato'], ['ctr', 'CTR'], ['cpm', 'CPM'], ['freq', 'Freq.'], ['reach', 'Alcance'],
+    ],
+    adsets: [
+      ['name', 'Conjunto', 'l'], ['status', 'Status', 'l'], ['budget', 'Orç./dia'], ['spend', 'Gasto'], ['contacts', 'Contatos'], ['cpContact', 'Custo/contato'], ['ctr', 'CTR'], ['cpm', 'CPM'], ['freq', 'Freq.'],
+    ],
+    ads: [
+      ['name', 'Anúncio', 'l'], ['status', 'Status', 'l'], ['spend', 'Gasto'], ['contacts', 'Contatos'], ['cpContact', 'Custo/contato'], ['ctr', 'CTR'], ['cpm', 'CPM'], ['freq', 'Freq.'], ['thruplays', 'ThruPlays'],
+    ],
+    pacing: [
+      ['name', 'Campanha', 'l'], ['budget', 'Orç./dia'], ['spendToday', 'Gasto hoje'], ['pace', 'Ritmo'], ['contactsToday', 'Contatos hoje'], ['cpToday', 'Custo hoje'],
+    ],
+  };
+  function rowsFor(tab) {
+    const m = S.model; if (!m) return [];
+    if (tab === 'campaigns') return m.camps.map(c => ({ ref: c, name: c.name, status: c.ds.label, statusOrd: c.ds.active ? 0 : 1, budget: c.budget, spend: c.met.spend, contacts: c.met.contacts, cpContact: c.met.cpContact, ctr: c.met.ctr, cpm: c.met.cpm, freq: c.met.freq, reach: c.met.reach }));
+    if (tab === 'adsets') return m.adsets.map(a => ({ ref: a, name: a.name, status: a.ds.label, statusOrd: a.ds.active ? 0 : 1, budget: a.budget, spend: a.met.spend, contacts: a.met.contacts, cpContact: a.met.cpContact, ctr: a.met.ctr, cpm: a.met.cpm, freq: a.met.freq }));
+    if (tab === 'ads') return m.ads.map(a => ({ ref: a, name: a.name, status: a.ds.label, statusOrd: a.ds.active ? 0 : 1, spend: a.met.spend, contacts: a.met.contacts, cpContact: a.met.cpContact, ctr: a.met.ctr, cpm: a.met.cpm, freq: a.met.freq, thruplays: a.thruplays }));
+    if (tab === 'pacing') {
+      const now = new Date(); const hf = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);
+      return m.camps.filter(c => c.budget > 0 || (m.today && m.today.camps[c.id] && m.today.camps[c.id].spend > 0)).map(c => { const d = m.today && m.today.camps[c.id]; const sp = d ? d.spend : 0; const ct = d ? d.contacts : 0; return { ref: c, name: c.name, budget: c.budget, spendToday: sp, pace: c.budget ? sp / (c.budget * hf) : null, contactsToday: ct, cpToday: ct ? sp / ct : null }; });
+    }
+    return [];
+  }
+  function renderTables() {
+    const m = S.model; const tab = S.tab; const cols = COLS[tab];
+    $('nCamp').textContent = m ? m.camps.length : ''; $('nAdset').textContent = m ? m.adsets.length : ''; $('nAd').textContent = m ? m.ads.length : '';
+    const rows = rowsFor(tab); $('nPace').textContent = m ? m.camps.filter(c => c.budget > 0).length : '';
+    const [sk, sd] = S.sort[tab];
+    rows.sort((a, b) => { let x = a[sk], y = b[sk]; if (sk === 'status') { x = a.statusOrd; y = b.statusOrd; } if (x == null) x = -Infinity; if (y == null) y = -Infinity; if (typeof x === 'string') return sd === 'asc' ? x.localeCompare(y) : y.localeCompare(x); return sd === 'asc' ? x - y : y - x; });
+    let h = '<thead><tr>' + cols.map(c => '<th class="sortable ' + (c[0] === sk ? 'sorted ' + sd : '') + '" data-k="' + c[0] + '"' + (c[2] === 'l' ? ' style="text-align:left"' : '') + '>' + esc(c[1]) + '</th>').join('') + '</tr></thead><tbody>';
+    if (!rows.length) h += '<tr><td colspan="' + cols.length + '" class="empty">' + (m ? 'Nenhum item no período.' : 'Aguardando dados…') + '</td></tr>';
+    for (const r of rows) {
+      const ref = r.ref;
+      h += '<tr>';
+      for (const c of cols) {
+        const k = c[0]; let v = '';
+        if (k === 'name') {
+          let ctx = '';
+          if (tab === 'adsets') ctx = ref.campaign_name; else if (tab === 'ads') ctx = ref.adset_name + (ref.campaign_name ? ' · ' + ref.campaign_name : '');
+          const chips = tab === 'ads' ? '' : '<span class="chips">' + chip(ref.cls.region, REGION_COLOR[ref.cls.region]) + chip(ref.cls.dest, DEST_COLOR[ref.cls.dest]) + (ref.cls.stageKey && ref.cls.stageKey[0] !== 'X' ? chip(ref.cls.stageKey + (ref.cls.stageLabel ? ' · ' + ref.cls.stageLabel.toLowerCase() : '')) : '') + (tab === 'campaigns' && ref.cbo ? chip('orçamento na campanha') : '') + '</span>';
+          v = '<td class="name"><div class="nm">' + esc(r.name) + '</div>' + (ctx ? '<div class="ctx">' + esc(ctx) + '</div>' : '') + chips + '</td>';
+        } else if (k === 'status') v = '<td style="text-align:left">' + stHtml(ref.ds) + '</td>';
+        else if (k === 'budget') v = '<td>' + (r.budget ? money(r.budget, 0) : '<span class="dim">—</span>') + '</td>';
+        else if (k === 'spend' || k === 'spendToday') v = '<td>' + money(r[k]) + '</td>';
+        else if (k === 'contacts' || k === 'contactsToday') { const met = ref.met; let sub = ''; if (k === 'contacts' && met) { if (met.leads && met.formToWa) sub = int(met.formNoMsg) + ' sem msg · ' + int(met.formToWa) + ' → WhatsApp' + (met.waDirect ? ' + ' + int(met.waDirect) + ' diretas' : ''); else if (met.leads && met.waDirect) sub = int(met.leads) + ' form. + ' + int(met.waDirect) + ' conversas'; else if (met.leads) sub = 'formulário'; else if (met.waDirect) sub = 'conversas'; } v = '<td>' + int(r[k]) + (sub ? ' <span class="dim">' + sub + '</span>' : '') + '</td>'; }
+        else if (k === 'cpContact' || k === 'cpToday') v = '<td>' + money(r[k]) + '</td>';
+        else if (k === 'ctr') v = '<td>' + pct(r.ctr) + '</td>';
+        else if (k === 'cpm') v = '<td>' + money(r.cpm) + '</td>';
+        else if (k === 'freq') v = '<td>' + dec1(r.freq) + '</td>';
+        else if (k === 'reach') v = '<td>' + compactInt(r.reach) + '</td>';
+        else if (k === 'thruplays') v = '<td>' + compactInt(r.thruplays) + '</td>';
+        else if (k === 'pace') { const p = r.pace; const cls = p == null ? '' : p < 0.6 ? 'bad' : p < 0.85 || p > 1.25 ? 'warn' : ''; v = '<td><span class="bar-cell"><span>' + (p == null ? '—' : Math.round(p * 100) + '%') + '</span><span class="b"><i style="width:' + (p == null ? 0 : Math.min(100, Math.round(p * 100))) + '%;background:' + (cls === 'bad' ? 'var(--critical)' : cls === 'warn' ? 'var(--warning)' : 'var(--s-bh)') + '"></i></span></span></td>'; }
+        h += v;
+      }
+      h += '</tr>';
+    }
+    h += '</tbody>';
+    $('tbl').innerHTML = h;
+  }
+  $('tbl').addEventListener('click', (ev) => {
+    const th = ev.target.closest('th.sortable'); if (!th) return;
+    const k = th.getAttribute('data-k'); const cur = S.sort[S.tab];
+    S.sort[S.tab] = cur[0] === k ? [k, cur[1] === 'desc' ? 'asc' : 'desc'] : [k, k === 'name' || k === 'status' ? 'asc' : 'desc'];
+    renderTables();
+  });
+  $('tblTabs').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[role="tab"]'); if (!b) return;
+    S.tab = b.getAttribute('data-t');
+    $('tblTabs').querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+    renderTables();
+  });
+
+  /* ---------------- rendering: all ---------------- */
+  function renderAll() {
+    try { recompute(); } catch (e) { console.error('recompute', e); }
+    renderKpis(); renderTemp(); renderToday(); renderBudget(); renderCharts(); renderStructure(); renderFunnel(); renderAlerts(); renderTables(); renderFresh();
+  }
+  function renderFresh() {
+    const ts = Object.values(S.stamp).filter(Boolean);
+    const el = $('fresh');
+    if (!ts.length) { el.textContent = ''; return; }
+    const oldest = Math.min(...ts); const d = new Date(oldest);
+    el.textContent = 'dados de ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + (d.toDateString() !== new Date().toDateString() ? ' (' + fmtDay(iso(d)) + ')' : '');
+  }
+  function setLive(state, text) { const c = $('liveChip'); c.className = 'live ' + state; $('liveTxt').textContent = text; }
+  function banner(kind, title, text, steps) {
+    const b = $('banner'); if (!kind) { b.hidden = true; return; }
+    b.className = 'banner ' + kind; b.hidden = false; b.querySelector('.ic').textContent = kind === 'critical' ? '!' : kind === 'warning' ? '!' : 'i';
+    $('bannerTitle').textContent = title; $('bannerText').textContent = text;
+    const ol = $('bannerSteps'); if (steps && steps.length) { ol.innerHTML = steps.map(s => '<li>' + s + '</li>').join(''); ol.hidden = false; } else ol.hidden = true;
+  }
+
+  /* ---------------- dados (arquivo data.json publicado junto com a página) ---------------- */
+  const DATA_URL = 'data.json';
+  const KEYS = ['campaigns', 'adsets', 'ads', 'daily', 'prev', 'today'];
+
+  function applyData(data) {
+    if (!data || typeof data !== 'object' || !Array.isArray(data.campaigns)) throw new Error('formato inesperado');
+    if (data.range && data.range.since && data.range.until) S.range = data.range;
+    for (const k of KEYS) S.raw[k] = data[k] ? { ad_entities: data[k] } : null;
+    const parsed = data.generatedAt ? new Date(data.generatedAt) : new Date();
+    const stamp = isFinite(parsed.getTime()) ? parsed.getTime() : Date.now();
+    const at = new Date(stamp);
+    S.at = stamp;
+    for (const k of KEYS) if (S.raw[k]) S.stamp[k] = stamp;
+    S.offline = false;
+    document.querySelectorAll('section').forEach(s => s.classList.remove('stale'));
+    banner(null);
+    setLive(stale(stamp) ? 'wait' : 'on', 'atualizado');
+    greet();
+    renderAll();
+    const el = $('srcStamp');
+    if (el) el.textContent = 'Leitura de ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + '.';
+    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 3 horas. A atualização automática roda de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.');
+  }
+  const stale = (ts) => Date.now() - ts > 3 * 60 * 60 * 1000;
+
+  async function load() {
+    setLive('wait', 'carregando');
+    document.querySelectorAll('section').forEach(s => s.classList.add('stale'));
+    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    applyData(await res.json());
+  }
+
+  /* ---------------- controls ---------------- */
+  // region filter is applied client-side on the data already loaded — no new connector calls
+  $('regionSeg').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-r]'); if (!b) return;
+    S.region = b.getAttribute('data-r');
+    $('regionSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    try { localStorage.setItem('radar.region', S.region); } catch (e) {}
+    $('acctLabel').textContent = 'Conta Henrique · ' + (S.region === 'ALL' ? 'BH e SP' : 'só ' + S.region);
+    renderAll();
+  });
+  $('regionSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.getAttribute('data-r') === S.region ? 'true' : 'false'));
+  $('acctLabel').textContent = 'Conta Henrique · ' + (S.region === 'ALL' ? 'BH e SP' : 'só ' + S.region);
+  $('tempModeSeg').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-m]'); if (!b) return;
+    S.tempMode = b.getAttribute('data-m');
+    $('tempModeSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    try { localStorage.setItem('radar.tempMode', S.tempMode); } catch (e) {}
+    if (S.model) renderTemp();
+  });
+  $('tempModeSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.getAttribute('data-m') === S.tempMode ? 'true' : 'false'));
+  $('budgetUnitSeg').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-u]'); if (!b) return;
+    S.budgetUnit = b.getAttribute('data-u');
+    $('budgetUnitSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    try { localStorage.setItem('radar.budgetUnit', S.budgetUnit); } catch (e) {}
+    if (S.model) renderBudget();
+  });
+  $('budgetUnitSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.getAttribute('data-u') === S.budgetUnit ? 'true' : 'false'));
+  // sidebar: highlight the section in view
+  (function sideNav() {
+    const links = Array.from(document.querySelectorAll('#sideNav a'));
+    const byId = {}; links.forEach(a => { byId[a.getAttribute('href').slice(1)] = a; });
+    const setActive = (id) => { links.forEach(a => a.classList.toggle('active', a === byId[id])); };
+    links.forEach(a => a.addEventListener('click', (ev) => {
+      const id = a.getAttribute('href').slice(1); const target = document.getElementById(id);
+      if (target) { ev.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      setActive(id);
+    }));
+    if (!('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      const vis = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (vis.length) setActive(vis[0].target.id);
+    }, { rootMargin: '-12% 0px -70% 0px', threshold: 0 });
+    document.querySelectorAll('section[id]').forEach(s => io.observe(s));
+  })();
+  let rsT = null;
+  window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { if (S.model) { renderCharts(); renderTemp(); renderFunnel(); } }, 150); });
+  $('refreshBtn').addEventListener('click', async () => {
+    const b = $('refreshBtn'); b.disabled = true; b.textContent = '↻ Atualizando…';
+    try { await load(); } catch (e) { console.warn('refresh', e); failed(e); }
+    b.disabled = false; b.textContent = '↻ Atualizar';
+  });
+  $('stageMetricSeg').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-m]'); if (!b) return;
+    S.stageMetric = b.getAttribute('data-m');
+    $('stageMetricSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    try { localStorage.setItem('radar.stageMetric', S.stageMetric); } catch (e) {}
+    if (S.model) renderFunnel();
+  });
+  $('stageMetricSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.getAttribute('data-m') === S.stageMetric ? 'true' : 'false'));
+
+  /* ---------------- boot ---------------- */
+  S.range = periodRange(S.period);
+  greet();
+  renderAll();
+  function failed(e) {
+    S.offline = true; setLive('err', 'sem dados');
+    const local = location.protocol === 'file:';
+    banner('critical', local ? 'Abra a página por um servidor, não como arquivo' : 'Não consegui carregar os dados',
+      local ? 'O navegador bloqueia a leitura do data.json quando a página é aberta direto do disco (file://). Publique no GitHub Pages ou rode "npx serve public" na pasta do projeto.'
+            : 'O arquivo data.json não pôde ser lido (' + (e && e.message ? e.message : 'erro desconhecido') + '). Se a página acabou de ser publicada, aguarde a primeira atualização automática terminar na aba Actions do repositório; depois recarregue.');
+    renderAll();
+  }
+  (async function boot() {
+    try { await load(); } catch (e) { console.warn('boot', e); failed(e); }
+    // recarrega sozinho de tempos em tempos: a atualização automática roda de hora em hora
+    setInterval(() => { load().catch((e) => console.warn('auto', e)); }, 10 * 60 * 1000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) load().catch(() => {}); });
+  })();
+})();
+</script>
+</body>
+</html>
