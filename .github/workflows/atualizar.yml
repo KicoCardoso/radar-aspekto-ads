@@ -1,0 +1,56 @@
+name: Atualizar dados e publicar
+
+# Lê a conta de anúncios na API da Meta, grava public/data.json e publica a pasta
+# public/ no GitHub Pages. Roda de hora em hora, a cada push na main, e no botão
+# "Run workflow" da aba Actions.
+
+on:
+  schedule:
+    - cron: '7 * * * *'      # todo início de hora (minuto 7, horário UTC)
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Uma execução por vez: se a anterior ainda estiver publicando, esta espera.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ler os dados da Meta
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ vars.META_AD_ACCOUNT_ID || '1545616483609687' }}
+          META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
+        run: node scripts/fetch-meta.mjs
+
+      - name: Conferir o arquivo gerado
+        run: node scripts/verificar-dados.mjs
+
+      - name: Empacotar a pasta public
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Publicar no GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
