@@ -45,7 +45,13 @@ replaceOnce('<title>Radar Aspekto Ads</title>', `<!DOCTYPE html>
 /* 1b. celular: sem o contêiner do artifact, as faixas em grade empurravam a página para o lado
        (itens de grid têm min-width:auto). Prende cada faixa à largura da tela e deixa o menu e
        as tabelas rolarem por dentro. */
-replaceOnce('</style>\n', `  /* --- ajuste de largura fora do visualizador de artifacts --- */
+replaceOnce('</style>\n', `  /* O visualizador de artifacts embrulha a página num documento que traz
+     [hidden]{display:none!important}. Aqui esse embrulho não existe, e regras como
+     .btn{display:inline-flex} venciam o estilo padrão do navegador — elementos marcados
+     como hidden apareciam mesmo assim (era o caso do botão "trocar planilhas"). */
+  [hidden]:not([hidden="until-found" i]) { display: none !important; }
+
+  /* --- ajuste de largura fora do visualizador de artifacts --- */
   html, body { max-width: 100%; overflow-x: hidden; }
   .app, .app > *, .main, .wrap, section, .card, .charts, .charts > *, .kpis, .tiles, .tscroll { min-width: 0; }
   .side { max-width: 100%; }
