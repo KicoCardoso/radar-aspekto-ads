@@ -9,7 +9,7 @@ conta no GitHub, nem no Claude, nem acesso ao Gerenciador de Anúncios.
 GitHub Actions (de hora em hora)
   ├─ scripts/fetch-meta.mjs   →  investimento, impressões e leads da conta de anúncios
   └─ scripts/fetch-leads.mjs  →  as respostas do formulário (sem nome, telefone ou e-mail),
-                                 lidas por anúncio; se a Meta negar, tenta pela Página
+                                 lidas de planilhas publicadas na web como CSV
        └─ public/data.json    →  os números
             └─ public/index.html  →  a página, que lê o data.json no navegador de quem abre
 ```
@@ -23,6 +23,29 @@ node scripts/build-page.mjs dashboard.html public/index.html
 O `build-page.mjs` troca só a camada de dados — em vez de falar com os conectores, a página
 passa a ler o `data.json`. Gráficos, contas e layout continuam idênticos. Sempre que o painel
 mudar, atualize o `dashboard.html` e rode esse comando de novo.
+
+### 3. Respostas do formulário (lead score)
+
+O GitHub não tem como fazer login no Google, então a planilha original — que tem nome e
+telefone — não serve. O caminho é publicar uma planilha **derivada**, com só as colunas sem
+dado pessoal:
+
+1. Crie uma planilha nova (ou uma aba nova) e ponha na primeira célula:
+
+   ```
+   =QUERY('SP Formulário'!A:S; "select B, L, H, M, N, O"; 1)
+   ```
+
+   Isso traz `created_time`, `platform`, `campaign_name` e as três perguntas. Repita para BH.
+
+2. Nessa planilha derivada: **Arquivo → Compartilhar → Publicar na web**, formato
+   **Valores separados por vírgula (.csv)**, e copie o endereço.
+
+3. No repositório: **Settings → Secrets and variables → Actions → Variables** →
+   `RADAR_SHEETS` com os endereços, um por linha.
+
+Se `RADAR_SHEETS` não existir, o script tenta ler os cadastros pela API da Meta, o que exige
+um token com acesso à Página (`leads_retrieval`, `pages_manage_ads` e companhia).
 
 ## Dado pessoal
 

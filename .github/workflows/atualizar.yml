@@ -48,6 +48,9 @@ jobs:
       - name: Ler as respostas do formulário
         continue-on-error: true
         env:
+          # Origem preferida: planilhas derivadas publicadas na web como CSV, sem as colunas
+          # de nome e telefone. Sem RADAR_SHEETS, o script tenta a API da Meta.
+          RADAR_SHEETS: ${{ vars.RADAR_SHEETS }}
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           META_PAGE_ID: ${{ vars.META_PAGE_ID || '1155805810953446' }}
           META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
