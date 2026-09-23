@@ -43,7 +43,10 @@ jobs:
           META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
         run: node scripts/fetch-meta.mjs
 
+      # O painel publica mesmo sem este passo: sem as respostas, todos os blocos continuam
+      # funcionando e só o de lead score mostra que os dados ainda não chegaram.
       - name: Ler as respostas do formulário
+        continue-on-error: true
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           META_PAGE_ID: ${{ vars.META_PAGE_ID || '1155805810953446' }}

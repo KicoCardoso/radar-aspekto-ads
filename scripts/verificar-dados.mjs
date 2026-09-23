@@ -35,6 +35,11 @@ if (!problemas.length) {
   const dias = new Set(arr('daily').map((d) => d.date_start));
   const semTag = campanhas.filter((c) => !/\[\s*(BH|SP)\s*\]/i.test(c.name || '') && (Number(c.amount_spent) || 0) > 0);
 
+  if (!data.leads || !Array.isArray(data.leads.rows) || !data.leads.rows.length) {
+    avisos.push('sem respostas de formulário — o bloco de lead score vai aparecer vazio (veja o passo "Ler as respostas do formulário")');
+  } else if (!(data.leads.fields || []).length) {
+    avisos.push('as respostas vieram sem nenhum campo de múltipla escolha — o lead score vai ficar vazio');
+  }
   if (gasto <= 0) avisos.push('investimento zerado no período (normal só no primeiro dia do mês, de madrugada)');
   if (!dias.size) avisos.push('série diária vazia');
   if (semTag.length) avisos.push(`${semTag.length} campanha(s) com gasto e sem tag [BH]/[SP] — vão aparecer como "Outros"`);
