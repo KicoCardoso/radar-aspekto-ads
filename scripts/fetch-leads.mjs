@@ -102,7 +102,9 @@ export function csvUrl(raw) {
   try {
     const url = new URL(u);
     if (/\/pub(html)?$/i.test(url.pathname)) url.pathname = url.pathname.replace(/\/pub(html)?$/i, '/pub');
-    if (!url.searchParams.get('output')) url.searchParams.set('output', 'csv');
+    // o parâmetro é reescrito, não completado: um endereço copiado pela metade (…output=cs)
+    // devolveria HTML em vez de CSV e o erro só apareceria na execução
+    url.searchParams.set('output', 'csv');
     url.searchParams.set('single', 'true');
     return url.toString();
   } catch (e) { return null; }
