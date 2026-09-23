@@ -590,7 +590,7 @@
       <div class="card">
         <h3>Leads por plataforma, por faixa de score</h3>
         <div class="hint" id="platHint">só campanhas de formulário</div>
-        <div class="legend"><span><i class="swatch" style="background:var(--sc-a)"></i>A · prioridade</span><span><i class="swatch" style="background:var(--sc-b)"></i>B · bom</span><span><i class="swatch" style="background:var(--sc-c)"></i>C · fraco</span><span><i class="swatch" style="background:var(--sc-d)"></i>D · baixo</span><span><i class="swatch" style="background:var(--s-other)"></i>Sem resposta</span></div>
+        <div class="legend"><span><i class="swatch" style="background:var(--sc-a)"></i>A · prioridade</span><span><i class="swatch" style="background:var(--sc-b)"></i>B · bom</span><span><i class="swatch" style="background:var(--sc-c)"></i>C · morno</span><span><i class="swatch" style="background:var(--sc-d)"></i>D · frio</span><span><i class="swatch" style="background:var(--s-other)"></i>Sem resposta</span></div>
         <div class="chart" id="chPlat"></div>
         <div id="platVerdict"></div>
       </div>
@@ -697,7 +697,7 @@
     <div><b>Impressões e alcance.</b> Impressões = vezes que os anúncios foram exibidos; alcance = pessoas únicas por campanha, somado entre as campanhas da mesma etapa (quem viu duas campanhas conta duas vezes). Frequência = impressões ÷ alcance. Os níveis 1/2/3 juntam L e E (formulário e WhatsApp) da mesma etapa.</div>
     <div><b>Lead score.</b> Vem das respostas do formulário, lidas automaticamente na API da Meta. Só as respostas de múltipla escolha são publicadas nesta página: nome, telefone e e-mail não saem da Meta. Conhece as lentes: sim 5 · não 4. Orçamento: à vista 8 · parcelado 7 · sem orçamento 1. Prazo: imediatamente 6 · em até 3 meses 3 · ainda não decidi 2. A soma vai de 7 a 19 (o valor 10 não existe: nenhuma combinação chega nele) e define a faixa: A de 17 a 19 (ligar agora), B de 14 a 16 (ligar essa semana), C de 11 a 13 (nutrir), D de 7 a 9 (fila fria). O orçamento é o que mais pesa: quem tem verba parte de 13 e quem não tem não passa de 12, então a linha entre A/B e C/D é a linha do orçamento, e dentro de cada metade quem decide é o prazo. Leads que não responderam as três perguntas ficam fora do score.</div>
     <div><b>Custo por lead no bloco de score.</b> O formulário com as três perguntas é recente, então o painel não divide o gasto do mês inteiro por esses leads: ele soma só o investimento das campanhas de formulário do primeiro dia com lead respondido em diante. Nos primeiros dias esse custo oscila muito, porque o gasto do dia entra inteiro e os leads ainda estão chegando.</div>
-    <div><b>Facebook × Instagram.</b> O investimento por plataforma vem da Meta (quebra por posicionamento), somando só as campanhas de formulário. Os leads e o score vêm das respostas do formulário, pela plataforma que a Meta registra em cada lead. Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e a planilha no momento do envio, e a planilha pode conter leads de outros períodos ou campanhas. Custo por lead A = investimento da plataforma ÷ leads de faixa A dela.</div>
+    <div><b>Facebook × Instagram.</b> O investimento por plataforma vem da Meta (quebra por posicionamento), somando só as campanhas de formulário. Os leads e o score vêm das respostas do formulário, pela plataforma que a Meta registra em cada lead. Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e o formulário no momento do envio. Custo por lead A = investimento da plataforma ÷ leads de faixa A dela.</div>
     <div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente de hora em hora e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>
   </footer>
 </div>
@@ -2092,7 +2092,7 @@
     if (!cfg) { note.textContent = 'sem dados de formulário'; el.innerHTML = '<div class="empty">Aguardando a primeira coleta de leads.</div>'; clear(); return; }
     if (S.leads.err) {
       note.textContent = 'respostas indisponíveis';
-      el.innerHTML = '<div class="banner warning" style="margin-top:4px"><div class="ic">!</div><div><h3>As respostas do formulário ainda não chegaram</h3><p>' + esc(S.leads.err.message || '') + '</p></div></div>' + sheetStatusHtml() + setupCard();
+      el.innerHTML = '<div class="banner warning" style="margin-top:4px"><div class="ic">!</div><div><h3>As respostas do formulário ainda não chegaram</h3><p>' + esc(S.leads.err.message || '') + '</p></div></div>' + sheetStatusHtml();
       clear(); return;
     }
     if (!S.leads.rows) { note.textContent = 'carregando…'; el.innerHTML = '<div class="empty">Carregando as respostas do formulário…</div>' + sheetStatusHtml(); clear(); return; }

@@ -265,6 +265,13 @@ replaceOnce(`  // setup card actions (the card is re-rendered, so the handlers l
 replaceOnce('<th title="linhas da planilha no período">Leads (planilha)</th>',
   '<th title="respostas do formulário no período">Leads (formulário)</th>', 'coluna de leads da tabela');
 
+/* 6d. o cartão "cole o link das planilhas" não faz sentido nesta página: quem a abre não
+      configura fonte de dados nenhuma. No estado de erro fica só a explicação. */
+replaceOnce("' + sheetStatusHtml() + setupCard();", "' + sheetStatusHtml();", 'cartão de planilhas no estado de erro');
+
+replaceOnce('Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e a planilha no momento do envio, e a planilha pode conter leads de outros períodos ou campanhas.',
+  'Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e o formulário no momento do envio.', 'rodapé sobre a diferença de contagem');
+
 /* 7. boot */
 const bootStart = html.indexOf('  (async function boot() {');
 const bootEnd = html.indexOf('  })();', bootStart);
