@@ -16,6 +16,15 @@ const dest = process.argv[3] || 'public/index.html';
 
 let html = await readFile(src, 'utf8');
 
+/* 0. o arquivo salvo do artifact vem embrulhado no esqueleto que o visualizador acrescenta
+      (doctype, head e body próprios). Tiramos esse embrulho: o head e o body desta página
+      são montados no passo 1, com as fontes, o ícone e os ajustes de largura. */
+{
+  const t = html.indexOf('<title>Radar Aspekto Ads</title>');
+  if (t > 0 && /^\s*<!doctype/i.test(html.slice(0, 40))) html = html.slice(t);
+  html = html.replace(/\s*<\/body>\s*<\/html>\s*$/i, '\n');
+}
+
 function replaceOnce(needle, replacement, label) {
   const i = html.indexOf(needle);
   if (i === -1) throw new Error('não encontrei o trecho: ' + label);
@@ -97,7 +106,7 @@ const cutEnd = html.indexOf('  /* ---------------- controls ---------------- */'
 if (cutStart === -1 || cutEnd === -1) throw new Error('não encontrei a camada de dados');
 html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json publicado junto com a página) ---------------- */
   const DATA_URL = 'data.json';
-  const KEYS = ['campaigns', 'adsets', 'ads', 'daily', 'prev', 'today'];
+  const KEYS = ['campaigns', 'adsets', 'ads', 'daily', 'prev', 'today', 'plat'];
 
   function applyData(data) {
     if (!data || typeof data !== 'object' || !Array.isArray(data.campaigns)) throw new Error('formato inesperado');
@@ -108,6 +117,7 @@ html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json
     const at = new Date(stamp);
     S.at = stamp;
     for (const k of KEYS) if (S.raw[k]) S.stamp[k] = stamp;
+    applyLeads(data.leads);
     S.offline = false;
     document.querySelectorAll('section').forEach(s => s.classList.remove('stale'));
     banner(null);
@@ -119,6 +129,33 @@ html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json
     if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 3 horas. A atualização automática roda de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.');
   }
   const stale = (ts) => Date.now() - ts > 3 * 60 * 60 * 1000;
+
+  /* ---------------- respostas do formulário (vêm no mesmo data.json) ---------------- */
+  // O coletor manda só as respostas de múltipla escolha, sem nome, telefone ou e-mail.
+  // Aqui elas viram a mesma tabela que a planilha do Google entregava no painel interno,
+  // para que o resto da página (score, faixas, Facebook × Instagram) não mude.
+  function leadsCsv(L) {
+    const q = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const head = ['created_time', 'platform', 'campaign_name'].concat(L.fields || []);
+    const lines = [head.map(q).join(',')];
+    for (const r of L.rows || []) {
+      const camp = (L.campaigns || [])[r[2]] || '';
+      lines.push([r[0], r[1], camp].concat(r[3] || []).map(q).join(','));
+    }
+    return lines.join('\\n');
+  }
+  function applyLeads(L) {
+    S.leads.cfg = { sheets: [] };
+    S.leads.src = {}; S.leads.loading = false; S.leads.info = L || null;
+    if (!L || !Array.isArray(L.rows) || !(L.fields || []).length) {
+      S.leads.rows = null; S.leads.meta = null;
+      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
+      return;
+    }
+    const parsed = parseSheet(leadsCsv(L));
+    S.leads.rows = parsed.rows; S.leads.meta = parsed.meta; S.leads.stamp = S.at || Date.now();
+    S.leads.err = parsed.meta.fatal ? { message: parsed.meta.fatal } : null;
+  }
 
   async function load() {
     setLive('wait', 'carregando');
@@ -142,6 +179,92 @@ replaceOnce(`  $('refreshBtn').addEventListener('click', async () => {
     b.disabled = false; b.textContent = '↻ Atualizar';
   });`, 'botão atualizar');
 
+/* 6b. o bloco de lead score deixa de falar em planilha do Google: aqui as respostas
+      chegam pelo mesmo data.json, coletadas da API da Meta pelo scripts/fetch-leads.mjs */
+
+replaceOnce("    btn.hidden = !cfg;", "    btn.hidden = true;", 'esconde o botão de trocar planilhas');
+
+replaceOnce("    if (!cfg) { note.textContent = 'planilhas ainda não escolhidas'; el.innerHTML = setupCard(); clear(); return; }",
+  "    if (!cfg) { note.textContent = 'sem dados de formulário'; el.innerHTML = '<div class=\"empty\">Aguardando a primeira coleta de leads.</div>'; clear(); return; }", 'sem configuração');
+
+replaceOnce("      note.textContent = 'erro ao ler a planilha';", "      note.textContent = 'respostas indisponíveis';", 'nota de erro');
+replaceOnce("<h3>Não consegui ler a planilha</h3>", "<h3>As respostas do formulário ainda não chegaram</h3>", 'título do erro');
+replaceOnce("' + esc(sheetErrText(S.leads.err)) + '", "' + esc(S.leads.err.message || '') + '", 'texto do erro');
+
+replaceOnce("    if (!S.leads.rows) { note.textContent = 'lendo a planilha…'; el.innerHTML = '<div class=\"empty\">Lendo a planilha de leads…</div>' + sheetStatusHtml(); clear(); return; }",
+  "    if (!S.leads.rows) { note.textContent = 'carregando…'; el.innerHTML = '<div class=\"empty\">Carregando as respostas do formulário…</div>' + sheetStatusHtml(); clear(); return; }", 'estado de carregamento');
+
+replaceOnce("(M.total ? ' · ' + int(M.total) + ' na' + (S.leads.cfg.sheets.length > 1 ? 's planilhas' : ' planilha') : '')",
+  "(M.total ? ' · ' + int(M.total) + ' coletados' : '')", 'contagem no cabeçalho');
+
+replaceOnce("(S.leads.cfg ? (S.leads.err ? 'A planilha de leads não pôde ser lida — veja a seção acima.' : 'Lendo a planilha de leads…') : 'Escolha as planilhas de leads na seção acima para separar Facebook e Instagram por lead score.')",
+  "(S.leads.err ? 'As respostas do formulário não puderam ser lidas — veja a seção acima.' : 'Carregando as respostas do formulário…')", 'estado vazio do Facebook x Instagram');
+
+replaceOnce('<span class="note">investimento vindo da Meta · leads e lead score vindos da planilha do formulário</span>',
+  '<span class="note">investimento e respostas do formulário vindos da Meta</span>', 'nota da seção de plataformas');
+
+replaceOnce('Vem das respostas do formulário, lidas das planilhas do Google.',
+  'Vem das respostas do formulário, lidas automaticamente na API da Meta. Só as respostas de múltipla escolha são publicadas nesta página: nome, telefone e e-mail não saem da Meta.', 'rodapé do lead score');
+
+replaceOnce('Os leads e o score vêm da planilha, pela coluna de plataforma do lead.',
+  'Os leads e o score vêm das respostas do formulário, pela plataforma que a Meta registra em cada lead.', 'rodapé de plataformas');
+
+replaceOnce('Cada planilha precisa estar acessível para a conta do Google ligada ao claude.ai.',
+  'Nesta página publicada as respostas chegam prontas no arquivo de dados.', 'texto do cartão de configuração');
+
+/* 6c. fora do claude.ai não existe conector do Google Drive nem janela extra de
+      posicionamento: o bloco inteiro de configuração de planilhas sai e a leitura por
+      posicionamento passa a ser a que já veio no data.json. */
+const sheetsStart = html.indexOf('  /* ---------------- lead score: config (which sheets) ---------------- */');
+const sheetsEnd = html.indexOf('  /* ---------------- lead score: model ---------------- */');
+if (sheetsStart === -1 || sheetsEnd === -1) throw new Error('não encontrei o bloco de configuração de planilhas');
+html = html.slice(0, sheetsStart) + `  /* ---------------- lead score: origem dos dados ---------------- */
+  // Quais formulários entraram na conta, e o lembrete de que nada pessoal é publicado.
+  function sheetStatusHtml() {
+    const L = S.leads.info; if (!L) return '';
+    const forms = (L.forms || []).filter((f) => f.count || f.error);
+    return '<div class="qcols"><span>respostas lidas direto da Meta, sem nome nem telefone</span>' +
+      forms.map((f) => f.error
+        ? '<span style="color:var(--critical-ink)">' + esc(f.name) + ': ' + esc(f.error) + '</span>'
+        : '<span>' + esc(f.name) + ': <b style="color:var(--ink-2)">' + int(f.count) + '</b></span>').join('') +
+      '</div>';
+  }
+
+` + html.slice(sheetsEnd);
+
+replaceOnce(`  // the placement breakdown for that same window, when it has already been read
+  function ensurePlatWindow(since) {
+    if (!S.mcp || !S.range) return;
+    const until = S.range.until;
+    if (!since) {
+      if (S.platWin.unsub) { try { S.platWin.unsub(); } catch (e) {} }
+      S.platWin = { since: null, until: null, unsub: null }; S.raw.platWin = null; return;
+    }
+    if (S.platWin.since === since && S.platWin.until === until) return;
+    if (S.platWin.unsub) { try { S.platWin.unsub(); } catch (e) {} }
+    S.raw.platWin = null;
+    const spec = baseInput({ level: 'campaign', time_range: tr(since, until), fields: F_PLAT, breakdowns: ['publisher_platform'], limit: 500 });
+    S.platWin = { since, until, unsub: null };
+    S.platWin.unsub = S.mcp.watchTool(SERVER, 'ads_get_ad_entities', spec, (ev) => {
+      if (ev.type === 'data') { const p = payloadOf(ev.result); if (p && typeof p === 'object') { S.raw.platWin = p; renderPlat(); } }
+      else console.warn('watch platWin', ev.error);
+    }, { refetchInterval: REFRESH_MS, cache: CACHE_OPTS });
+  }`,
+`  // Aqui a quebra por posicionamento é a do período inteiro, que já vem no data.json:
+  // não há como pedir uma janela menor à Meta de dentro da página publicada.
+  function ensurePlatWindow() {}`, 'janela de posicionamento');
+
+/* os botões do cartão de planilhas não existem mais nesta versão */
+replaceOnce(`  // setup card actions (the card is re-rendered, so the handlers live on the section)
+  document.getElementById('secScore').addEventListener('click', async (ev) => {`,
+`  // o cartão de escolher planilhas não existe na página publicada
+  document.getElementById('secScore').addEventListener('click', async (ev) => {
+    return;
+    /* eslint-disable no-unreachable */`, 'abre o handler do cartão');
+
+replaceOnce('<th title="linhas da planilha no período">Leads (planilha)</th>',
+  '<th title="respostas do formulário no período">Leads (formulário)</th>', 'coluna de leads da tabela');
+
 /* 7. boot */
 const bootStart = html.indexOf('  (async function boot() {');
 const bootEnd = html.indexOf('  })();', bootStart);
@@ -163,7 +286,8 @@ html = html.slice(0, bootStart) + `  function failed(e) {
 
 /* conferências finais */
 for (const proibido of ['window.claude', 'mcp.watchTool', 'S.mcp', 'claude.ai', 'ACCESS_STEPS']) {
-  if (html.includes(proibido)) throw new Error('sobrou referência ao conector: ' + proibido);
+  const at = html.indexOf(proibido);
+  if (at !== -1) throw new Error('sobrou referência ao conector: ' + proibido + '\n  ...' + html.slice(Math.max(0, at - 160), at + 160).replace(/\s+/g, ' ') + '...');
 }
 if (!html.startsWith('<!DOCTYPE html>')) throw new Error('documento sem doctype');
 

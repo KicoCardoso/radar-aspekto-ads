@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Painel de desempenho das campanhas da Aspekto (BH e SP).">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Radar Aspekto Ads</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A1%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
   :root {
@@ -459,27 +452,7 @@
     .top { padding-top: 14px; }
     .top.stuck .brand { display: none; }
   }
-  /* --- ajuste de largura fora do visualizador de artifacts --- */
-  html, body { max-width: 100%; overflow-x: hidden; }
-  .app, .app > *, .main, .wrap, section, .card, .charts, .charts > *, .kpis, .tiles, .tscroll { min-width: 0; }
-  .side { max-width: 100%; }
-  @media (max-width: 1024px) {
-    .side { -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
-    .side nav { flex: 1 1 auto; min-width: 0; }
-  }
-  /* números grandes cabem na coluna estreita do celular em vez de serem cortados */
-  @media (max-width: 760px) {
-    .kpi .val { font-size: 21px; }
-    .kpi.hl .val { font-size: 25px; }
-    .kpi.hl { margin: -8px 2px; padding: 12px 14px; }
-    .tile .val { font-size: 22px; }
-  }
-  @media (max-width: 420px) {
-    .kpi .val, .kpi.hl .val, .tile .val { font-size: 19px; }
-  }
 </style>
-</head>
-<body>
 
 <div class="app">
   <aside class="side">
@@ -537,7 +510,7 @@
   </section>
 
   <section id="secToday">
-    <div class="sec-head"><h2>Hoje</h2><span class="note" id="todayNote">atualiza de hora em hora</span></div>
+    <div class="sec-head"><h2>Hoje</h2><span class="note" id="todayNote">até agora · atualiza a cada 5 min</span></div>
     <div class="tiles" id="todayRow"></div>
   </section>
 
@@ -585,7 +558,7 @@
   </section>
 
   <section id="secPlat">
-    <div class="sec-head"><h2>Facebook × Instagram</h2><span class="note">investimento e respostas do formulário vindos da Meta</span></div>
+    <div class="sec-head"><h2>Facebook × Instagram</h2><span class="note">investimento vindo da Meta · leads e lead score vindos da planilha do formulário</span></div>
     <div class="charts temp">
       <div class="card">
         <h3>Leads por plataforma, por faixa de score</h3>
@@ -695,10 +668,10 @@
     <div><b>Estrutura.</b> A região vem das tags [BH]/[SP] no nome; o destino de [Formulario]/[Whatsapp]; a etapa de [L1–L3]/[E1–E3]. Campanhas sem essas tags entram em "Outros".</div>
     <div><b>Temperatura do lead.</b> É a etapa da campanha que gerou o contato — origem, não qualidade; a qualidade está no lead score. A temperatura é inferida assim: as campanhas de meio (L2/E2) e fundo (L3/E3) só alcançam quem já foi impactado pelas etapas anteriores (públicos de remarketing), então um contato vindo do meio já consumiu o topo (morno) e um vindo do fundo percorreu topo e meio (quente). Contato de campanha de topo = frio. Temperatura média = média ponderada (frio 1 · morno 2 · quente 3). A Meta atribui o contato à campanha do último clique/visualização, por isso é uma aproximação.</div>
     <div><b>Impressões e alcance.</b> Impressões = vezes que os anúncios foram exibidos; alcance = pessoas únicas por campanha, somado entre as campanhas da mesma etapa (quem viu duas campanhas conta duas vezes). Frequência = impressões ÷ alcance. Os níveis 1/2/3 juntam L e E (formulário e WhatsApp) da mesma etapa.</div>
-    <div><b>Lead score.</b> Vem das respostas do formulário, lidas automaticamente na API da Meta. Só as respostas de múltipla escolha são publicadas nesta página: nome, telefone e e-mail não saem da Meta. Conhece as lentes: sim 5 · não 4. Orçamento: à vista 8 · parcelado 7 · sem orçamento 1. Prazo: imediatamente 6 · em até 3 meses 3 · ainda não decidi 2. A soma vai de 7 a 19 (o valor 10 não existe: nenhuma combinação chega nele) e define a faixa: A de 17 a 19 (ligar agora), B de 14 a 16 (ligar essa semana), C de 11 a 13 (nutrir), D de 7 a 9 (fila fria). O orçamento é o que mais pesa: quem tem verba parte de 13 e quem não tem não passa de 12, então a linha entre A/B e C/D é a linha do orçamento, e dentro de cada metade quem decide é o prazo. Leads que não responderam as três perguntas ficam fora do score.</div>
+    <div><b>Lead score.</b> Vem das respostas do formulário, lidas das planilhas do Google. Conhece as lentes: sim 5 · não 4. Orçamento: à vista 8 · parcelado 7 · sem orçamento 1. Prazo: imediatamente 6 · em até 3 meses 3 · ainda não decidi 2. A soma vai de 7 a 19 (o valor 10 não existe: nenhuma combinação chega nele) e define a faixa: A de 17 a 19 (ligar agora), B de 14 a 16 (ligar essa semana), C de 11 a 13 (nutrir), D de 7 a 9 (fila fria). O orçamento é o que mais pesa: quem tem verba parte de 13 e quem não tem não passa de 12, então a linha entre A/B e C/D é a linha do orçamento, e dentro de cada metade quem decide é o prazo. Leads que não responderam as três perguntas ficam fora do score.</div>
     <div><b>Custo por lead no bloco de score.</b> O formulário com as três perguntas é recente, então o painel não divide o gasto do mês inteiro por esses leads: ele soma só o investimento das campanhas de formulário do primeiro dia com lead respondido em diante. Nos primeiros dias esse custo oscila muito, porque o gasto do dia entra inteiro e os leads ainda estão chegando.</div>
-    <div><b>Facebook × Instagram.</b> O investimento por plataforma vem da Meta (quebra por posicionamento), somando só as campanhas de formulário. Os leads e o score vêm das respostas do formulário, pela plataforma que a Meta registra em cada lead. Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e a planilha no momento do envio, e a planilha pode conter leads de outros períodos ou campanhas. Custo por lead A = investimento da plataforma ÷ leads de faixa A dela.</div>
-    <div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente de hora em hora e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>
+    <div><b>Facebook × Instagram.</b> O investimento por plataforma vem da Meta (quebra por posicionamento), somando só as campanhas de formulário. Os leads e o score vêm da planilha, pela coluna de plataforma do lead. Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e a planilha no momento do envio, e a planilha pode conter leads de outros períodos ou campanhas. Custo por lead A = investimento da plataforma ÷ leads de faixa A dela.</div>
+    <div><b>Fonte.</b> Conector Facebook Ads da sua conta claude.ai, lido com as suas credenciais. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial.</div>
   </footer>
 </div>
   </main>
@@ -857,7 +830,7 @@
     let leads = e.lead != null && e.lead !== '' ? parseNum(e.lead) : 0;
     if (!leads && cpl) leads = derived(spend, cpl);
     const cpc = parseNum(e['cost_per_action_type:onsite_conversion.messaging_conversation_started_7d']);
-    let conv = e.conversations != null && e.conversations !== '' ? parseNum(e.conversations) : derived(spend, cpc);
+    let conv = derived(spend, cpc);
     const rc = resultsCount(e.results), rl = resultsLabel(e.results);
     if (!conv && rl === 'conversas' && rc) conv = rc;
     if (!leads && rl === 'leads' && rc) leads = rc;
@@ -914,7 +887,7 @@
     db: null, leads: { cfg: null, src: {}, unsubs: [], rows: null, meta: null, err: null, stamp: null, loading: false },
     platWin: { since: null, until: null, unsub: null },
     stamp: {}, err: {}, unsub: [], tab: 'campaigns', sort: { campaigns: ['spend', 'desc'], adsets: ['spend', 'desc'], ads: ['spend', 'desc'], pacing: ['budget', 'desc'] },
-    model: null, accessDenied: false, offline: false, at: null,
+    model: null, accessDenied: false, offline: false,
     specs: null, retries: {}, gen: 0, stageMetric: 'impressions', region: 'ALL', tempMode: 'share', budgetUnit: 'ALL',
   };
   try {
@@ -1055,12 +1028,10 @@
     return { total, score, share: { 1: total ? bs[1].contacts / total : 0, 2: total ? bs[2].contacts / total : 0, 3: total ? bs[3].contacts / total : 0 } };
   }
 
-  const dataNow = () => S.at ? new Date(S.at) : new Date();
-
   /* ---------------- rendering: today ---------------- */
   function renderToday() {
     const m = S.model, el = $('todayRow');
-    const now = dataNow(); const hourFrac = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);
+    const now = new Date(); const hourFrac = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);
     if (!m || !m.today || !m.totals) { el.innerHTML = tileEmpty(4); return; }
     const t = m.today;
     const budget = m.totals.budget;
@@ -1068,7 +1039,7 @@
     const pace = budget > 0 ? t.spend / expected : null;
     const paceCls = pace == null ? '' : pace < 0.6 ? 'bad' : pace < 0.85 || pace > 1.25 ? 'warn' : '';
     const contacts = t.contacts;
-    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza de hora em hora';
+    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza a cada 5 min';
     el.innerHTML = [
       tile('Investimento hoje', money(t.spend), '<span>orçamento diário ativo ' + money(budget, 0) + '</span>' + (pace != null ? '<span class="delta">' + (paceCls === 'bad' ? '▼' : paceCls === 'warn' ? '•' : '▲') + ' ritmo ' + Math.round(pace * 100) + '%</span>' : ''), '<div class="meter" title="gasto vs. esperado até agora"><i style="width:' + Math.min(100, Math.round((budget ? t.spend / budget : 0) * 100)) + '%"></i></div>', 'accent'),
       tile('Leads · formulário hoje', int(t.leads), '<span><i class="swatch" style="background:var(--s-form)"></i>' + (t.leads ? int(t.formNoMsg) + ' sem mensagem · ' + int(t.formToWa) + ' → WhatsApp' : 'sem leads ainda') + '</span>'),
@@ -1114,7 +1085,7 @@
   function greet() {
     const h = new Date().getHours(); const g = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
     $('hello').innerHTML = g + ', <b>Kico</b>';
-    $('subLine').textContent = 'resumo de ' + monthName(S.range.since).toLowerCase() + ' · atualiza de hora em hora';
+    $('subLine').textContent = 'resumo de ' + monthName(S.range.since).toLowerCase() + ' · atualiza a cada 5 min';
   }
   function monthName(isoDate) { const d = new Date(isoDate + 'T12:00:00'); const s = d.toLocaleDateString('pt-BR', { month: 'long' }); return s.charAt(0).toUpperCase() + s.slice(1); }
 
@@ -1164,7 +1135,7 @@
   function renderCharts() {
     const m = S.model;
     const days = m && m.days && m.days.length ? m.days : null;
-    if (!days) { for (const id of ['chSpend', 'chContacts', 'chCost']) $(id).innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return; }
+    if (!days) { for (const id of ['chSpend', 'chContacts', 'chCost']) $(id).innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando a série diária…') + '</div>'; return; }
     const n = days.length;
     // 1. stacked spend — by region in "Geral", by destination when one region is selected
     const st = spendStack();
@@ -1256,7 +1227,7 @@
   /* ---------------- rendering: daily budget split ---------------- */
   function renderBudget() {
     const m = S.model, barsEl = $('budgetBars'), tblEl = $('budgetTbl');
-    if (!m || !m.camps.length) { barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = ''; $('budgetHint').textContent = 'R$/dia'; return; }
+    if (!m || !m.camps.length) { barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = ''; $('budgetHint').textContent = 'R$/dia'; return; }
     const act = m.camps.filter(c => c.budget > 0);
     const total = act.reduce((t, c) => t + c.budget, 0);
     // unit shown in this card: the card's own toggle when the page is on "Geral", else the page filter
@@ -1326,8 +1297,8 @@
   function renderTemp() {
     const m = S.model, gEl = $('tempGauge'), tEl = $('tempTbl'), cEl = $('chTemp');
     if (!m || !m.temp) {
-      gEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tEl.innerHTML = '';
-      cEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return;
+      gEl.innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando campanhas…') + '</div>'; tEl.innerHTML = '';
+      cEl.innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando a série diária…') + '</div>'; return;
     }
     const T = m.temp, P = m.prevTotals && m.prevTotals.temp;
     if (!T.total) { gEl.innerHTML = '<div class="empty">Ainda não há contatos em campanhas com etapa ([L1]–[L3] / [E1]–[E3]) neste mês.</div>'; tEl.innerHTML = ''; }
@@ -1409,8 +1380,8 @@
   function renderFunnel() {
     const m = S.model; const barsEl = $('chStageBars'), tblEl = $('stageVol'), dailyEl = $('chStageDaily');
     if (!m || !m.camps.length) {
-      barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = '';
-      dailyEl.innerHTML = '<div class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a série diária…') + '</div>'; return;
+      barsEl.innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando campanhas…') + '</div>'; tblEl.innerHTML = '';
+      dailyEl.innerHTML = '<div class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando a série diária…') + '</div>'; return;
     }
     // period volumes: region × stage
     const mk = () => ({ 1: { impressions: 0, reach: 0, spend: 0, n: 0 }, 2: { impressions: 0, reach: 0, spend: 0, n: 0 }, 3: { impressions: 0, reach: 0, spend: 0, n: 0 } });
@@ -1699,66 +1670,89 @@
     $('bannerTitle').textContent = title; $('bannerText').textContent = text;
     const ol = $('bannerSteps'); if (steps && steps.length) { ol.innerHTML = steps.map(s => '<li>' + s + '</li>').join(''); ol.hidden = false; } else ol.hidden = true;
   }
+  const ACCESS_STEPS = [
+    '<b>Mais rápido — reconectar o conector:</b> em claude.ai, abra <b>Configurações → Conectores → Facebook Ads</b>, desconecte e conecte de novo entrando com o perfil do Facebook que administra a conta Henrique. Na tela de permissões da Meta, confira que a conta <b>Henrique (Aspekto Saude)</b> está marcada.',
+    '<b>Ou liberar no Business Manager:</b> no Meta Business Suite do negócio <b>Aspekto Saude</b>, em <b>Configurações → Contas de anúncios → Henrique → Pessoas</b>, adicione o perfil que já está conectado ao Claude com acesso de <b>Analisar desempenho</b>.',
+    'Depois recarregue esta página (permita o conector se o claude.ai perguntar) ou clique em <b>Atualizar</b>.',
+  ];
 
-  /* ---------------- dados (arquivo data.json publicado junto com a página) ---------------- */
-  const DATA_URL = 'data.json';
-  const KEYS = ['campaigns', 'adsets', 'ads', 'daily', 'prev', 'today', 'plat'];
-
-  function applyData(data) {
-    if (!data || typeof data !== 'object' || !Array.isArray(data.campaigns)) throw new Error('formato inesperado');
-    if (data.range && data.range.since && data.range.until) S.range = data.range;
-    for (const k of KEYS) S.raw[k] = data[k] ? { ad_entities: data[k] } : null;
-    const parsed = data.generatedAt ? new Date(data.generatedAt) : new Date();
-    const stamp = isFinite(parsed.getTime()) ? parsed.getTime() : Date.now();
-    const at = new Date(stamp);
-    S.at = stamp;
-    for (const k of KEYS) if (S.raw[k]) S.stamp[k] = stamp;
-    applyLeads(data.leads);
-    S.offline = false;
-    document.querySelectorAll('section').forEach(s => s.classList.remove('stale'));
-    banner(null);
-    setLive(stale(stamp) ? 'wait' : 'on', 'atualizado');
-    greet();
+  /* ---------------- watches ---------------- */
+  function baseInput(extra) { return Object.assign({ ad_account_id: S.account, client_conversation_id: CONV_ID, advertiser_request: REQUEST_TEXT, include_additional_context: false }, extra); }
+  function tr(since, until) { return JSON.stringify({ since, until }); }
+  function stopWatches() { for (const u of S.unsub) { try { u(); } catch (e) {} } S.unsub = []; }
+  const CACHE_OPTS = { staleTime: 60 * 1000, gcTime: 60 * 60 * 1000 };
+  function buildSpecs(R) {
+    const specs = {
+      campaigns: baseInput({ level: 'campaign', time_range: tr(R.since, R.until), fields: F_CAMPAIGN, limit: 500 }),
+      adsets: baseInput({ level: 'adset', time_range: tr(R.since, R.until), fields: F_ADSET, limit: 1000 }),
+      ads: baseInput({ level: 'ad', time_range: tr(R.since, R.until), fields: F_AD, limit: 1000 }),
+      daily: baseInput({ level: 'campaign', time_range: tr(R.since, R.until), time_increment: '1', fields: F_DAILY, limit: 500 }),
+      prev: baseInput({ level: 'campaign', time_range: tr(R.cSince, R.cUntil), fields: F_PREV, limit: 500 }),
+      plat: baseInput({ level: 'campaign', time_range: tr(R.since, R.until), fields: F_PLAT, breakdowns: ['publisher_platform'], limit: 500 }),
+    };
+    const inPeriod = R.since <= R.today && R.today <= R.until;
+    if (!inPeriod) specs.today = baseInput({ level: 'campaign', time_range: tr(R.today, R.today), fields: F_DAILY, limit: 500 });
+    return specs;
+  }
+  function startWatches() {
+    if (!S.mcp) return;
+    stopWatches();
+    S.range = periodRange(S.period);
+    for (const k of Object.keys(S.raw)) { S.raw[k] = null; S.stamp[k] = null; S.err[k] = null; }
+    S.accessDenied = false; banner(null);
+    const specs = buildSpecs(S.range);
+    S.specs = specs; S.retries = {}; S.gen++;
+    setLive('wait', 'buscando');
+    document.querySelectorAll('section').forEach(s => s.classList.add('stale'));
     renderAll();
-    const el = $('srcStamp');
-    if (el) el.textContent = 'Leitura de ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + '.';
-    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 3 horas. A atualização automática roda de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.');
-  }
-  const stale = (ts) => Date.now() - ts > 3 * 60 * 60 * 1000;
-
-  /* ---------------- respostas do formulário (vêm no mesmo data.json) ---------------- */
-  // O coletor manda só as respostas de múltipla escolha, sem nome, telefone ou e-mail.
-  // Aqui elas viram a mesma tabela que a planilha do Google entregava no painel interno,
-  // para que o resto da página (score, faixas, Facebook × Instagram) não mude.
-  function leadsCsv(L) {
-    const q = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-    const head = ['created_time', 'platform', 'campaign_name'].concat(L.fields || []);
-    const lines = [head.map(q).join(',')];
-    for (const r of L.rows || []) {
-      const camp = (L.campaigns || [])[r[2]] || '';
-      lines.push([r[0], r[1], camp].concat(r[3] || []).map(q).join(','));
+    for (const key of Object.keys(specs)) {
+      const un = S.mcp.watchTool(SERVER, 'ads_get_ad_entities', specs[key], (ev) => onEvent(key, ev), { refetchInterval: REFRESH_MS, cache: CACHE_OPTS });
+      S.unsub.push(un);
     }
-    return lines.join('\n');
   }
-  function applyLeads(L) {
-    S.leads.cfg = { sheets: [] };
-    S.leads.src = {}; S.leads.loading = false; S.leads.info = L || null;
-    if (!L || !Array.isArray(L.rows) || !(L.fields || []).length) {
-      S.leads.rows = null; S.leads.meta = null;
-      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
+  function payloadOf(result) {
+    let p = result.payload;
+    if (p == null && result.content && result.content.length) { const t = result.content.find(b => b.type === 'text'); p = t ? t.text : null; }
+    if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { /* keep string */ } }
+    return p;
+  }
+  function onEvent(key, ev) {
+    if (ev.type === 'data') {
+      const p = payloadOf(ev.result);
+      if (!p || typeof p !== 'object') { S.err[key] = { code: 'bad_payload', message: 'resposta inesperada' }; return; }
+      S.raw[key] = p; S.err[key] = null;
+      S.stamp[key] = ev.result.cache && ev.result.cache.storedAt ? ev.result.cache.storedAt : Date.now();
+      const ready = Object.keys(S.specs || {}).every(k => S.raw[k]);
+      if (ready) { document.querySelectorAll('section').forEach(s => s.classList.remove('stale')); setLive('on', 'ao vivo'); }
+      renderAll();
       return;
     }
-    const parsed = parseSheet(leadsCsv(L));
-    S.leads.rows = parsed.rows; S.leads.meta = parsed.meta; S.leads.stamp = S.at || Date.now();
-    S.leads.err = parsed.meta.fatal ? { message: parsed.meta.fatal } : null;
+    const e = ev.error || {}; S.err[key] = e; console.warn('watch error', key, e);
+    const code = e.code || 'upstream_error';
+    // Transient failure (incl. the first call that raced the consent prompt): re-issue once or twice, honoring retryAfterMs.
+    const retrying = (e.retryable || code === 'server_unavailable' || code === 'rate_limited' || code === 'upstream_error') && scheduleRetry(key, e);
+    const denial = ['needs_reauth', 'server_not_connected', 'not_in_manifest', 'blocked_by_policy', 'approval_required', 'selection_required', 'not_granted', 'capability_disabled', 'capability_removed', 'consent_required'].includes(code);
+    if (denial) { S.raw[key] = null; S.stamp[key] = null; }
+    if (code === 'tool_error' && /not found|do not have access|access|permission/i.test(e.message || '')) {
+      S.accessDenied = true; S.raw[key] = null; S.stamp[key] = null;
+      setLive('err', 'sem acesso');
+      banner('warning', 'O conector ainda não enxerga a conta ' + DEFAULT_ACCOUNT_NAME + ' (' + S.account + ')', 'A Meta respondeu que o perfil do Facebook conectado ao Claude não tem permissão nesta conta de anúncios. Resolva de um dos dois jeitos abaixo (basta um) e o painel passa a atualizar sozinho.', ACCESS_STEPS);
+    } else if (code === 'needs_reauth') { setLive('err', 'reconectar'); banner('critical', 'Reconecte o Facebook Ads', 'A autorização do conector expirou. Em claude.ai, abra Configurações → Conectores e reconecte o Facebook Ads; depois clique em Atualizar.'); }
+    else if (code === 'server_not_connected' || code === 'selection_required') { setLive('err', 'sem conector'); banner('critical', 'Conector Facebook Ads não encontrado', 'Adicione (ou escolha) o conector Facebook Ads em claude.ai → Configurações → Conectores e recarregue a página.'); }
+    else if (code === 'not_in_manifest' || code === 'blocked_by_policy' || code === 'approval_required' || code === 'not_granted' || code === 'consent_required') { setLive('err', 'sem permissão'); banner('critical', 'Esta página não tem permissão para usar o conector', 'Ao abrir a página, permita o acesso ao conector Facebook Ads quando o claude.ai perguntar (ou revise as permissões da página).'); }
+    else if (code === 'tool_error') { setLive('err', 'erro na Meta'); banner('warning', 'A Meta devolveu um erro nesta consulta', (e.message || '').slice(0, 300)); }
+    else {
+      setLive(S.raw[key] ? 'wait' : (retrying ? 'wait' : 'err'), retrying ? 'tentando de novo' : 'erro');
+      if (!S.raw[key]) banner(retrying ? 'info' : 'warning', retrying ? 'Conectando ao Facebook Ads…' : 'Não consegui ler os dados agora', retrying ? 'A primeira leitura não completou (' + code + '); estou tentando de novo em alguns segundos.' : 'O conector não respondeu (' + code + '). Mantive os últimos dados quando havia; a próxima atualização automática tenta de novo — ou clique em Atualizar.');
+    }
+    renderAll();
   }
-
-  async function load() {
-    setLive('wait', 'carregando');
-    document.querySelectorAll('section').forEach(s => s.classList.add('stale'));
-    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    applyData(await res.json());
+  function scheduleRetry(key, e) {
+    const n = S.retries[key] || 0; if (n >= 2 || !S.mcp || !S.specs || !S.specs[key]) return false;
+    S.retries[key] = n + 1;
+    const gen = S.gen; const delay = Math.min(60000, (e && e.retryAfterMs) || (2500 + Math.random() * 3000) * (n + 1));
+    setTimeout(() => { if (gen !== S.gen || !S.mcp) return; S.mcp.invalidate(SERVER, 'ads_get_ad_entities', S.specs[key]).catch(() => {}); }, delay);
+    return true;
   }
 
   /* ---------------- controls ---------------- */
@@ -1823,8 +1817,9 @@
   window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { if (S.model) { renderCharts(); renderTemp(); renderFunnel(); } }, 150); });
   $('refreshBtn').addEventListener('click', async () => {
     const b = $('refreshBtn'); b.disabled = true; b.textContent = '↻ Atualizando…';
-    try { await load(); } catch (e) { console.warn('refresh', e); failed(e); }
-    b.disabled = false; b.textContent = '↻ Atualizar';
+    S.retries = {};
+    try { if (S.mcp) await S.mcp.invalidate(SERVER, 'ads_get_ad_entities'); } catch (e) {}
+    setTimeout(() => { b.disabled = false; b.textContent = '↻ Atualizar'; }, 2500);
   });
   $('stageMetricSeg').addEventListener('click', (ev) => {
     const b = ev.target.closest('button[data-m]'); if (!b) return;
@@ -1954,16 +1949,115 @@
     return { rows, meta };
   }
 
-  /* ---------------- lead score: origem dos dados ---------------- */
-  // Quais formulários entraram na conta, e o lembrete de que nada pessoal é publicado.
+  /* ---------------- lead score: config (which sheets) ---------------- */
+  function sheetIdFrom(input) {
+    const s = String(input || '').trim();
+    const m = /\/spreadsheets\/d\/([a-zA-Z0-9_-]{15,})/.exec(s) || /\/file\/d\/([a-zA-Z0-9_-]{15,})/.exec(s) || /[?&]id=([a-zA-Z0-9_-]{15,})/.exec(s);
+    if (m) return m[1];
+    if (/^[a-zA-Z0-9_-]{25,}$/.test(s)) return s;
+    return null;
+  }
+  // a config is a list of sheets ({fileId, url}); the single-sheet shape from older versions still loads
+  function normalizeCfg(d) {
+    if (!d) return null;
+    const list = Array.isArray(d.sheets) ? d.sheets : (d.fileId ? [{ fileId: d.fileId, url: d.url || '' }] : []);
+    const out = [];
+    for (const it of list) { const id = it && it.fileId ? String(it.fileId) : sheetIdFrom(it && it.url); if (id && !out.some(x => x.fileId === id)) out.push({ fileId: id, url: String((it && it.url) || '') }); }
+    return out.length ? { sheets: out } : null;
+  }
+  async function loadSheetCfg() {
+    let cfg = null;
+    try { const ls = localStorage.getItem('radar.sheet'); if (ls) cfg = normalizeCfg(JSON.parse(ls)); } catch (e) {}
+    if (S.db) {
+      try { const snap = await S.db.doc(SHEET_DOC).get(); if (snap.exists) { const c = normalizeCfg(snap.data() || {}); if (c) cfg = c; } } catch (e) { console.warn('cfg', e); }
+    }
+    S.leads.cfg = cfg;
+  }
+  async function saveSheetCfg(cfg) {
+    S.leads.cfg = cfg;
+    try { localStorage.setItem('radar.sheet', JSON.stringify(cfg)); } catch (e) {}
+    if (S.db) { try { await S.db.doc(SHEET_DOC).set({ sheets: cfg ? cfg.sheets : [], savedAt: new Date().toISOString() }); } catch (e) { console.warn('save cfg', e); } }
+  }
+  function parseSheetLinks(text) {
+    const out = [];
+    for (const line of String(text || '').split(/[\n,\s]+/)) {
+      const raw = line.trim(); if (!raw) continue;
+      const id = sheetIdFrom(raw); if (id && !out.some(x => x.fileId === id)) out.push({ fileId: id, url: raw });
+    }
+    return out;
+  }
+  function startSheetWatch() {
+    for (const u of S.leads.unsubs) { try { u(); } catch (e) {} }
+    S.leads.unsubs = []; S.leads.src = {}; S.leads.rows = null; S.leads.meta = null; S.leads.err = null;
+    if (!S.mcp || !S.leads.cfg) { S.leads.loading = false; renderScore(); renderPlat(); return; }
+    S.leads.loading = true;
+    renderScore(); renderPlat();
+    for (const sh of S.leads.cfg.sheets) {
+      const id = sh.fileId;
+      S.leads.src[id] = { rows: null, meta: null, err: null, stamp: null, title: '' };
+      const un = S.mcp.watchTool(DRIVE_SERVER, DRIVE_TOOL, { fileId: id, exportMimeType: 'text/csv' }, (ev) => onSheetEvent(id, ev), { refetchInterval: REFRESH_MS, cache: CACHE_OPTS });
+      S.leads.unsubs.push(un);
+    }
+  }
+  function onSheetEvent(id, ev) {
+    const src = S.leads.src[id] = S.leads.src[id] || { rows: null, meta: null, err: null, stamp: null, title: '' };
+    if (ev.type === 'data') {
+      const p = payloadOf(ev.result);
+      const body = p && typeof p === 'object' ? (p.content != null ? p.content : p.data != null ? p.data : p.body) : p;
+      src.title = p && typeof p === 'object' && p.title ? String(p.title) : '';
+      if (body == null) { src.err = { code: 'bad_payload', message: 'a resposta da planilha veio vazia' }; src.rows = null; }
+      else {
+        const parsed = parseSheet(maybeDecode(body));
+        src.rows = parsed.rows; src.meta = parsed.meta;
+        src.err = parsed.meta.fatal ? { code: 'sheet_empty', message: parsed.meta.fatal } : null;
+        src.stamp = ev.result.cache && ev.result.cache.storedAt ? ev.result.cache.storedAt : Date.now();
+      }
+    } else { src.err = ev.error || {}; console.warn('sheet watch', id, src.err); }
+    mergeSheets(); renderScore(); renderPlat();
+  }
+  // every sheet feeds the same pool of leads; a sheet that fails only takes its own rows out
+  function mergeSheets() {
+    const ids = Object.keys(S.leads.src);
+    let rows = null, meta = null, stamp = null, pending = false; const errs = [];
+    for (const id of ids) {
+      const s2 = S.leads.src[id];
+      if (s2.err) { errs.push(s2.err); continue; }
+      if (!s2.rows) { pending = true; continue; }
+      rows = (rows || []).concat(s2.rows);
+      stamp = stamp == null ? s2.stamp : Math.min(stamp, s2.stamp);
+      if (!meta) meta = { headers: s2.meta.headers, mapped: Object.assign({}, s2.meta.mapped), missing: s2.meta.missing.slice(), total: 0 };
+      else { for (const k in s2.meta.mapped) if (!meta.mapped[k]) meta.mapped[k] = s2.meta.mapped[k]; for (const mi of s2.meta.missing) if (!meta.missing.includes(mi)) meta.missing.push(mi); }
+      if (meta) meta.total += s2.meta.total;
+    }
+    S.leads.loading = pending;
+    S.leads.rows = rows; S.leads.meta = meta; S.leads.stamp = stamp;
+    S.leads.err = rows ? null : (errs.length ? errs[0] : null);
+  }
   function sheetStatusHtml() {
-    const L = S.leads.info; if (!L) return '';
-    const forms = (L.forms || []).filter((f) => f.count || f.error);
-    return '<div class="qcols"><span>respostas lidas direto da Meta, sem nome nem telefone</span>' +
-      forms.map((f) => f.error
-        ? '<span style="color:var(--critical-ink)">' + esc(f.name) + ': ' + esc(f.error) + '</span>'
-        : '<span>' + esc(f.name) + ': <b style="color:var(--ink-2)">' + int(f.count) + '</b></span>').join('') +
-      '</div>';
+    const ids = Object.keys(S.leads.src); if (!ids.length) return '';
+    const items = ids.map((id, i) => {
+      const s2 = S.leads.src[id];
+      const name = s2.title || ('Planilha ' + (i + 1));
+      if (s2.err) return '<span style="color:var(--critical-ink)">' + esc(name) + ': ' + esc(sheetErrText(s2.err)) + '</span>';
+      if (!s2.rows) return '<span>' + esc(name) + ': lendo…</span>';
+      return '<span>' + esc(name) + ': <b style="color:var(--ink-2)">' + int(s2.meta.total) + '</b> linhas</span>';
+    });
+    return '<div class="qcols">' + items.join('') + '</div>';
+  }
+  const SHEET_ERR = {
+    needs_reauth: 'A autorização do Google Drive expirou. Em claude.ai, Configurações → Conectores, reconecte o Google Drive.',
+    server_not_connected: 'O conector do Google Drive não está ligado nesta conta do claude.ai. Adicione-o em Configurações → Conectores.',
+    not_in_manifest: 'Esta página ainda não tem permissão para usar o Google Drive. Recarregue e permita o conector quando o claude.ai perguntar.',
+    not_granted: 'Permissão do conector negada nesta página. Recarregue e permita o Google Drive.',
+    consent_required: 'Permita o acesso ao Google Drive quando o claude.ai perguntar.',
+    approval_required: 'Permita o acesso ao Google Drive quando o claude.ai perguntar.',
+  };
+  function sheetErrText(e) {
+    const c = e && e.code;
+    if (SHEET_ERR[c]) return SHEET_ERR[c];
+    if (/not found|no such|404|entity was not found/i.test((e && e.message) || '')) return 'A conta do Google ligada ao claude.ai não enxerga essa planilha. Compartilhe a planilha com essa conta (leitor já basta) ou reconecte o Google Drive com a conta que é dona dela.';
+    if (c === 'tool_error' && /permission|access|403/i.test(e.message || '')) return 'A conta do Google conectada ao claude.ai não tem acesso a essa planilha. Compartilhe a planilha com ela (pode ser só leitura).';
+    return (e && e.message ? String(e.message).slice(0, 240) : 'não consegui ler a planilha agora') + (c ? ' (' + c + ')' : '');
   }
 
   /* ---------------- lead score: model ---------------- */
@@ -2059,16 +2153,31 @@
     for (const k in o) boxStats(o[k]);
     return o;
   }
-  // Aqui a quebra por posicionamento é a do período inteiro, que já vem no data.json:
-  // não há como pedir uma janela menor à Meta de dentro da página publicada.
-  function ensurePlatWindow() {}
+  // the placement breakdown for that same window, when it has already been read
+  function ensurePlatWindow(since) {
+    if (!S.mcp || !S.range) return;
+    const until = S.range.until;
+    if (!since) {
+      if (S.platWin.unsub) { try { S.platWin.unsub(); } catch (e) {} }
+      S.platWin = { since: null, until: null, unsub: null }; S.raw.platWin = null; return;
+    }
+    if (S.platWin.since === since && S.platWin.until === until) return;
+    if (S.platWin.unsub) { try { S.platWin.unsub(); } catch (e) {} }
+    S.raw.platWin = null;
+    const spec = baseInput({ level: 'campaign', time_range: tr(since, until), fields: F_PLAT, breakdowns: ['publisher_platform'], limit: 500 });
+    S.platWin = { since, until, unsub: null };
+    S.platWin.unsub = S.mcp.watchTool(SERVER, 'ads_get_ad_entities', spec, (ev) => {
+      if (ev.type === 'data') { const p = payloadOf(ev.result); if (p && typeof p === 'object') { S.raw.platWin = p; renderPlat(); } }
+      else console.warn('watch platWin', ev.error);
+    }, { refetchInterval: REFRESH_MS, cache: CACHE_OPTS });
+  }
 
   /* ---------------- rendering: lead score ---------------- */
   function setupCard(msg) {
     return '<div class="setup">' +
       '<p>Cole o link das planilhas do Google onde os leads do formulário caem — uma por linha, se houver mais de uma (BH e SP, por exemplo). O painel junta todas, lê as três perguntas e a coluna de plataforma (Facebook ou Instagram) e atualiza junto com o resto.</p>' +
       '<div class="frm"><textarea id="sheetInput" rows="3" placeholder="https://docs.google.com/spreadsheets/d/…" autocomplete="off" spellcheck="false" style="flex:1 1 320px;min-width:0;padding:9px 12px;border-radius:10px;border:1px solid var(--hairline-2);background:var(--surface-2);color:var(--ink);font-size:13px;font-family:var(--mono);resize:vertical">' + esc(S.leads.cfg ? S.leads.cfg.sheets.map(x => x.url || ('https://docs.google.com/spreadsheets/d/' + x.fileId)).join('\n') : '') + '</textarea><button class="btn" type="button" id="sheetSave">Usar estas planilhas</button></div>' +
-      '<div class="msg' + (msg && msg.bad ? ' bad' : '') + '" id="sheetMsg">' + (msg ? esc(msg.text) : 'Nesta página publicada as respostas chegam prontas no arquivo de dados.') + '</div></div>';
+      '<div class="msg' + (msg && msg.bad ? ' bad' : '') + '" id="sheetMsg">' + (msg ? esc(msg.text) : 'Cada planilha precisa estar acessível para a conta do Google ligada ao claude.ai.') + '</div></div>';
   }
   function bandBarHtml(box, opts) {
     opts = opts || {};
@@ -2087,17 +2196,17 @@
     const el = $('scoreBody'), qEl = $('scoreQuestions'), stEl = $('scoreByStage'), note = $('scoreNote'), btn = $('sheetBtn');
     if (!el) return;
     const cfg = S.leads.cfg;
-    btn.hidden = true;
+    btn.hidden = !cfg;
     const clear = () => { qEl.innerHTML = ''; stEl.innerHTML = ''; };
-    if (!cfg) { note.textContent = 'sem dados de formulário'; el.innerHTML = '<div class="empty">Aguardando a primeira coleta de leads.</div>'; clear(); return; }
+    if (!cfg) { note.textContent = 'planilhas ainda não escolhidas'; el.innerHTML = setupCard(); clear(); return; }
     if (S.leads.err) {
-      note.textContent = 'respostas indisponíveis';
-      el.innerHTML = '<div class="banner warning" style="margin-top:4px"><div class="ic">!</div><div><h3>As respostas do formulário ainda não chegaram</h3><p>' + esc(S.leads.err.message || '') + '</p></div></div>' + sheetStatusHtml() + setupCard();
+      note.textContent = 'erro ao ler a planilha';
+      el.innerHTML = '<div class="banner warning" style="margin-top:4px"><div class="ic">!</div><div><h3>Não consegui ler a planilha</h3><p>' + esc(sheetErrText(S.leads.err)) + '</p></div></div>' + sheetStatusHtml() + setupCard();
       clear(); return;
     }
-    if (!S.leads.rows) { note.textContent = 'carregando…'; el.innerHTML = '<div class="empty">Carregando as respostas do formulário…</div>' + sheetStatusHtml(); clear(); return; }
+    if (!S.leads.rows) { note.textContent = 'lendo a planilha…'; el.innerHTML = '<div class="empty">Lendo a planilha de leads…</div>' + sheetStatusHtml(); clear(); return; }
     const L = leadModel(); const M = S.leads.meta || {}; const A = L.all;
-    note.textContent = int(L.total) + ' lead' + (L.total === 1 ? '' : 's') + ' no período' + (M.total ? ' · ' + int(M.total) + ' coletados' : '');
+    note.textContent = int(L.total) + ' lead' + (L.total === 1 ? '' : 's') + ' no período' + (M.total ? ' · ' + int(M.total) + ' na' + (S.leads.cfg.sheets.length > 1 ? 's planilhas' : ' planilha') : '');
     const cols = '<div class="qcols">' + QUESTIONS.map(q => M.mapped && M.mapped[q.key] ? '<span>' + esc(q.short) + ': <code>' + esc(M.mapped[q.key]) + '</code></span>' : '<span style="color:var(--critical-ink)">' + esc(q.short) + ': coluna não encontrada</span>').join('') +
       (M.mapped && M.mapped.platform ? '<span>Plataforma: <code>' + esc(M.mapped.platform) + '</code></span>' : '<span style="color:var(--critical-ink)">Plataforma: coluna não encontrada</span>') +
       (M.mapped && M.mapped.created ? '' : '<span>sem coluna de data: todos os leads entram no período</span>') + '</div>' + sheetStatusHtml();
@@ -2229,7 +2338,7 @@
     const winTxt = P && P.windowed && S.platWin.since ? 'investimento de ' + fmtDay(S.platWin.since) + ' em diante · só dias com investimento' : 'investimento do período todo';
     $('platHint').textContent = 'só campanhas de formulário · ' + winTxt + (S.region === 'ALL' ? ' · BH + SP' : ' · ' + S.region);
     if (!L) {
-      chEl.innerHTML = '<div class="empty">' + (S.leads.err ? 'As respostas do formulário não puderam ser lidas — veja a seção acima.' : 'Carregando as respostas do formulário…') + '</div>';
+      chEl.innerHTML = '<div class="empty">' + (S.leads.cfg ? (S.leads.err ? 'A planilha de leads não pôde ser lida — veja a seção acima.' : 'Lendo a planilha de leads…') : 'Escolha as planilhas de leads na seção acima para separar Facebook e Instagram por lead score.') + '</div>';
       vEl.innerHTML = '';
     } else if (!L.total) {
       chEl.innerHTML = '<div class="empty">Nenhum lead da planilha neste período.</div>'; vEl.innerHTML = '';
@@ -2258,10 +2367,10 @@
       const small = L.all.scored < 30 ? ' <span style="color:var(--muted)">Com ' + int(L.all.scored) + ' leads respondidos a leitura ainda é frágil; a partir de ~30 por plataforma ela fica confiável.</span>' : '';
       vEl.innerHTML = '<div class="verdict">' + txt + small + '</div>';
     }
-    if (!P) { tblEl.innerHTML = '<tbody><tr><td class="empty">' + (S.offline ? 'Dados indisponíveis.' : 'Aguardando a quebra por plataforma na Meta…') + '</td></tr></tbody>'; barsEl.innerHTML = ''; return; }
+    if (!P) { tblEl.innerHTML = '<tbody><tr><td class="empty">' + (S.offline ? 'Sem conexão com o conector.' : 'Aguardando a quebra por plataforma na Meta…') + '</td></tr></tbody>'; barsEl.innerHTML = ''; return; }
     const keys = ['fb', 'ig'].concat(P.other.spend > 0 ? ['other'] : []);
     const totalSpend = keys.reduce((t, k) => t + P[k].spend, 0) || 1;
-    let th = '<thead><tr><th style="text-align:left">Plataforma</th><th>Investimento</th><th title="leads de formulário atribuídos pela Meta">Leads (Meta)</th><th title="respostas do formulário no período">Leads (formulário)</th><th>Score médio</th><th>% A+B</th><th>Custo por lead</th><th title="investimento ÷ leads da faixa A">Custo por lead A</th></tr></thead><tbody>';
+    let th = '<thead><tr><th style="text-align:left">Plataforma</th><th>Investimento</th><th title="leads de formulário atribuídos pela Meta">Leads (Meta)</th><th title="linhas da planilha no período">Leads (planilha)</th><th>Score médio</th><th>% A+B</th><th>Custo por lead</th><th title="investimento ÷ leads da faixa A">Custo por lead A</th></tr></thead><tbody>';
     for (const k of keys) {
       const m = P[k]; const b = L ? L.byPlat[k] : null; const bc = CP ? CP[k] : null;
       const cpl = m.leads ? m.spend / m.leads : null;
@@ -2292,10 +2401,8 @@
           '<b>' + money(x.v) + '</b></div>').join('') + '</div>';
     } else barsEl.innerHTML = '';
   }
-  // o cartão de escolher planilhas não existe na página publicada
+  // setup card actions (the card is re-rendered, so the handlers live on the section)
   document.getElementById('secScore').addEventListener('click', async (ev) => {
-    return;
-    /* eslint-disable no-unreachable */
     const save = ev.target.closest('#sheetSave'); const swap = ev.target.closest('#sheetBtn');
     if (swap) { const el = $('scoreBody'); el.innerHTML = setupCard(); const i = $('sheetInput'); if (i) i.focus(); return; }
     if (!save) return;
@@ -2314,21 +2421,46 @@
   S.range = periodRange(S.period);
   greet();
   renderAll();
-  function failed(e) {
-    S.offline = true; setLive('err', 'sem dados');
-    const local = location.protocol === 'file:';
-    banner('critical', local ? 'Abra a página por um servidor, não como arquivo' : 'Não consegui carregar os dados',
-      local ? 'O navegador bloqueia a leitura do data.json quando a página é aberta direto do disco (file://). Publique no GitHub Pages ou rode "npx serve public" na pasta do projeto.'
-            : 'O arquivo data.json não pôde ser lido (' + (e && e.message ? e.message : 'erro desconhecido') + '). Se a página acabou de ser publicada, aguarde a primeira atualização automática terminar na aba Actions do repositório; depois recarregue.');
-    renderAll();
-  }
   (async function boot() {
-    try { await load(); } catch (e) { console.warn('boot', e); failed(e); }
-    // recarrega sozinho de tempos em tempos: a atualização automática roda de hora em hora
-    setInterval(() => { load().catch((e) => console.warn('auto', e)); }, 10 * 60 * 1000);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) load().catch(() => {}); });
+    let mcp = null;
+    try { mcp = window.claude && window.claude.use ? await window.claude.use('mcp') : null; } catch (e) { mcp = null; }
+    if (!mcp) {
+      S.offline = true; setLive('err', 'sem conector');
+      banner('info', 'Abra esta página dentro do claude.ai para ver os dados ao vivo', 'Fora do claude.ai a página não consegue ler o conector Facebook Ads com as suas credenciais. Os números aparecem assim que ela for aberta no app (ou compartilhada com alguém da sua organização que também tenha o conector).');
+      renderAll(); return;
+    }
+    S.mcp = mcp;
+    // One call first (the campaigns read): it carries the viewer's consent prompt for the connector. Only after it
+    // settles do the data watches start, so none of them races the prompt (which would fail them with upstream_error).
+    // The campaigns watch then replays this same cached result instead of calling again.
+    setLive('wait', 'conectando');
+    S.range = periodRange(S.period);
+    const prime = buildSpecs(S.range).campaigns;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try { await mcp.callTool(SERVER, 'ads_get_ad_entities', prime, { cache: CACHE_OPTS }); break; }
+      catch (e) {
+        console.warn('prime', e);
+        const code = (e && e.code) || 'upstream_error';
+        const transient = (e && e.retryable) || code === 'upstream_error' || code === 'server_unavailable' || code === 'rate_limited';
+        if (!transient || attempt === 2) break; // access/tool errors surface through the watches' own handlers
+        await new Promise(r => setTimeout(r, Math.min(60000, (e && e.retryAfterMs) || (3000 + Math.random() * 3000))));
+      }
+    }
+    startWatches();
+    // lead answers: a Google Sheet the viewer points the page at (kept in the artifact's own store,
+    // with a per-browser copy so the page still finds it if the store is unavailable)
+    try { S.db = window.claude && window.claude.use ? await window.claude.use('db') : null; } catch (e) { S.db = null; }
+    await loadSheetCfg();
+    startSheetWatch();
+    // uma aba deixada aberta durante a virada do dia continuaria presa na janela de ontem:
+    // quando a data muda, o periodo e recalculado e os dados sao buscados de novo
+    setInterval(() => {
+      if (!S.mcp || !S.range) return;
+      const r = periodRange(S.period);
+      if (r.until !== S.range.until) { greet(); startWatches(); }
+    }, 5 * 60 * 1000);
   })();
 })();
 </script>
-</body>
-</html>
+
+</body></html>

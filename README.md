@@ -7,10 +7,29 @@ conta no GitHub, nem no Claude, nem acesso ao Gerenciador de Anúncios.
 
 ```
 GitHub Actions (de hora em hora)
-  └─ scripts/fetch-meta.mjs  →  lê a API da Meta com o token do repositório
-       └─ public/data.json   →  os números
+  ├─ scripts/fetch-meta.mjs   →  investimento, impressões e leads da conta de anúncios
+  └─ scripts/fetch-leads.mjs  →  as respostas do formulário (sem nome, telefone ou e-mail)
+       └─ public/data.json    →  os números
             └─ public/index.html  →  a página, que lê o data.json no navegador de quem abre
 ```
+
+A página é gerada a partir do `dashboard.html` (o painel como ele existe no Claude):
+
+```
+node scripts/build-page.mjs dashboard.html public/index.html
+```
+
+O `build-page.mjs` troca só a camada de dados — em vez de falar com os conectores, a página
+passa a ler o `data.json`. Gráficos, contas e layout continuam idênticos. Sempre que o painel
+mudar, atualize o `dashboard.html` e rode esse comando de novo.
+
+## Dado pessoal
+
+O `data.json` é público (qualquer um que abra a página baixa esse arquivo). Por isso o
+`fetch-leads.mjs` só publica respostas de múltipla escolha do formulário, e joga fora todo o
+resto por duas barreiras independentes: uma lista de nomes de campo conhecidos (nome, telefone,
+e-mail, CPF, endereço…) e uma regra de cardinalidade — campo cujas respostas são quase todas
+diferentes é texto livre e não entra. Os nomes descartados aparecem no registro da execução.
 
 ## Como colocar no ar
 
@@ -23,7 +42,10 @@ Use um **usuário do sistema**, cujo token não expira quando alguém troca de s
 2. **Usuários → Usuários do sistema → Adicionar**. Nome: `Radar Ads`, função **Funcionário**.
 3. Nesse usuário, **Adicionar ativos → Contas de anúncios →** marque **Henrique** com
    **Ver desempenho** (só leitura — o token não consegue alterar nada).
-4. **Gerar novo token**: escolha um app do negócio e marque a permissão **`ads_read`**.
+4. Ainda nesse usuário, **Adicionar ativos → Páginas →** marque **Aspekto Saude** com acesso
+   aos **cadastros** (é o que permite baixar as respostas do formulário).
+5. **Gerar novo token**: escolha um app do negócio, validade **nunca expira**, e marque
+   **`ads_read`**, **`leads_retrieval`**, **`pages_show_list`** e **`pages_read_engagement`**.
    Copie o token; ele só aparece uma vez.
 
 ### 2. Repositório
@@ -31,8 +53,10 @@ Use um **usuário do sistema**, cujo token não expira quando alguém troca de s
 1. Crie um repositório no GitHub (pode ser **público** — o token nunca fica nos arquivos; ele
    vive nos segredos do repositório, que não aparecem no código nem nos registros de execução).
 2. Envie o conteúdo desta pasta para a branch `main`.
-3. **Settings → Secrets and variables → Actions → New repository secret**
-   Nome: `META_ACCESS_TOKEN` · Valor: o token do passo 1.
+3. **Settings → Secrets and variables → Actions**
+   - aba **Secrets** → `META_ACCESS_TOKEN` = o token do passo 1
+   - aba **Variables** → `META_AD_ACCOUNT_ID` = `1545616483609687`
+   - aba **Variables** → `META_PAGE_ID` = `1155805810953446`
 4. **Settings → Pages → Source: GitHub Actions**.
 5. **Actions → Atualizar dados e publicar → Run workflow**.
 

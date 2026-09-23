@@ -43,6 +43,13 @@ jobs:
           META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
         run: node scripts/fetch-meta.mjs
 
+      - name: Ler as respostas do formulário
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_PAGE_ID: ${{ vars.META_PAGE_ID || '1155805810953446' }}
+          META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
+        run: node scripts/fetch-leads.mjs
+
       - name: Conferir o arquivo gerado
         run: node scripts/verificar-dados.mjs
 

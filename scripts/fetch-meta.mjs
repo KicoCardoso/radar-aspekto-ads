@@ -253,6 +253,17 @@ export function dailyRows(insights, campaignsById) {
   });
 }
 
+/** Linhas por posicionamento (Facebook x Instagram), por campanha. */
+export function platRows(insights, campaignsById) {
+  return insights.map((r) => {
+    const id = String(r.campaign_id); const camp = campaignsById[id];
+    const name = camp ? camp.name : r.campaign_name || '';
+    const dest = destOf(name, camp ? { objective: camp.objective } : {});
+    const m = metricsOf(r, dest);
+    return { id, name, publisher_platform: r.publisher_platform || '', amount_spent: m.amount_spent, impressions: m.impressions, reach: m.reach, link_click: m.link_click, lead: m.lead, cost_per_lead: m.cost_per_lead, results: m.results };
+  });
+}
+
 /* ------------------------------------------------------------------ coleta */
 const INSIGHT_BASE = ['spend', 'impressions', 'reach', 'frequency', 'cpm', 'ctr', 'inline_link_clicks', 'actions'];
 const FIELDS = {
@@ -282,14 +293,15 @@ export async function collect({ client, account, now = new Date(), log = () => {
   ]);
   log(`entidades: ${campaignsE.length} campanhas · ${adsetsE.length} conjuntos · ${adsE.length} anúncios`);
 
-  const [campI, adsetI, adI, dailyI, prevI] = await Promise.all([
+  const [campI, adsetI, adI, dailyI, prevI, platI] = await Promise.all([
     insights('campaign', range.since, range.until),
     insights('adset', range.since, range.until),
     insights('ad', range.since, range.until),
     client.all(`${account}/insights`, { level: 'campaign', fields: FIELDS.daily.join(','), time_range: tr(range.since, range.until), time_increment: 1, use_account_attribution_setting: true }),
     client.all(`${account}/insights`, { level: 'campaign', fields: FIELDS.daily.join(','), time_range: tr(range.cSince, range.cUntil), use_account_attribution_setting: true }),
+    client.all(`${account}/insights`, { level: 'campaign', fields: FIELDS.daily.join(','), time_range: tr(range.since, range.until), breakdowns: 'publisher_platform', use_account_attribution_setting: true }),
   ]);
-  log(`insights: ${campI.length} campanhas · ${adsetI.length} conjuntos · ${adI.length} anúncios · ${dailyI.length} linhas diárias · ${prevI.length} do mês anterior`);
+  log(`insights: ${campI.length} campanhas · ${adsetI.length} conjuntos · ${adI.length} anúncios · ${dailyI.length} linhas diárias · ${prevI.length} do mês anterior · ${platI.length} por posicionamento`);
 
   const campaignsById = Object.fromEntries(campaignsE.map((c) => [String(c.id), c]));
   const adsetsById = Object.fromEntries(adsetsE.map((a) => [String(a.id), a]));
@@ -306,6 +318,7 @@ export async function collect({ client, account, now = new Date(), log = () => {
     campaigns, adsets, ads,
     daily: dailyRows(dailyI, campaignsById),
     prev: dailyRows(prevI, campaignsById),
+    plat: platRows(platI, campaignsById),
     today: null,
   };
 }
