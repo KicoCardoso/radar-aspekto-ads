@@ -8,7 +8,8 @@ conta no GitHub, nem no Claude, nem acesso ao Gerenciador de Anúncios.
 ```
 GitHub Actions (de hora em hora)
   ├─ scripts/fetch-meta.mjs   →  investimento, impressões e leads da conta de anúncios
-  └─ scripts/fetch-leads.mjs  →  as respostas do formulário (sem nome, telefone ou e-mail)
+  └─ scripts/fetch-leads.mjs  →  as respostas do formulário (sem nome, telefone ou e-mail),
+                                 lidas por anúncio; se a Meta negar, tenta pela Página
        └─ public/data.json    →  os números
             └─ public/index.html  →  a página, que lê o data.json no navegador de quem abre
 ```
