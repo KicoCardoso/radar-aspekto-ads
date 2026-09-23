@@ -121,7 +121,19 @@ export async function pageClient({ client, pageId, version, log }) {
 export async function collectLeads({ client, pageId, range, version = DEFAULTS.version, now = new Date(), log = () => {} }) {
   const { client: pc, name: pageName } = await pageClient({ client, pageId, version, log });
 
-  const forms = await pc.all(`${pageId}/leadgen_forms`, { fields: 'id,name,status' });
+  let forms;
+  try {
+    forms = await pc.all(`${pageId}/leadgen_forms`, { fields: 'id,name,status' });
+  } catch (e) {
+    throw new Error(
+      'Não consegui listar os formulários da página. ' + e.message + '\n\n' +
+      'O token lê a conta de anúncios mas não a Página. Para corrigir, no Business Manager:\n' +
+      '  1. Configurações do negócio → Usuários do sistema → Radar Ads\n' +
+      '  2. Adicionar ativos → Páginas → Aspekto Saude, com acesso aos cadastros (anúncios da página)\n' +
+      '  3. Gerar novo token marcando ads_read, leads_retrieval, pages_show_list,\n' +
+      '     pages_read_engagement e pages_manage_ads\n' +
+      '  4. Atualizar o segredo META_ACCESS_TOKEN no GitHub (um token já emitido não ganha permissões novas)');
+  }
   log(`formulários na página: ${forms.length}`);
   if (!forms.length) throw new Error('A página não devolveu nenhum formulário de cadastro. Confira se o usuário do sistema tem a Página atribuída com acesso aos cadastros e se o token tem leads_retrieval.');
 
