@@ -52,7 +52,10 @@ replaceOnce('</style>\n', `  /* O visualizador de artifacts embrulha a página n
   [hidden]:not([hidden="until-found" i]) { display: none !important; }
 
   /* --- ajuste de largura fora do visualizador de artifacts --- */
-  html, body { max-width: 100%; overflow-x: hidden; }
+  /* overflow-x:hidden aqui quebrava o position:sticky do cabeçalho — o filtro Geral/BH/SP
+     rolava junto com a página. O estouro de largura que ele mascarava foi corrigido na
+     origem, com min-width:0 nas faixas e uma coluna só no celular. */
+  html, body { max-width: 100%; }
   .app, .app > *, .main, .wrap, section, .card, .charts, .charts > *, .kpis, .tiles, .tscroll { min-width: 0; }
   .side { max-width: 100%; }
   @media (max-width: 1024px) {

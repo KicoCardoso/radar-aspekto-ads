@@ -276,12 +276,15 @@
   .meter.bad { background: color-mix(in srgb, var(--critical) 16%, transparent); }
 
   /* ---------- cards & charts ---------- */
-  .charts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  /* align-items: start — sem isso o grid estica todos os cards de uma linha até a altura do
+     mais alto, e o mais curto fica com um vazio grande embaixo (chegava a 275px no lead score) */
+  .charts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
   .charts.evo { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
   .charts.evo > .card:last-child { grid-column: 1 / -1; }
   .charts.temp, .charts.funnel { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
   @media (max-width: 900px) { .charts.temp, .charts.funnel { grid-template-columns: 1fr; } }
-  .grid2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  @media (max-width: 760px) { .charts, .charts.evo, .grid2 { grid-template-columns: 1fr; } }
+  .grid2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); align-items: start; }
   .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; min-width: 0; }
   .card h3 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
   .card .hint { color: var(--muted); font-size: 12px; margin-top: 2px; }
@@ -366,7 +369,7 @@
   .verdict b { color: var(--ink); }
 
   /* ---------- tables ---------- */
-  .tabs { display: inline-flex; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; box-shadow: var(--shadow); margin-bottom: 12px; }
+  .tabs { display: inline-flex; flex-wrap: wrap; max-width: 100%; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; box-shadow: var(--shadow); margin-bottom: 12px; }
   .tabs button { background: none; border: 0; padding: 7px 14px; cursor: pointer; color: var(--ink-2); font-size: 13px; font-weight: 500; border-radius: 999px; }
   .tabs button[aria-selected="true"] { color: var(--primary); background: var(--primary-soft); font-weight: 600; }
   .tabs button .n { color: var(--muted); font-weight: 500; margin-left: 5px; font-variant-numeric: tabular-nums; }
@@ -434,6 +437,13 @@
   .sr { position: absolute; left: -9999px; }
 
   /* ---------- responsive shell ---------- */
+  /* itens de grid têm min-width:auto, então a barra lateral e as tabelas largas empurravam a
+     página inteira para o lado no celular. Cada faixa fica presa à largura da tela e o que é
+     largo rola por dentro do próprio contêiner. */
+  .app > *, .main, .wrap, section, .card, .charts > *, .grid2 > *, .kpis, .tiles, .tscroll { min-width: 0; }
+  .side { min-width: 0; max-width: 100%; }
+  .side nav { min-width: 0; }
+
   @media (max-width: 1024px) {
     .app { grid-template-columns: 1fr; }
     .side { position: static; height: auto; flex-direction: row; align-items: center; gap: 6px; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--hairline); overflow-x: auto; }
@@ -1347,7 +1357,7 @@
     const share = S.tempMode === 'share';
     const max = share ? 100 : niceMax(Math.max(...days.map(tot)) * 1.05);
     fitChart(cEl);
-    const savedR = CH.r; CH.r = 62; // room for the temperature scale on the right (restored below)
+    const savedR = CH.r, savedH = CH.h; CH.r = 62; CH.h = 300; // escala da temperatura à direita; altura maior para acompanhar o card ao lado
     const f = frame(max, (v) => share ? Math.round(v) + '%' : int(v));
     const n = days.length, bw = f.iw / n, barW = Math.min(24, bw * 0.62);
     let bars = '', line = '', pen = false;
@@ -1371,7 +1381,7 @@
     const lineSvg = '<path d="' + line + '" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"></path>' +
       [[3, 'quente'], [2, 'morno'], [1, 'frio']].map(([v, lab]) => { const y = CH.t + f.ih - (v - 1) / 2 * f.ih; return '<line x1="' + (CH.w - CH.r) + '" x2="' + (CH.w - CH.r + 3) + '" y1="' + y.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="var(--axis)"></line><text class="tick" x="' + ax + '" y="' + (y + 4).toFixed(1) + '">' + v + ' ' + lab + '</text>'; }).join('');
     const svg = svgWrap(barDefs() + f.grid + bars + lineSvg + xLabels(days) + hitLayer(days, 'temp'), 'Temperatura dos contatos por dia');
-    CH.r = savedR;
+    CH.r = savedR; CH.h = savedH;
     cEl.innerHTML = svg;
   }
 
@@ -1438,6 +1448,7 @@
     const totOf = (d) => d.byStage ? [1, 2, 3].reduce((t, s) => t + d.byStage[s][metric], 0) : 0;
     if (!days.some(d => totOf(d) > 0)) { dailyEl.innerHTML = '<div class="empty">Sem ' + (metric === 'reach' ? 'alcance' : 'impressões') + ' por etapa no período.</div>'; return; }
     fitChart(dailyEl);
+    const savedH = CH.h; CH.h = 300; // idem: o card vizinho é bem mais alto
     const max = niceMax(Math.max(...days.map(totOf)) * 1.05);
     const f = frame(max, (v) => compactInt(v));
     const n = days.length, bw = f.iw / n, barW = Math.min(24, bw * 0.62);
@@ -1453,6 +1464,7 @@
       }
     }
     dailyEl.innerHTML = svgWrap(barDefs() + f.grid + bars + xLabels(days) + hitLayer(days, 'stageDaily'), (metric === 'reach' ? 'Alcance' : 'Impressões') + ' por dia por etapa do funil');
+    CH.h = savedH;
   }
   function roundTop(x, y, w, h, r) {
     if (h <= 0) return '';
@@ -2233,10 +2245,10 @@
       '<div><span class="l">A · ligar agora</span><b>' + int(A.A) + '</b><span class="s">' + (cpA ? money(cpA) + ' por lead A' + paidHint(PB.A, A.A) : A.A ? 'sem investimento nos dias desses leads' : 'sem leads A ainda') + '</span></div>' +
       '<div><span class="l">A + B · vale ligação</span><b>' + int(A.ab) + '</b><span class="s">' + (cpAB ? money(cpAB) + ' cada' + paidHint(PB.ab, A.ab) : '—') + '</span></div>' +
       '<div><span class="l">Investimento considerado</span><b>' + (spend == null ? '—' : money(spend, 0)) + '</b><span class="s">' + (fs ? 'campanhas de formulário, de ' + fmtDay(fs.since) + ' em diante · ' + fs.days + ' dia' + (fs.days === 1 ? '' : 's') + ' com investimento' : 'sem leads com score ainda') + '</span></div></div>';
-    el.innerHTML = head + wins + histHtml(L.hist) + bandBarHtml(A, { showNone: true }) + stats +
-      (fs ? '<div class="qcols"><span>o custo por lead conta só os dias em que as campanhas de formulário investiram, a partir de quando o formulário com as perguntas entrou no ar.' +
-        (fs.skipped ? ' ' + fs.skipped + ' dia' + (fs.skipped === 1 ? '' : 's') + ' sem investimento ' + (fs.skipped === 1 ? 'ficou' : 'ficaram') + ' de fora dos dois lados da conta — nem o gasto, nem os leads daquele dia.' : '') +
-        (fs.days <= 3 ? ' Com tão poucos dias, ele ainda se move muito a cada dia.' : '') + '</span></div>' : '') + cols;
+    const notaCusto = fs ? '<div class="qcols"><span>o custo por lead conta só os dias em que as campanhas de formulário investiram, a partir de quando o formulário com as perguntas entrou no ar.' +
+      (fs.skipped ? ' ' + fs.skipped + ' dia' + (fs.skipped === 1 ? '' : 's') + ' sem investimento ' + (fs.skipped === 1 ? 'ficou' : 'ficaram') + ' de fora dos dois lados da conta — nem o gasto, nem os leads daquele dia.' : '') +
+      (fs.days <= 3 ? ' Com tão poucos dias, ele ainda se move muito a cada dia.' : '') + '</span></div>' : '';
+    el.innerHTML = head + wins + histHtml(L.hist) + bandBarHtml(A, { showNone: true }) + stats;
     // the three questions and the budget × timing table
     let h = '';
     for (const q of QUESTIONS) {
@@ -2252,7 +2264,8 @@
         ks.map(k => '<span><i class="swatch" style="background:' + colorOf(k) + '"></i>' + esc(k) + (ptsOf(k) != null ? ' <span class="dim">' + (ptsOf(k) > 0 ? '+' : '') + ptsOf(k) + ' pt' + (Math.abs(ptsOf(k)) === 1 ? '' : 's') + '</span>' : '') + ' <b style="color:var(--ink)">' + int(b.counts[k]) + '</b> · ' + Math.round(b.counts[k] / L.total * 100) + '%</span>').join('') + '</div></div>';
     }
     h += dailyScoreHtml(L);
-    qEl.innerHTML = h || '<div class="empty">As colunas das perguntas não foram encontradas na planilha.</div>';
+    // as notas de rodapé ficam aqui, no card mais curto, em vez de alongar ainda mais o da esquerda
+    qEl.innerHTML = (h || '<div class="empty">As colunas das perguntas não foram encontradas na planilha.</div>') + notaCusto + cols;
     // funnel stage (the lead temperature) against the declared score
     const stages = [1, 2, 3].filter(s => L.byStage[s].n) ;
     if (!stages.length) stEl.innerHTML = '<div class="empty">Os nomes de campanha da planilha não trazem a etapa ([L1]–[L3]).</div>';
