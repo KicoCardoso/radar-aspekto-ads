@@ -84,18 +84,18 @@ replaceOnce("    let conv = derived(spend, cpc);",
 
 /* 3. rodapé: a fonte agora é a API da Meta, não o conector */
 replaceOnce('<div><b>Fonte.</b> Conector Facebook Ads da sua conta claude.ai, lido com as suas credenciais. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial.</div>',
-  '<div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente de hora em hora e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>', 'rodapé fonte');
+  '<div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente a cada 10 minutos e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>', 'rodapé fonte');
 
-/* 4. atualização: de 5 min (conector) para de hora em hora (GitHub Actions);
+/* 4. atualização: de 5 min (conector) para a cada 10 min (GitHub Actions);
       e o bloco "Hoje" passa a se referir ao horário da leitura, não ao relógio de quem abre */
 replaceOnce("monthName(S.range.since).toLowerCase() + ' · atualiza a cada 5 min'",
-  "monthName(S.range.since).toLowerCase() + ' · atualiza de hora em hora'", 'subtítulo');
+  "monthName(S.range.since).toLowerCase() + ' · atualiza a cada 10 min'", 'subtítulo');
 replaceOnce('<span class="note" id="todayNote">até agora · atualiza a cada 5 min</span>',
-  '<span class="note" id="todayNote">atualiza de hora em hora</span>', 'nota do bloco Hoje');
+  '<span class="note" id="todayNote">atualiza a cada 10 min</span>', 'nota do bloco Hoje');
 replaceOnce("    const now = new Date(); const hourFrac = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);",
   "    const now = dataNow(); const hourFrac = Math.max(0.02, (now.getHours() + now.getMinutes() / 60) / 24);", 'relógio do bloco Hoje');
 replaceOnce("    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza a cada 5 min';",
-  "    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza de hora em hora';", 'hora do bloco Hoje');
+  "    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza a cada 10 min';", 'hora do bloco Hoje');
 // dataNow(): o instante da leitura publicada (o ritmo do dia é medido por ele, não pelo relógio do visitante)
 replaceOnce("  /* ---------------- rendering: today ---------------- */",
   "  const dataNow = () => S.at ? new Date(S.at) : new Date();\n\n  /* ---------------- rendering: today ---------------- */", 'helper dataNow');
@@ -133,11 +133,19 @@ html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json
     setLive(stale(stamp) ? 'wait' : 'on', 'atualizado');
     greet();
     renderAll();
-    const el = $('srcStamp');
-    if (el) el.textContent = 'Leitura de ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + '.';
-    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 3 horas. A atualização automática roda de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.');
+    stampAge();
+    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 45 minutos. A atualização automática roda a cada 10 minutos — se continuar assim, verifique a aba Actions do repositório no GitHub.');
   }
-  const stale = (ts) => Date.now() - ts > 3 * 60 * 60 * 1000;
+  const stale = (ts) => Date.now() - ts > 45 * 60 * 1000;
+
+  // Idade da leitura no rodapé, com tique de 30s: 'Leitura de 25/09/2026 17:52 · há 4 minutos.'
+  // O horário sozinho obriga quem lê a fazer a subtração de cabeça.
+  function stampAge() {
+    const el = $('srcStamp'); if (!el || !S.at) return;
+    const when = new Date(S.at), mins = Math.max(0, Math.round((Date.now() - S.at) / 60000));
+    el.textContent = 'Leitura de ' + when.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ' · '
+      + (mins < 1 ? 'agora mesmo' : mins === 1 ? 'há 1 minuto' : 'há ' + mins + ' minutos') + '.';
+  }
 
   /* ---------------- respostas do formulário (vêm no mesmo data.json) ---------------- */
   // O coletor manda só as respostas de múltipla escolha, sem nome, telefone ou e-mail.
@@ -158,7 +166,7 @@ html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json
     S.leads.src = {}; S.leads.loading = false; S.leads.info = L || null;
     if (!L || !Array.isArray(L.rows) || !(L.fields || []).length) {
       S.leads.rows = null; S.leads.meta = null;
-      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
+      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização a cada 10 minutos — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
       return;
     }
     const parsed = parseSheet(leadsCsv(L));
@@ -166,12 +174,37 @@ html = html.slice(0, cutStart) + `  /* ---------------- dados (arquivo data.json
     S.leads.err = parsed.meta.fatal ? { message: parsed.meta.fatal } : null;
   }
 
+  let lastGen = null, quietFails = 0;
+
+  async function fetchData() {
+    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  // Leitura explícita: abertura da página e botão Atualizar. Pode piscar 'carregando',
+  // porque foi pedida.
   async function load() {
     setLive('wait', 'carregando');
     document.querySelectorAll('section').forEach(s => s.classList.add('stale'));
-    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    applyData(await res.json());
+    const data = await fetchData();
+    lastGen = data.generatedAt || null;
+    applyData(data);
+  }
+
+  // Leitura de fundo. Não pisca nada e só repinta quando o data.json publicado é outro:
+  // renderAll() reconstrói as seções, e fazer isso a cada ciclo jogaria fora a ordenação
+  // da tabela e a rolagem de quem está lendo a página. Sem generatedAt, repinta por garantia.
+  async function loadQuiet() {
+    if (document.hidden) return;
+    let data;
+    try { data = await fetchData(); }
+    catch (e) { if (++quietFails >= 3) setLive('wait', 'sem resposta'); console.warn('auto', e); return; }
+    quietFails = 0;
+    const gen = data.generatedAt || null;
+    if (gen && gen === lastGen) { stampAge(); return; }
+    lastGen = gen;
+    applyData(data);
   }
 
   /* ---------------- controls ---------------- */` + html.slice(cutEnd + '  /* ---------------- controls ---------------- */'.length);
@@ -295,9 +328,11 @@ html = html.slice(0, bootStart) + `  function failed(e) {
   }
   (async function boot() {
     try { await load(); } catch (e) { console.warn('boot', e); failed(e); }
-    // recarrega sozinho de tempos em tempos: a atualização automática roda de hora em hora
-    setInterval(() => { load().catch((e) => console.warn('auto', e)); }, 10 * 60 * 1000);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) load().catch(() => {}); });
+    // O pipeline publica a cada 10 min; aqui procuramos arquivo novo a cada 2 min, para que
+    // a página encoste no publicado em vez de esperar o próximo múltiplo de 10.
+    setInterval(loadQuiet, 2 * 60 * 1000);
+    setInterval(stampAge, 30 * 1000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadQuiet(); });
   })();` + html.slice(bootEnd + '  })();'.length);
 
 /* conferências finais */

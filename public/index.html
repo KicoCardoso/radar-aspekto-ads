@@ -556,7 +556,7 @@
   </section>
 
   <section id="secToday">
-    <div class="sec-head"><h2>Hoje</h2><span class="note" id="todayNote">atualiza de hora em hora</span></div>
+    <div class="sec-head"><h2>Hoje</h2><span class="note" id="todayNote">atualiza a cada 10 min</span></div>
     <div class="tiles" id="todayRow"></div>
   </section>
 
@@ -717,7 +717,7 @@
     <div><b>Lead score.</b> Vem das respostas do formulário, lidas automaticamente na API da Meta. Só as respostas de múltipla escolha são publicadas nesta página: nome, telefone e e-mail não saem da Meta. Conhece as lentes: sim 5 · não 4. Orçamento: à vista 8 · parcelado 7 · sem orçamento 1. Prazo: imediatamente 6 · em até 3 meses 3 · ainda não decidi 2. A soma vai de 7 a 19 (o valor 10 não existe: nenhuma combinação chega nele) e define a faixa: A de 17 a 19 (ligar agora), B de 14 a 16 (ligar essa semana), C de 11 a 13 (nutrir), D de 7 a 9 (fila fria). O orçamento é o que mais pesa: quem tem verba parte de 13 e quem não tem não passa de 12, então a linha entre A/B e C/D é a linha do orçamento, e dentro de cada metade quem decide é o prazo. Leads que não responderam as três perguntas ficam fora do score.</div>
     <div><b>Custo por lead no bloco de score.</b> O formulário com as três perguntas é recente, então o painel não divide o gasto do mês inteiro por esses leads: ele soma só o investimento das campanhas de formulário do primeiro dia com lead respondido em diante. Nos primeiros dias esse custo oscila muito, porque o gasto do dia entra inteiro e os leads ainda estão chegando.</div>
     <div><b>Facebook × Instagram.</b> O investimento por plataforma vem da Meta (quebra por posicionamento), somando só as campanhas de formulário. Os leads e o score vêm das respostas do formulário, pela plataforma que a Meta registra em cada lead. Os dois números podem não bater exatamente: a Meta conta o lead no dia do clique e o formulário no momento do envio. Custo por lead A = investimento da plataforma ÷ leads de faixa A dela.</div>
-    <div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente de hora em hora e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>
+    <div><b>Fonte.</b> API de Marketing da Meta (conta Henrique), lida automaticamente a cada 10 minutos e publicada nesta página. Os números da Meta podem levar algumas horas para consolidar; o dia atual é sempre parcial. <span id="srcStamp"></span></div>
   </footer>
 </div>
   </main>
@@ -1087,7 +1087,7 @@
     const pace = budget > 0 ? t.spend / expected : null;
     const paceCls = pace == null ? '' : pace < 0.6 ? 'bad' : pace < 0.85 || pace > 1.25 ? 'warn' : '';
     const contacts = t.contacts;
-    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza de hora em hora';
+    $('todayNote').textContent = 'até ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' · atualiza a cada 10 min';
     el.innerHTML = [
       tile('Investimento hoje', money(t.spend), '<span>orçamento diário ativo ' + money(budget, 0) + '</span>' + (pace != null ? '<span class="delta">' + (paceCls === 'bad' ? '▼' : paceCls === 'warn' ? '•' : '▲') + ' ritmo ' + Math.round(pace * 100) + '%</span>' : ''), '<div class="meter" title="gasto vs. esperado até agora"><i style="width:' + Math.min(100, Math.round((budget ? t.spend / budget : 0) * 100)) + '%"></i></div>', 'accent'),
       tile('Leads · formulário hoje', int(t.leads), '<span><i class="swatch" style="background:var(--s-form)"></i>' + (t.leads ? int(t.formNoMsg) + ' sem mensagem · ' + int(t.formToWa) + ' → WhatsApp' : 'sem leads ainda') + '</span>'),
@@ -1133,7 +1133,7 @@
   function greet() {
     const h = new Date().getHours(); const g = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
     $('hello').innerHTML = g + ', <b>Kico</b>';
-    $('subLine').textContent = 'resumo de ' + monthName(S.range.since).toLowerCase() + ' · atualiza de hora em hora';
+    $('subLine').textContent = 'resumo de ' + monthName(S.range.since).toLowerCase() + ' · atualiza a cada 10 min';
   }
   function monthName(isoDate) { const d = new Date(isoDate + 'T12:00:00'); const s = d.toLocaleDateString('pt-BR', { month: 'long' }); return s.charAt(0).toUpperCase() + s.slice(1); }
 
@@ -1741,11 +1741,19 @@
     setLive(stale(stamp) ? 'wait' : 'on', 'atualizado');
     greet();
     renderAll();
-    const el = $('srcStamp');
-    if (el) el.textContent = 'Leitura de ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + '.';
-    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 3 horas. A atualização automática roda de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.');
+    stampAge();
+    if (stale(stamp)) banner('warning', 'Estes números podem estar atrasados', 'A última leitura da Meta foi em ' + at.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ', há mais de 45 minutos. A atualização automática roda a cada 10 minutos — se continuar assim, verifique a aba Actions do repositório no GitHub.');
   }
-  const stale = (ts) => Date.now() - ts > 3 * 60 * 60 * 1000;
+  const stale = (ts) => Date.now() - ts > 45 * 60 * 1000;
+
+  // Idade da leitura no rodapé, com tique de 30s: 'Leitura de 25/09/2026 17:52 · há 4 minutos.'
+  // O horário sozinho obriga quem lê a fazer a subtração de cabeça.
+  function stampAge() {
+    const el = $('srcStamp'); if (!el || !S.at) return;
+    const when = new Date(S.at), mins = Math.max(0, Math.round((Date.now() - S.at) / 60000));
+    el.textContent = 'Leitura de ' + when.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) + ' · '
+      + (mins < 1 ? 'agora mesmo' : mins === 1 ? 'há 1 minuto' : 'há ' + mins + ' minutos') + '.';
+  }
 
   /* ---------------- respostas do formulário (vêm no mesmo data.json) ---------------- */
   // O coletor manda só as respostas de múltipla escolha, sem nome, telefone ou e-mail.
@@ -1766,7 +1774,7 @@
     S.leads.src = {}; S.leads.loading = false; S.leads.info = L || null;
     if (!L || !Array.isArray(L.rows) || !(L.fields || []).length) {
       S.leads.rows = null; S.leads.meta = null;
-      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização de hora em hora — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
+      S.leads.err = { message: 'O arquivo de dados ainda não traz as respostas do formulário. A coleta roda junto com a atualização a cada 10 minutos — se continuar assim, verifique a aba Actions do repositório no GitHub.' };
       return;
     }
     const parsed = parseSheet(leadsCsv(L));
@@ -1774,12 +1782,37 @@
     S.leads.err = parsed.meta.fatal ? { message: parsed.meta.fatal } : null;
   }
 
+  let lastGen = null, quietFails = 0;
+
+  async function fetchData() {
+    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  // Leitura explícita: abertura da página e botão Atualizar. Pode piscar 'carregando',
+  // porque foi pedida.
   async function load() {
     setLive('wait', 'carregando');
     document.querySelectorAll('section').forEach(s => s.classList.add('stale'));
-    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    applyData(await res.json());
+    const data = await fetchData();
+    lastGen = data.generatedAt || null;
+    applyData(data);
+  }
+
+  // Leitura de fundo. Não pisca nada e só repinta quando o data.json publicado é outro:
+  // renderAll() reconstrói as seções, e fazer isso a cada ciclo jogaria fora a ordenação
+  // da tabela e a rolagem de quem está lendo a página. Sem generatedAt, repinta por garantia.
+  async function loadQuiet() {
+    if (document.hidden) return;
+    let data;
+    try { data = await fetchData(); }
+    catch (e) { if (++quietFails >= 3) setLive('wait', 'sem resposta'); console.warn('auto', e); return; }
+    quietFails = 0;
+    const gen = data.generatedAt || null;
+    if (gen && gen === lastGen) { stampAge(); return; }
+    lastGen = gen;
+    applyData(data);
   }
 
   /* ---------------- controls ---------------- */
@@ -2346,9 +2379,11 @@
   }
   (async function boot() {
     try { await load(); } catch (e) { console.warn('boot', e); failed(e); }
-    // recarrega sozinho de tempos em tempos: a atualização automática roda de hora em hora
-    setInterval(() => { load().catch((e) => console.warn('auto', e)); }, 10 * 60 * 1000);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) load().catch(() => {}); });
+    // O pipeline publica a cada 10 min; aqui procuramos arquivo novo a cada 2 min, para que
+    // a página encoste no publicado em vez de esperar o próximo múltiplo de 10.
+    setInterval(loadQuiet, 2 * 60 * 1000);
+    setInterval(stampAge, 30 * 1000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadQuiet(); });
   })();
 })();
 </script>

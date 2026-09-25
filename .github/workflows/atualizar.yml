@@ -1,12 +1,13 @@
 name: Atualizar dados e publicar
 
 # Lê a conta de anúncios na API da Meta, grava public/data.json e publica a pasta
-# public/ no GitHub Pages. Roda de hora em hora, a cada push na main, e no botão
+# public/ no GitHub Pages. Roda a cada 10 minutos, a cada push na main, e no botão
 # "Run workflow" da aba Actions.
 
 on:
   schedule:
-    - cron: '7 * * * *'      # todo início de hora (minuto 7, horário UTC)
+    - cron: '*/10 * * * *'   # a cada 10 minutos (o mínimo do GitHub são 5; abaixo de 10
+                             # a própria Meta não tem número novo para dar)
   push:
     branches: [main]
   workflow_dispatch:
