@@ -412,6 +412,18 @@
   .matrix th.grp { text-align: center; border-bottom: 0; padding-bottom: 2px; }
   .matrix td.k { text-align: left; font-weight: 500; }
   .matrix td.k .sw { margin-right: 8px; }
+  .matrix tr.sep th, .matrix tr.sep td { border-top: 1px solid var(--hairline-2); padding-top: 11px; }
+  .matrix.wide { width: 100%; table-layout: fixed; }
+  .matrix.wide th:first-child { width: auto; }
+  .matrix.wide thead th:not(:first-child), .matrix.wide td { width: 17%; min-width: 86px; text-align: right; }
+  .matrix.wide td.why { width: 30%; white-space: normal; line-height: 1.35; }
+  .matrix.wide td[colspan] { width: auto; text-align: left; white-space: normal; line-height: 1.4; }
+  @media (max-width: 560px) {
+    .matrix.wide { table-layout: auto; }
+    .matrix.wide thead th:not(:first-child), .matrix.wide td, .matrix.wide td.why { width: auto; }
+    .matrix.wide tbody th:first-child { white-space: normal; line-height: 1.3; max-width: 150px; }
+    .matrix.wide th, .matrix.wide td { padding-left: 8px; padding-right: 8px; }
+  }
   .share { display: inline-grid; grid-template-columns: 1fr 40px; align-items: center; gap: 6px; min-width: 96px; }
   .share .b { height: 8px; border-radius: 4px; background: var(--wash); overflow: hidden; }
   .share .b > i { display: block; height: 100%; border-radius: 4px; }
@@ -474,6 +486,7 @@
       <a href="#secTemp"><svg viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v6"/></svg>Termômetro</a>
       <a href="#secScore"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>Lead score</a>
       <a href="#secPlat"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/></svg>Facebook × Instagram</a>
+      <a href="#secPerfil"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></svg>Perfil A/B</a>
       <a href="#secBudget"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>Orçamento</a>
       <a href="#secCharts"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-8"/><path d="M4 21h16"/></svg>Evolução</a>
       <div class="nav-lab">Estrutura</div>
@@ -583,6 +596,26 @@
         <div class="tscroll" style="border:0"><table class="matrix" id="platTbl"></table></div>
         <div id="platBars"></div>
       </div>
+    </div>
+  </section>
+
+  <section id="secPerfil">
+    <div class="sec-head"><h2>@clinicaaspekto × @gui.martinezf</h2><span class="note" id="perfilNote">teste paralelo · mesmas campanhas de formulário, mesmos criativos, mesmo formulário · a única diferença é o perfil do Instagram</span></div>
+    <div id="perfilGuard"></div>
+    <div class="card">
+      <h3>Custo e qualidade do lead</h3>
+      <div class="hint" id="perfilCostHint">só dias comparáveis · só campanhas de formulário</div>
+      <div class="tscroll" style="border:0"><table class="matrix wide" id="perfilTbl"></table></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h3>Par a par</h3>
+      <div class="hint">cada campanha nova contra a equivalente antiga · mesma praça, mesma etapa</div>
+      <div class="tscroll" style="border:0"><table class="matrix wide" id="perfilPairTbl"></table></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h3>Os dias do período</h3>
+      <div class="hint">a estrutura antiga desliga sexta 19h e volta domingo 19h · só os dias em que as duas rodaram inteiras entram na conta acima</div>
+      <div id="perfilDays"></div>
     </div>
   </section>
 
@@ -807,6 +840,18 @@
   const PERIOD_LABEL = { this_month: 'Mês atual', last_month: 'Mês anterior', last_7d: 'Últimos 7 dias', last_30d: 'Últimos 30 dias', today: 'Hoje', yesterday: 'Ontem' };
 
   /* ---------------- structure classification ---------------- */
+  // A estrutura nova (identidade @clinicaaspekto) leva [Insta clinica] no nome da campanha e do
+  // conjunto. É o único marcador confiável: as duas estruturas compartilham o resto do padrão.
+  const RE_CLINICA = /\[\s*insta\s*cl[ií]nica\s*\]/i;
+  // Chave do par: o nome sem o prefixo. [Insta clinica][BH][Leads][Formulario][L1] casa com
+  // [BH][Leads][Formulario][L1] — é assim que cada campanha nova acha sua equivalente antiga.
+  const pairKeyOf = (n) => String(n || '').replace(RE_CLINICA, '').replace(/\s*—\s*C[óo]pia\s*$/i, '').replace(/\s+/g, ' ').trim();
+  // Na planilha do formulário o lead guarda o nome da campanha de quando foi enviado. Entre a
+  // publicação (7/out) e o renome, a campanha nova se chamava "… — Cópia"; nenhuma campanha antiga
+  // jamais teve "Cópia" no nome, então os dois padrões juntos são seguros.
+  const perfilOfCampName = (n) => (RE_CLINICA.test(String(n || '')) || /c[óo]pia/i.test(String(n || ''))) ? 'clinica' : 'gui';
+  const PERFIL_LABEL = { clinica: '@clinicaaspekto', gui: '@gui.martinezf' };
+
   function classify(name, extra) {
     const n = name || ''; extra = extra || {};
     const region = /\[\s*BH\s*\]/i.test(n) ? 'BH' : /\[\s*SP\s*\]/i.test(n) ? 'SP' : 'Outros';
@@ -827,7 +872,7 @@
     else if (/\[\s*topo/i.test(n)) stageNum = 1; else if (/\[\s*meio/i.test(n)) stageNum = 2; else if (/\[\s*fundo/i.test(n)) stageNum = 3;
     if (!stageKey && stageNum) stageKey = (dest === 'Formulário' ? 'L' : dest === 'WhatsApp' ? 'E' : 'X') + stageNum;
     const stageLabel = { 1: 'Topo', 2: 'Meio', 3: 'Fundo' }[stageNum] || '';
-    return { region, dest, stageNum, stageKey, stageLabel };
+    return { region, dest, stageNum, stageKey, stageLabel, perfil: RE_CLINICA.test(n) ? 'clinica' : 'gui', pairKey: pairKeyOf(n) };
   }
   const REGION_COLOR = { BH: 'var(--s-bh)', SP: 'var(--s-sp)', Outros: 'var(--s-other)' };
   const DEST_COLOR = { 'Formulário': 'var(--s-form)', WhatsApp: 'var(--s-wa)', Outros: 'var(--s-other)' };
@@ -1663,10 +1708,167 @@
   });
 
   /* ---------------- rendering: all ---------------- */
+  /* ---------------- @clinicaaspekto × @gui.martinezf ---------------- */
+  // Seg–qui as duas estruturas rodam o dia inteiro. Sexta a antiga desliga às 19h (regra
+  // automatizada) e só volta domingo 19h — esses dias não comparam, porque a nova rodaria
+  // sozinha e levaria sozinha o CPL pior do fim de semana.
+  // o dia de hoje ainda está correndo: entra na tabela de dias, mas nunca na conta,
+  // senão meia jornada de entrega entraria como se fosse um dia fechado
+  function dayKind(dateStr) {
+    if (S.range && dateStr === S.range.today) return 'today';
+    const dow = new Date(dateStr + 'T12:00:00').getDay(); // 0 dom … 6 sáb
+    return (dow >= 1 && dow <= 4) ? 'full' : dow === 5 ? 'partial' : 'solo';
+  }
+  const DAY_KIND_LABEL = { full: 'comparável', partial: 'sexta · antiga só até 19h', solo: 'só a nova rodou', today: 'hoje · dia ainda em andamento' };
+  const MIN_LEADS = 30, MIN_DAYS = 3; // abaixo disso a diferença é ruído, não resultado
+
+  function perfilModel() {
+    const m = S.model; if (!m || !m.days || !m.days.length) return null;
+    const mk = () => ({ spend: 0, impressions: 0, reach: 0, clicks: 0, leads: 0 });
+    const add = (b, met) => { b.spend += met.spend; b.impressions += met.impressions; b.reach += met.reach; b.clicks += met.clicks; b.leads += met.leads; };
+    const kinds = { full: { clinica: mk(), gui: mk() }, partial: { clinica: mk(), gui: mk() }, solo: { clinica: mk(), gui: mk() }, today: { clinica: mk(), gui: mk() } };
+    const pairs = new Map();
+    const days = [], fullDates = [];
+    let anyClinica = false;
+
+    for (const d of m.days) {
+      const kind = dayKind(d.date);
+      const row = { date: d.date, kind, clinica: mk(), gui: mk() };
+      for (const cid in d.camps) {
+        const c = m.byId[cid]; if (!c || c.cls.dest !== 'Formulário') continue;
+        add(row[c.cls.perfil], d.camps[cid]);
+        if (c.cls.perfil === 'clinica') anyClinica = true;
+      }
+      // um dia só conta como comparável se as duas de fato investiram nele
+      const both = row.clinica.spend > 0 && row.gui.spend > 0;
+      row.comparable = kind === 'full' && both;
+      if (row.comparable) fullDates.push(d.date);
+      if (row.clinica.spend > 0 || row.gui.spend > 0) days.push(row);
+      const bucket = row.comparable ? 'full' : kind === 'full' ? 'partial' : kind;
+      add(kinds[bucket].clinica, row.clinica); add(kinds[bucket].gui, row.gui);
+      if (!row.comparable) continue;
+      for (const cid in d.camps) {
+        const c = m.byId[cid]; if (!c || c.cls.dest !== 'Formulário') continue;
+        const k = c.cls.pairKey;
+        if (!pairs.has(k)) pairs.set(k, { key: k, clinica: mk(), gui: mk() });
+        add(pairs.get(k)[c.cls.perfil], d.camps[cid]);
+      }
+    }
+    if (!anyClinica) return null;
+
+    // leads da planilha, restritos aos mesmos dias comparáveis
+    const dateSet = new Set(fullDates);
+    const sheet = { clinica: mkBandBox(), gui: mkBandBox() };
+    let sheetAny = false;
+    if (S.leads.rows) for (const r of S.leads.rows) {
+      if (!r.date || !dateSet.has(r.date)) continue;
+      if (S.region !== 'ALL' && r.region !== S.region) continue;
+      addToBox(sheet[r.perfil] || sheet.gui, r); sheetAny = true;
+    }
+    boxStats(sheet.clinica); boxStats(sheet.gui);
+
+    const enough = fullDates.length >= MIN_DAYS && kinds.full.clinica.leads >= MIN_LEADS && kinds.full.gui.leads >= MIN_LEADS;
+    return { kinds, pairs: [...pairs.values()].sort((a, b) => a.key.localeCompare(b.key)), days, fullDates, sheet, sheetAny, enough };
+  }
+
+  const pct0 = (v) => v == null ? '—' : Math.round(v * 100) + '%';
+  const cpl = (b) => b.leads ? b.spend / b.leads : null;
+  const cpm = (b) => b.impressions ? b.spend / b.impressions * 1000 : null;
+  const ctr = (b) => b.impressions ? b.clicks / b.impressions * 100 : null;
+
+  function renderPerfil() {
+    const sec = $('secPerfil'); if (!sec) return;
+    const P = perfilModel();
+    if (!P) { sec.hidden = true; return; }
+    sec.hidden = false;
+
+    const nd = P.fullDates.length, A = P.kinds.full.clinica, G = P.kinds.full.gui;
+    // guarda: sem amostra, nenhum número desta seção é conclusão
+    const faltaC = Math.max(0, MIN_LEADS - Math.round(A.leads)), faltaG = Math.max(0, MIN_LEADS - Math.round(G.leads));
+    $('perfilGuard').innerHTML = P.enough
+      ? '<div class="banner info" style="margin:0 0 12px"><div class="ic">i</div><div><h3>Amostra suficiente para ler a diferença</h3>' +
+        '<p>' + nd + ' dias comparáveis · ' + fmtInt.format(Math.round(A.leads)) + ' leads do @clinicaaspekto e ' + fmtInt.format(Math.round(G.leads)) + ' do @gui.martinezf. Os orçamentos são diferentes (a nova roda com 30% do valor da antiga), então compare só as taxas — custo por lead, CPM, CTR, % de lead A — e nunca os totais.</p></div></div>'
+      : '<div class="banner warning" style="margin:0 0 12px"><div class="ic">!</div><div><h3>Ainda não dá para concluir nada daqui</h3>' +
+        '<p>São ' + nd + ' dia' + (nd === 1 ? '' : 's') + ' comparáve' + (nd === 1 ? 'l' : 'is') + ' e ' + fmtInt.format(Math.round(A.leads)) + ' leads do @clinicaaspekto contra ' + fmtInt.format(Math.round(G.leads)) + ' do @gui.martinezf. ' +
+        'Para uma diferença de custo por lead significar alguma coisa eu uso como piso ' + MIN_DAYS + ' dias comparáveis e ' + MIN_LEADS + ' leads de cada lado' +
+        (faltaC || faltaG ? ' — faltam ' + (faltaC ? fmtInt.format(faltaC) + ' do @clinicaaspekto' : '') + (faltaC && faltaG ? ' e ' : '') + (faltaG ? fmtInt.format(faltaG) + ' do @gui.martinezf' : '') : '') +
+        '. Os números abaixo já são reais, mas leia como tendência, não como veredito.</p></div></div>';
+
+    $('perfilCostHint').textContent = nd
+      ? 'só os ' + nd + ' dia' + (nd === 1 ? '' : 's') + ' em que as duas rodaram inteiras · ' + P.fullDates.map(fmtDay).join(', ')
+      : 'ainda não houve um dia inteiro com as duas rodando';
+
+    // ---- tabela principal: só taxas, porque os orçamentos são diferentes
+    const delta = (a, b, lowerIsBetter) => {
+      if (a == null || b == null || !isFinite(a) || !isFinite(b) || !b) return '<td class="dim">—</td>';
+      const d = (a - b) / b * 100;
+      const good = lowerIsBetter ? d < 0 : d > 0;
+      const cls = !P.enough ? 'dim' : good ? 'up' : 'down';
+      return '<td class="' + cls + '">' + (d > 0 ? '+' : '') + fmt1.format(d) + '%</td>';
+    };
+    const row = (label, fa, fg, fmtv, lowerIsBetter, hint) =>
+      '<tr><th>' + label + (hint ? ' <span class="dim">' + hint + '</span>' : '') + '</th><td>' + fmtv(fa) + '</td><td>' + fmtv(fg) + '</td>' + delta(fa, fg, lowerIsBetter) + '</tr>';
+    const mny = (v) => v == null ? '—' : money(v);
+    const pc = (v) => v == null ? '—' : fmt2.format(v) + '%';
+    const sA = P.sheet.clinica, sG = P.sheet.gui;
+    const shareA = (b) => b.scored ? b.A / b.scored * 100 : null;
+    const costA = (spendB, box) => box.A ? spendB.spend / box.A : null;
+    // a planilha de respostas só cobre os formulários que estão ligados a ela. Os formulários
+    // novos ainda não estão: sem checar a cobertura, o lado de fora apareceria com meia dúzia
+    // de respostas contra centenas e a "% de lead A" sairia comparando coisas diferentes.
+    const cover = (box, b) => b.leads ? box.n / b.leads : null;
+    const covA = cover(sA, A), covG = cover(sG, G);
+    const MIN_COVER = 0.5;
+    const sheetUsable = P.sheetAny && covA != null && covG != null && covA >= MIN_COVER && covG >= MIN_COVER;
+    const coverNote = !P.sheetAny
+      ? 'Planilha do formulário não conectada nestes dias — sem faixa de score por perfil.'
+      : 'A planilha de respostas cobre ' + pct0(covA) + ' dos leads do @clinicaaspekto e ' + pct0(covG) + ' dos do @gui.martinezf. ' +
+        'Enquanto os dois formulários não estiverem na mesma planilha, a faixa de score não compara os dois perfis.';
+
+    $('perfilTbl').innerHTML =
+      '<thead><tr><th></th><th>@clinicaaspekto</th><th>@gui.martinezf</th><th>dif.</th></tr></thead><tbody>' +
+      row('Custo por lead', cpl(A), cpl(G), mny, true) +
+      row('CPM', cpm(A), cpm(G), mny, true, '· custo de mil impressões') +
+      row('CTR', ctr(A), ctr(G), pc, false, '· cliques no link') +
+      (sheetUsable
+        ? row('Lead faixa A', shareA(sA), shareA(sG), pc, false, '· % dos leads com as 3 respostas') +
+          row('Custo por lead A', costA(A, sA), costA(G, sG), mny, true)
+        : '<tr><td colspan="4" class="dim">' + coverNote + '</td></tr>') +
+      '<tr class="sep"><th>Investimento <span class="dim">· só referência</span></th><td class="dim">' + money(A.spend) + '</td><td class="dim">' + money(G.spend) + '</td><td class="dim">—</td></tr>' +
+      '<tr><th>Leads <span class="dim">· idem</span></th><td class="dim">' + fmtInt.format(Math.round(A.leads)) + '</td><td class="dim">' + fmtInt.format(Math.round(G.leads)) + '</td><td class="dim">—</td></tr>' +
+      '</tbody>';
+
+    // ---- par a par
+    const pr = P.pairs.filter(p => p.clinica.spend > 0 || p.gui.spend > 0);
+    $('perfilPairTbl').innerHTML = !pr.length
+      ? '<tbody><tr><td class="dim">Nenhum par com investimento em dia comparável ainda.</td></tr></tbody>'
+      : '<thead><tr><th>Campanha</th><th>CPL novo</th><th>CPL antigo</th><th>dif.</th></tr></thead><tbody>' +
+        pr.map(p => {
+          const a = cpl(p.clinica), g = cpl(p.gui);
+          const name = esc(p.key.replace(/\[Leads\]\[Formulario\]/i, '').replace(/\s+/g, ' ').trim()) || esc(p.key);
+          const only = (p.clinica.spend > 0) !== (p.gui.spend > 0);
+          return '<tr><th>' + name + (only ? ' <span class="dim">· só um lado rodou</span>' : '') + '</th><td>' + mny(a) + '</td><td>' + mny(g) + '</td>' + delta(a, g, true) + '</tr>';
+        }).join('') + '</tbody>';
+
+    // ---- dias
+    const whyNot = (d) => {
+      if (d.kind !== 'full') return DAY_KIND_LABEL[d.kind];
+      if (d.clinica.spend <= 0) return 'a nova ainda não investia neste dia';
+      if (d.gui.spend <= 0) return 'a antiga não investiu neste dia';
+      return 'fora da conta';
+    };
+    $('perfilDays').innerHTML = !P.days.length ? '<div class="empty">Sem dias com investimento no período.</div>' :
+      '<div class="tscroll" style="border:0;margin-top:8px"><table class="matrix wide"><thead><tr><th>Dia</th><th>@clinicaaspekto</th><th>@gui.martinezf</th><th>entra na conta?</th></tr></thead><tbody>' +
+      P.days.map(d => '<tr><th>' + fmtDay(d.date) + '</th><td>' + money(d.clinica.spend, 0) + '</td><td>' + money(d.gui.spend, 0) + '</td><td class="why' + (d.comparable ? '' : ' dim') + '">' +
+        (d.comparable ? 'sim' : 'não · ' + whyNot(d)) + '</td></tr>').join('') +
+      '</tbody></table></div>';
+  }
+
   function renderAll() {
     try { recompute(); } catch (e) { console.error('recompute', e); }
     renderKpis(); renderTemp(); renderToday(); renderBudget(); renderCharts(); renderStructure(); renderFunnel(); renderAlerts(); renderTables(); renderFresh();
     try { renderScore(); renderPlat(); } catch (e) { console.error('score', e); }
+    try { renderPerfil(); } catch (e) { console.error('perfil', e); }
   }
   function renderFresh() {
     const ts = Object.values(S.stamp).filter(Boolean);
@@ -1953,7 +2155,7 @@
       const score = answered === QUESTIONS.length ? sum : null; // the score only means something with the three answers
       rows.push({
         date: toIsoDate(get(idx.created)), platform: platKey(get(idx.platform)),
-        region: cls ? cls.region : 'Outros', stage: cls ? cls.stageNum : 0, campaign,
+        region: cls ? cls.region : 'Outros', stage: cls ? cls.stageNum : 0, campaign, perfil: perfilOfCampName(campaign),
         ans, answered, score, band: bandOf(score),
       });
     }
